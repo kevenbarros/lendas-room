@@ -32,7 +32,7 @@ export const Hero = () => {
           descubra pistas e escape antes que o tempo acabe!
         </p>
 
-        <a href="#cadastro" className="hero__cta">
+        <a href="#contact" className="hero__cta">
           Cadastra-se para receber 20% OFF na estréia
         </a>
 

@@ -60,7 +60,7 @@ export const Contact = () => {
   };
 
   return (
-    <section className="contact" aria-labelledby="contact-title">
+    <section id="contact" className="contact" aria-labelledby="contact-title">
       <div className="contact__container">
         <div className="contact__content">
           <h2 id="contact-title" className="contact__title">
