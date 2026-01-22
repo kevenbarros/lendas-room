@@ -124,7 +124,7 @@ export const Rooms = () => {
   ];
 
   return (
-    <section className="rooms" aria-labelledby="rooms-title">
+    <section id="rooms" className="rooms" aria-labelledby="rooms-title">
       <div className="rooms__container">
         <p className="rooms__subtitle">
           AGORA QUE VOCÊ CONHECE O LENDAS ESCAPE ROOM

@@ -45,17 +45,17 @@ export const Header = () => {
         <nav className="header__nav" aria-label="Navegação principal">
           <ul className="header__nav-list">
             <li className="header__nav-item">
-              <a href="#escape-room" className="header__nav-link">
+              <a href="#about" className="header__nav-link">
                 O que é Escape room?
               </a>
             </li>
             <li className="header__nav-item">
-              <a href="#salas" className="header__nav-link">
+              <a href="#rooms" className="header__nav-link">
                 Salas
               </a>
             </li>
             <li className="header__nav-item">
-              <a href="#promocao" className="header__nav-link">
+              <a href="#contact" className="header__nav-link">
                 Promoção
               </a>
             </li>
@@ -110,7 +110,7 @@ export const Header = () => {
             <ul className="header__mobile-list">
               <li className="header__mobile-item">
                 <a
-                  href="#escape-room"
+                  href="#about"
                   className="header__mobile-link"
                   onClick={closeMobileMenu}
                 >
@@ -119,7 +119,7 @@ export const Header = () => {
               </li>
               <li className="header__mobile-item">
                 <a
-                  href="#salas"
+                  href="#rooms"
                   className="header__mobile-link"
                   onClick={closeMobileMenu}
                 >
@@ -128,7 +128,7 @@ export const Header = () => {
               </li>
               <li className="header__mobile-item">
                 <a
-                  href="#promocao"
+                  href="#contact"
                   className="header__mobile-link"
                   onClick={closeMobileMenu}
                 >

@@ -64,7 +64,7 @@ export const About = () => {
   ];
 
   return (
-    <section className="about" aria-labelledby="about-title">
+    <section id="about" className="about" aria-labelledby="about-title">
       <div className="about__container">
         <h2 id="about-title" className="about__title">
           O que é escape room?
