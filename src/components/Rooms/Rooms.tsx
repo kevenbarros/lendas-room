@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./Rooms.css";
 import iluminadoImg from "../../assets/room-iluminado.png";
 import matintaImg from "../../assets/rom-matinta.png";
@@ -13,7 +13,9 @@ interface RoomCardProps {
   additionalInfo?: string;
   roomId: RoomName;
   onRoomClick: (roomId: RoomName) => void;
-  isTracking: boolean;
+  isLoading: boolean;
+  isVoted: boolean;
+  disabledAll?: boolean;
 }
 
 const RoomCard = ({
@@ -24,7 +26,9 @@ const RoomCard = ({
   additionalInfo,
   roomId,
   onRoomClick,
-  isTracking,
+  isLoading,
+  isVoted,
+  disabledAll = false,
 }: RoomCardProps) => {
   return (
     <article className="rooms__card">
@@ -44,9 +48,14 @@ const RoomCard = ({
           className="rooms__card-button"
           type="button"
           onClick={() => onRoomClick(roomId)}
-          disabled={isTracking}
+          disabled={isVoted || isLoading || disabledAll}
+          aria-pressed={isVoted}
         >
-          {isTracking ? "Registrando..." : "Achei esse interessante"}
+          {isLoading
+            ? "Registrando..."
+            : isVoted
+              ? "✓ Registrado"
+              : "Achei esse interessante"}
         </button>
       </div>
     </article>
@@ -54,14 +63,30 @@ const RoomCard = ({
 };
 
 export const Rooms = () => {
-  const [isTracking, setIsTracking] = useState(false);
+  const [loadingRoom, setLoadingRoom] = useState<RoomName | null>(null);
+  const [votedRoom, setVotedRoom] = useState<RoomName | null>(null);
   const [trackingMessage, setTrackingMessage] = useState("");
   const [messageStatus, setMessageStatus] = useState<"success" | "error" | "">(
     "",
   );
 
+  // Inicializa voto salvo no localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem("lendas_voted");
+    if (saved === "iluminado" || saved === "matinta" || saved === "tesouro") {
+      setVotedRoom(saved as RoomName);
+    }
+  }, []);
+
   const handleRoomClick = async (roomId: RoomName) => {
-    setIsTracking(true);
+    if (votedRoom) {
+      setTrackingMessage("Você já votou em uma sala.");
+      setMessageStatus("error");
+      setTimeout(() => setTrackingMessage(""), 3000);
+      return;
+    }
+
+    setLoadingRoom(roomId);
     setTrackingMessage("");
     setMessageStatus("");
 
@@ -69,6 +94,8 @@ export const Rooms = () => {
       const result = await trackRoomClick(roomId);
 
       if (result.success) {
+        setVotedRoom(roomId);
+        localStorage.setItem("lendas_voted", roomId);
         setTrackingMessage("✓ Interesse registrado com sucesso!");
         setMessageStatus("success");
       } else {
@@ -79,8 +106,7 @@ export const Rooms = () => {
       setTrackingMessage("Erro ao registrar interesse. Tente novamente.");
       setMessageStatus("error");
     } finally {
-      setIsTracking(false);
-
+      setLoadingRoom(null);
       // Limpar mensagem após 3 segundos
       setTimeout(() => {
         setTrackingMessage("");
@@ -89,7 +115,10 @@ export const Rooms = () => {
     }
   };
 
-  const rooms: Omit<RoomCardProps, "onRoomClick" | "isTracking">[] = [
+  const rooms: Omit<
+    RoomCardProps,
+    "onRoomClick" | "isLoading" | "isVoted" | "disabledAll"
+  >[] = [
     {
       roomId: "iluminado",
       image: iluminadoImg,
@@ -141,7 +170,9 @@ export const Rooms = () => {
               key={index}
               {...room}
               onRoomClick={handleRoomClick}
-              isTracking={isTracking}
+              isLoading={loadingRoom === room.roomId}
+              isVoted={votedRoom === room.roomId}
+              disabledAll={votedRoom !== null}
             />
           ))}
         </div>

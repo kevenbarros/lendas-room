@@ -8,9 +8,10 @@
 .contact__container {
   max-width: 1360px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
+  display: flex;
+  gap: 3rem;
+  flex-wrap: wrap;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -31,7 +32,7 @@
 .contact__description {
   font-family: var(--font-body);
   font-weight: 400;
-  font-size: 1rem;
+  font-size: 16px;
   line-height: 1.6;
   color: hsl(0, 0%, 100%);
   margin-bottom: 2.5rem;
@@ -153,13 +154,14 @@
   position: relative;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .contact__image {
   width: 100%;
   height: auto;
   display: block;
+  max-width: 548px;
+
 }
 
 .contact__image-overlay {

@@ -122,9 +122,6 @@ export const Contact = () => {
             alt="Família jogando escape room"
             className="contact__image"
           />
-          <div className="contact__image-overlay">
-            <div className="contact__image-icon"></div>
-          </div>
         </div>
       </div>
     </section>
