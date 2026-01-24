@@ -78,7 +78,9 @@
 
 /* CTA Button */
 .hero__cta {
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 1rem 2.5rem;
   background-color: #f95738;
   color: #ffffff;

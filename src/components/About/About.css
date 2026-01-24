@@ -29,7 +29,7 @@
 .about__description {
   font-family: var(--font-body);
   font-weight: 400;
-  font-size: 1rem;
+  font-size: 16px;
   line-height: 1.6;
   color: hsl(0, 0%, 100%);
   margin-bottom: 3rem;
@@ -66,7 +66,7 @@
 .about__card-description {
   font-family: var(--font-body);
   font-weight: 400;
-  font-size: 0.9375rem;
+  font-size: 18px;
   line-height: 1.5;
   color: hsl(0, 0%, 100%);
   margin: 0;
@@ -117,7 +117,7 @@
   }
 
   .about__card-description {
-    font-size: 0.9375rem;
+    font-size: 16px;
     line-height: 1.6;
   }
 }
@@ -138,7 +138,7 @@
   }
 
   .about__description {
-    font-size: 0.9375rem;
+    font-size: 16px;
     margin-bottom: 2rem;
   }
 

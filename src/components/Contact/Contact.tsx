@@ -123,68 +123,7 @@ export const Contact = () => {
             className="contact__image"
           />
           <div className="contact__image-overlay">
-            <p className="contact__image-text">
-              ESCAPE PARA TODA A<br />
-              <span className="contact__image-text--highlight">FAMÍLIA</span>
-            </p>
-            <div className="contact__image-icon">
-              <svg
-                width="45"
-                height="44"
-                viewBox="0 0 45 44"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect
-                  x="26.6285"
-                  y="12.3352"
-                  width="6"
-                  height="37.6585"
-                  rx="1"
-                  transform="rotate(45 26.6285 12.3352)"
-                  fill="#F95738"
-                />
-                <rect
-                  x="6.2616"
-                  y="39.0969"
-                  width="4.08899"
-                  height="6.48614"
-                  rx="1"
-                  transform="rotate(-45 6.2616 39.0969)"
-                  fill="#F95738"
-                />
-                <rect
-                  x="11.286"
-                  y="34.8914"
-                  width="4.08899"
-                  height="7.23025"
-                  rx="1"
-                  transform="rotate(-45 11.286 34.8914)"
-                  fill="#F95738"
-                />
-                <circle
-                  cx="34.286"
-                  cy="18"
-                  r="5"
-                  stroke="#BD3920"
-                  strokeWidth="4"
-                />
-                <circle
-                  cx="37.286"
-                  cy="7"
-                  r="5"
-                  stroke="#BD3920"
-                  strokeWidth="4"
-                />
-                <circle
-                  cx="25.286"
-                  cy="9"
-                  r="5"
-                  stroke="#BD3920"
-                  strokeWidth="4"
-                />
-              </svg>
-            </div>
+            <div className="contact__image-icon"></div>
           </div>
         </div>
       </div>

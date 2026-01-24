@@ -43,8 +43,8 @@
 }
 
 .header__logo-icon {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   flex-shrink: 0;
   filter: brightness(0) invert(1);
 }
@@ -77,13 +77,12 @@
 .header__nav-link {
   font-family: var(--font-body);
   font-weight: 500;
-  font-size: 0.9375rem;
+  font-size: 16px;
   color: hsl(0, 0%, 100%);
   text-decoration: none;
   position: relative;
-  padding-bottom: 0.25rem;
   transition: color 0.3s ease;
-  display: inline-block;
+  
 }
 
 .header__nav-link::after {
@@ -263,7 +262,7 @@
   }
 
   .header__nav-link {
-    font-size: 1rem;
+    font-size: 16px;
   }
 }
 

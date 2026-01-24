@@ -57,3 +57,18 @@ img {
   max-width: 100%;
   display: block;
 }
+
+/* Smooth scrolling and offset for fixed header */
+:root {
+  --header-scroll-offset: 80px;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--header-scroll-offset);
+}
+
+/* Ensure anchor targets are not hidden behind the fixed header */
+section {
+  scroll-margin-top: var(--header-scroll-offset);
+}
