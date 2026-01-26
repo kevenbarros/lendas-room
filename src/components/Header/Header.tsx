@@ -30,12 +30,15 @@ export const Header = () => {
     >
       <div className="header__container">
         {/* Logo */}
-        <a href="/" className="header__logo" aria-label="Room - Página inicial">
+        <a
+          href="/"
+          className="header__logo"
+          aria-label="Lendas Escape Room - Página inicial"
+        >
           <img
             src={logoIcon}
-            alt=""
+            alt="Lendas Escape Room logo"
             className="header__logo-icon"
-            aria-hidden="true"
             width="40"
             height="40"
           />

@@ -33,7 +33,13 @@ const RoomCard = ({
   return (
     <article className="rooms__card">
       <div className="rooms__card-image-wrapper">
-        <img src={image} alt={imageAlt} className="rooms__card-image" />
+        <img
+          src={image}
+          alt={imageAlt}
+          className="rooms__card-image"
+          loading="lazy"
+          decoding="async"
+        />
       </div>
 
       <div className="rooms__card-content">

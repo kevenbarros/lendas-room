@@ -18,6 +18,9 @@ export const Hero = () => {
         alt=""
         className="hero__background"
         aria-hidden="true"
+        loading="eager"
+        decoding="async"
+        fetchPriority="high"
       />
 
       <div className="hero__content">
@@ -42,7 +45,13 @@ export const Hero = () => {
           aria-label="Rolar para o conteúdo"
           type="button"
         >
-          <img src={arrowIcon} alt="" aria-hidden="true" />
+          <img
+            src={arrowIcon}
+            alt=""
+            aria-hidden="true"
+            loading="eager"
+            decoding="async"
+          />
         </button>
       </div>
     </section>

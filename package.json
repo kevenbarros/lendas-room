@@ -7,11 +7,18 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "dev:ssr": "node server.js",
+    "build:ssr": "tsc -b && vite build && vite build --ssr src/entry-server.tsx",
+    "preview:ssr": "node server.js --prod",
+    "build:ssg": "tsc -b && vite build && vite build --ssr src/entry-server.tsx --outDir dist/server && node scripts/prerender.mjs",
+    "preview:ssg": "vite preview"
   },
   "dependencies": {
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "react-helmet-async": "^2.0.5",
+    "sirv": "^2.0.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

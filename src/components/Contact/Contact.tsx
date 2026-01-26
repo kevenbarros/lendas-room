@@ -77,7 +77,11 @@ export const Contact = () => {
 
           <form className="contact__form" onSubmit={handleSubmit}>
             <div className="contact__form-group">
+              <label className="visually-hidden" htmlFor="contact-email">
+                Email
+              </label>
               <input
+                id="contact-email"
                 type="email"
                 placeholder="Digite seu email"
                 className="contact__input"
@@ -87,7 +91,11 @@ export const Contact = () => {
                 aria-label="Digite seu email"
               />
               <span className="contact__form-separator">Ou</span>
+              <label className="visually-hidden" htmlFor="contact-phone">
+                Telefone
+              </label>
               <input
+                id="contact-phone"
                 type="tel"
                 placeholder="(00) 00000-0000"
                 className="contact__input"
@@ -100,6 +108,7 @@ export const Contact = () => {
                 type="submit"
                 className="contact__button"
                 disabled={isSubmitting}
+                aria-label="Enviar cadastro"
               >
                 {isSubmitting ? "Enviando..." : "Enviar"}
               </button>
@@ -121,6 +130,8 @@ export const Contact = () => {
             src={familiaImg}
             alt="Família jogando escape room"
             className="contact__image"
+            loading="lazy"
+            decoding="async"
           />
         </div>
       </div>

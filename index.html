@@ -4,15 +4,98 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Preload Google Fonts stylesheet to reduce FOIT -->
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Karma:wght@400;500;600;700&display=swap"
+      onload="this.rel = 'stylesheet'"
+    />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Karma:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
     <meta
       name="description"
       content="Escape room com salas temáticas e desafios únicos. Reserve sua experiência hoje!"
     />
-    <title>Room - Escape Room | Salas Temáticas e Promoções</title>
+    <title>Lendas Escape Room | Salas Temáticas e Promoções</title>
+
+    <link rel="canonical" href="https://lendas-escape-room.example/" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#0f1020" />
+
+    <!-- Open Graph -->
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="Lendas Escape Room — Salas Temáticas e Promoções"
+    />
+    <meta
+      property="og:description"
+      content="Escape room com salas temáticas e desafios únicos. Reserve sua experiência hoje!"
+    />
+    <meta property="og:url" content="https://lendas-escape-room.example/" />
+    <meta
+      property="og:image"
+      content="https://lendas-escape-room.example/og-image.jpg"
+    />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Lendas Escape Room — Salas Temáticas e Promoções"
+    />
+    <meta
+      name="twitter:description"
+      content="Escape room com salas temáticas e desafios únicos. Reserve sua experiência hoje!"
+    />
+    <meta
+      name="twitter:image"
+      content="https://lendas-escape-room.example/og-image.jpg"
+    />
+
+    <link
+      rel="sitemap"
+      type="application/xml"
+      title="Sitemap"
+      href="/sitemap.xml"
+    />
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://lendas-escape-room.example/#organization",
+            "name": "Lendas Escape Room",
+            "url": "https://lendas-escape-room.example/",
+            "logo": "https://lendas-escape-room.example/logo.png"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://lendas-escape-room.example/#website",
+            "url": "https://lendas-escape-room.example/",
+            "name": "Lendas Escape Room",
+            "description": "Escape room com salas temáticas e desafios únicos. Reserve sua experiência hoje!",
+            "publisher": {
+              "@id": "https://lendas-escape-room.example/#organization"
+            }
+          }
+        ]
+      }
+    </script>
 
     <!-- Google Fonts: Archivo Black e Karma -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Fallback stylesheet load (preconnect above improves handshake) -->
     <link
       href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Karma:wght@400;500;600;700&display=swap"
       rel="stylesheet"
@@ -20,6 +103,6 @@
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <script type="module" src="/src/entry-client.tsx"></script>
   </body>
 </html>
