@@ -39,8 +39,8 @@ export const Header = () => {
             src={logoIcon}
             alt="Lendas Escape Room logo"
             className="header__logo-icon"
-            width="40"
-            height="40"
+            // width="40"
+            // height="40"
           />
         </a>
 

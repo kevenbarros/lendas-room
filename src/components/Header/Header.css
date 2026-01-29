@@ -252,6 +252,17 @@
   }
 }
 
+@media (max-width: 767px) {
+  .header__container {
+    padding: 1rem 1.25rem;
+  }
+
+  .header__logo-icon {
+    width: 36px;
+    height: 36px;
+  }
+}
+
 @media (min-width: 1024px) {
   .header__container {
     padding: 1.5rem 4rem;
