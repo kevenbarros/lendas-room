@@ -86,7 +86,7 @@ export const Contact = () => {
                 placeholder="Digite seu email"
                 className="contact__input"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value.replace(/\s/g, ""))}
                 disabled={isSubmitting}
                 aria-label="Digite seu email"
               />
@@ -100,7 +100,14 @@ export const Contact = () => {
                 placeholder="(00) 00000-0000"
                 className="contact__input"
                 value={phone}
-                onChange={(e) => setPhone(e.target.value)}
+                onChange={(e) => {
+                  let value = e.target.value;
+                  value = value.replace(/\D/g, "");
+                  value = value.replace(/^(\d{2})(\d)/, "($1) $2");
+                  value = value.replace(/(\d)(\d{4})$/, "$1-$2");
+                  setPhone(value);
+                }}
+                maxLength={15}
                 disabled={isSubmitting}
                 aria-label="Digite seu telefone"
               />
