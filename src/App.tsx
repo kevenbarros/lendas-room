@@ -27,22 +27,24 @@ function App() {
   return (
     <>
       <Helmet>
-        <title>Lendas Escape Room | Salas Temáticas e Promoções</title>
+        <title>Lendas Room | O Primeiro Escape Room de Belém</title>
         <meta
           name="description"
-          content="Escape room com salas temáticas e desafios únicos. Reserve sua experiência hoje!"
+          content="O primeiro Escape Room de Belém! Salas temáticas, desafios imersivos e muita diversão com seus amigos. Garanta sua vaga com 20% OFF na estreia!"
         />
-        <link rel="canonical" href="https://lendas-escape-room.example/" />
+        <meta name="keywords" content="escape room belém, jogos de fuga belém, lendas room, entretenimento belém, o que fazer em belém, sala de escape" />
+        <link rel="canonical" href="https://lendas-room.vercel.app/" />
         <meta property="og:type" content="website" />
         <meta
           property="og:title"
-          content="Lendas Escape Room — Salas Temáticas e Promoções"
+          content="Lendas Room | O Primeiro Escape Room de Belém"
         />
         <meta
           property="og:description"
-          content="Escape room com salas temáticas e desafios únicos. Reserve sua experiência hoje!"
+          content="Desvende mistérios e escape antes que o tempo acabe! O primeiro Escape Room de Belém está chegando. Cadastre-se para a estreia."
         />
-        <meta property="og:url" content="https://lendas-escape-room.example/" />
+        <meta property="og:url" content="https://lendas-room.vercel.app/" />
+        <meta property="og:image" content="https://lendas-room.vercel.app/og-image.jpg" />
       </Helmet>
       <a href="#main-content" className="skip-link">
         Pular para o conteúdo
