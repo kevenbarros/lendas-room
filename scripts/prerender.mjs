@@ -25,7 +25,7 @@ async function prerender() {
     if (heroFile) {
       heroPreload = `<link rel="preload" as="image" href="/assets/${heroFile}" fetchpriority="high" />`;
     }
-  } catch {}
+  } catch { }
 
   const withHead = template.replace(/<\/head>/i, `${head}${heroPreload}</head>`);
   const finalHtml = withHead.replace(
@@ -36,18 +36,7 @@ async function prerender() {
   await fs.writeFile(indexPath, finalHtml, "utf-8");
   console.log("SSG: prerendered dist/index.html");
 
-  // Generate sitemap.xml
-  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>${baseUrl}/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-</urlset>
-`;
-  await fs.writeFile(path.resolve(root, "dist", "sitemap.xml"), sitemap, "utf-8");
-  console.log("SSG: generated dist/sitemap.xml");
+
 }
 
 prerender().catch((err) => {
