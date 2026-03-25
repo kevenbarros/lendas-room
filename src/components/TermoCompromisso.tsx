@@ -42,13 +42,13 @@ export function TermoCompromisso() {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 3500); // 3.5s timeout no maximo
       
-      const res = await fetch("https://ipapi.co/json/", { signal: controller.signal });
+      const res = await fetch("https://ipinfo.io/json", { signal: controller.signal });
       clearTimeout(timeoutId);
       
       if (res.ok) {
         const data = await res.json();
         finalIp = data.ip || "Desconhecido";
-        finalLocal = `${data.city || "-"} / ${data.region || "-"}, ${data.country_name || "-"}`;
+        finalLocal = `${data.city || "-"} / ${data.region || "-"}, ${data.country || "-"}`;
       }
     } catch (err) {
       finalIp = "Bloqueado pelo Anti-rastreio/AdBlock";
