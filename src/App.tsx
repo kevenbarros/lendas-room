@@ -5,7 +5,8 @@ import { Rooms as RoomsSSR } from "./components/Rooms";
 import { Contact as ContactSSR } from "./components/Contact";
 import "./App.css";
 import { Helmet } from "./lib/helmet";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
+import { TermoCompromisso } from "./components/TermoCompromisso";
 
 const About = import.meta.env.SSR
   ? AboutSSR
@@ -24,6 +25,16 @@ const Contact = import.meta.env.SSR
     );
 
 function App() {
+  const [isTermoPage, setIsTermoPage] = useState(false);
+
+  useEffect(() => {
+    setIsTermoPage(window.location.pathname === "/termo-de-compromisso");
+  }, []);
+
+  if (isTermoPage) {
+    return <TermoCompromisso />;
+  }
+
   return (
     <>
       <Helmet>

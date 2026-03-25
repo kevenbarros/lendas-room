@@ -21,6 +21,15 @@ export interface ContactFormData {
   timestamp?: string;
 }
 
+export interface TermoFormData {
+  nome: string;
+  cpf: string;
+  dataHora: string;
+  ip?: string;
+  local?: string;
+  userAgent?: string;
+}
+
 export interface GoogleSheetsResponse {
   success: boolean;
   message: string;
@@ -75,6 +84,46 @@ export const sendToGoogleSheets = async (
     return {
       success: false,
       message: "Erro ao enviar dados. Tente novamente.",
+    };
+  }
+};
+
+/**
+ * Envia dados do Termo de Compromisso para o Google Sheets (nova aba/tipo)
+ */
+export const sendTermoToGoogleSheets = async (
+  data: TermoFormData,
+): Promise<GoogleSheetsResponse> => {
+  if (!SCRIPT_URL) {
+    console.warn("Google Script URL não configurada. Simulando envio...");
+    return { success: true, message: "Simulado com sucesso" };
+  }
+
+  try {
+    const params = new URLSearchParams({
+      action: "termoCompromisso",
+      nome: data.nome,
+      cpf: data.cpf,
+      timestamp: data.dataHora,
+      ip: data.ip || "",
+      local: data.local || "",
+      userAgent: data.userAgent || "",
+    });
+
+    await fetch(`${SCRIPT_URL}?${params.toString()}`, {
+      method: "GET",
+      mode: "no-cors",
+    });
+
+    return {
+      success: true,
+      message: "Termo enviado com sucesso!",
+    };
+  } catch (error) {
+    console.error("Erro ao enviar termo:", error);
+    return {
+      success: false,
+      message: "Erro ao enviar termo.",
     };
   }
 };
