@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import "./Rooms.css";
 import iluminadoImg from "../../assets/room-iluminado.png";
-import matintaImg from "../../assets/rom-matinta.png";
-import tesouroImg from "../../assets/room-tesouro.png";
 import { trackRoomClick, type RoomName } from "../../services/roomTracking";
 
 interface RoomCardProps {
@@ -53,10 +51,12 @@ const RoomCard = ({
 
         <div className="rooms__card-meta">
           <span className="rooms__card-meta-item">
-            <span className="rooms__card-meta-label">Dificuldade:</span> {difficulty}
+            <span className="rooms__card-meta-label">Dificuldade:</span>{" "}
+            {difficulty}
           </span>
           <span className="rooms__card-meta-item">
-            <span className="rooms__card-meta-label">Categoria:</span> {categories.join(", ")}
+            <span className="rooms__card-meta-label">Categoria:</span>{" "}
+            {categories.join(", ")}
           </span>
           <span className="rooms__card-meta-item">
             <span className="rooms__card-meta-label">Público:</span> {audience}

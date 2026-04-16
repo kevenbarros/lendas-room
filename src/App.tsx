@@ -68,11 +68,12 @@ function App() {
         <Suspense fallback={null}>
           <About />
         </Suspense>
-        <Suspense fallback={null}>{/* <Contact /> */}</Suspense>
-        <Suspense fallback={null}>
-          {/* <TermoCompromisso /> */}
-          <Rooms />
-        </Suspense>
+        {/* <Suspense fallback={null}>
+          <TermoCompromisso />}
+          
+          </Suspense> */}
+        <Suspense fallback={null}>{<Rooms />}</Suspense>
+        <Suspense fallback={null}>{<Contact />}</Suspense>
       </main>
     </>
   );
