@@ -27,7 +27,7 @@ export const Hero = () => {
         <h1 className="hero__title">
           O PRIMEIRO{" "}
           <span className="hero__title--highlight">ESCAPE ROOM DE BELÉM</span>{" "}
-          ESTÁ CHEGANDO!
+          CHEGOu!
         </h1>
 
         <p className="hero__description">
@@ -36,7 +36,7 @@ export const Hero = () => {
         </p>
 
         <a href="#contact" className="hero__cta">
-          Cadastra-se para receber 20% OFF na estréia
+          Faça sua reserva
         </a>
 
         <button

@@ -11,6 +11,9 @@ interface RoomCardProps {
   title: string;
   description: string;
   additionalInfo?: string;
+  difficulty: string;
+  categories: string[];
+  audience: string;
   roomId: RoomName;
   onRoomClick: (roomId: RoomName) => void;
   isLoading: boolean;
@@ -24,6 +27,9 @@ const RoomCard = ({
   title,
   description,
   additionalInfo,
+  difficulty,
+  categories,
+  audience,
   roomId,
   onRoomClick,
   isLoading,
@@ -45,6 +51,18 @@ const RoomCard = ({
       <div className="rooms__card-content">
         <h3 className="rooms__card-title">{title}</h3>
 
+        <div className="rooms__card-meta">
+          <span className="rooms__card-meta-item">
+            <span className="rooms__card-meta-label">Dificuldade:</span> {difficulty}
+          </span>
+          <span className="rooms__card-meta-item">
+            <span className="rooms__card-meta-label">Categoria:</span> {categories.join(", ")}
+          </span>
+          <span className="rooms__card-meta-item">
+            <span className="rooms__card-meta-label">Público:</span> {audience}
+          </span>
+        </div>
+
         <div className="rooms__card-description">
           <p>{description}</p>
           {additionalInfo && <p>{additionalInfo}</p>}
@@ -57,11 +75,7 @@ const RoomCard = ({
           disabled={isVoted || isLoading || disabledAll}
           aria-pressed={isVoted}
         >
-          {isLoading
-            ? "Registrando..."
-            : isVoted
-              ? "✓ Registrado"
-              : "Achei esse interessante"}
+          {"Agendar agora"}
         </button>
       </div>
     </article>
@@ -131,30 +145,13 @@ export const Rooms = () => {
       imageAlt:
         "Sala O Iluminado - ambiente vintage com sofá e decoração clássica",
       title: "O ILUMINADO",
+      difficulty: "Média",
+      categories: ["Investigação", "Horror"],
+      audience: "Indicado para maiores de 14 anos",
       description:
         "Um massacre ocorrido em 2005, no bairro do Marco, até hoje não foi solucionado.",
       additionalInfo:
         "O principal suspeito? Um senhor chamado Alberto. Ele teria assassinado quatro membros da família e desaparecido.\n\nApenas um neto ainda está vivo e pode ser a chave para desvendar o mistério.",
-    },
-    {
-      roomId: "matinta",
-      image: matintaImg,
-      imageAlt: "Sala A Matinta - ambiente escuro e misterioso",
-      title: "A MATINTA",
-      description:
-        "Duas crianças desapareceram em Itaituba. Foram ditos de buscas e nenhum sinal delas.",
-      additionalInfo:
-        'Na verdade, foi encontrada apenas uma casa abandonada no meio da mata, com um bilhete sobre a mesa escrito "Taiporã". Acho que isso não significa nada.\n\nVocê acha que consegue encontrar as crianças?',
-    },
-    {
-      roomId: "tesouro",
-      image: tesouroImg,
-      imageAlt: "Sala O Baú do Tesouro - ambiente de taverna medieval",
-      title: "O BAÚ DO TESOURO",
-      description:
-        "A lenda fala sobre um baú repleto de ouro e pedras preciosas. O tesouro, diz o ditado, não é apenas conversa fiada.",
-      additionalInfo:
-        "Mas não vá sozinho. Os últimos que foram atrás desse tesouro nunca voltaram para contar a história.",
     },
   ];
 

@@ -45,7 +45,7 @@ export const About = () => {
       iconAlt: "Ícone de trabalho em equipe",
       title: "Trabalho em equipe",
       description:
-        "Colabore com amigos ou desconhecidos. Esses jogos foram criados para desenvolver o trabalho em equipe e a cooperação, enquanto todos se divertem.",
+        "Colabore com amigos. Esses jogos foram criados para desenvolver o trabalho em equipe e a cooperação, enquanto todos se divertem.",
     },
     {
       icon: keyIcon,
@@ -57,9 +57,9 @@ export const About = () => {
     {
       icon: festaIcon,
       iconAlt: "Ícone de festa",
-      title: "Para quem é quando?",
+      title: "Para quem e quando?",
       description:
-        "Para todos os públicos, ideal para comemorar aniversários, encontros, team building de empresas ou simplesmente para quem quer viver uma experiência inesquecível.",
+        "Para todos os públicos. Ideal para comemorar aniversários, encontros, team building de empresas ou simplesmente para quem quer viver uma experiência inesquecível.",
     },
   ];
 

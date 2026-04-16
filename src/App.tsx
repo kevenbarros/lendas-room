@@ -6,6 +6,7 @@ import "./App.css";
 import { Helmet } from "./lib/helmet";
 import { lazy, Suspense, useEffect, useState } from "react";
 import { TermoCompromisso } from "./components/TermoCompromisso";
+import { Rooms } from "./components/Rooms";
 
 const About = import.meta.env.SSR
   ? AboutSSR
@@ -67,8 +68,10 @@ function App() {
         <Suspense fallback={null}>
           <About />
         </Suspense>
+        <Suspense fallback={null}>{/* <Contact /> */}</Suspense>
         <Suspense fallback={null}>
-          <Contact />
+          {/* <TermoCompromisso /> */}
+          <Rooms />
         </Suspense>
       </main>
     </>
