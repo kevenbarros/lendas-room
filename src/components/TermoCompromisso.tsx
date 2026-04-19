@@ -29,12 +29,8 @@ const SECTIONS: AccordionSection[] = [
           <li>Ambientes fechados e com pouca iluminação;</li>
           <li>Estímulos sonoros e visuais intensos;</li>
           <li>Situações de pressão psicológica, suspense ou tensão;</li>
-          <li>
-            Desafios que exigem raciocínio lógico sob limite de tempo;
-          </li>
-          <li>
-            Necessidade de interação e movimentação em espaços limitados.
-          </li>
+          <li>Desafios que exigem raciocínio lógico sob limite de tempo;</li>
+          <li>Necessidade de interação e movimentação em espaços limitados.</li>
         </ul>
       </>
     ),
@@ -67,8 +63,8 @@ const SECTIONS: AccordionSection[] = [
         </li>
         <li>
           O preço de cada jogo será indicado nos canais de comunicação do
-          Lendas, podendo variar de acordo com o número de participantes, sala
-          e data. Os preços podem ser alterados a qualquer momento sem aviso
+          Lendas, podendo variar de acordo com o número de participantes, sala e
+          data. Os preços podem ser alterados a qualquer momento sem aviso
           prévio.
         </li>
         <li>
@@ -127,9 +123,9 @@ const SECTIONS: AccordionSection[] = [
     content: (
       <>
         <p>
-          Antes do início, os jogadores receberão instruções. O Lendas reserva
-          o direito de recusar o acesso ou terminar o jogo antecipadamente em
-          caso de descumprimento das regras, sem direito a reembolso.
+          Antes do início, os jogadores receberão instruções. O Lendas reserva o
+          direito de recusar o acesso ou terminar o jogo antecipadamente em caso
+          de descumprimento das regras, sem direito a reembolso.
         </p>
         <p>A participação envolve determinados riscos, como:</p>
         <ul>
@@ -154,9 +150,9 @@ const SECTIONS: AccordionSection[] = [
           condição que possa ser agravada pela experiência.
         </p>
         <p>
-          Os jogos não são recomendados para pessoas com marca-passo,
-          restrições psicológicas ou outras condições médicas que possam
-          colocar em risco a saúde do jogador.
+          Os jogos não são recomendados para pessoas com marca-passo, restrições
+          psicológicas ou outras condições médicas que possam colocar em risco a
+          saúde do jogador.
         </p>
       </>
     ),
@@ -170,8 +166,8 @@ const SECTIONS: AccordionSection[] = [
           Ao participar, o jogador assume responsabilidade por eventuais
           consequências decorrentes de sua própria conduta, incluindo danos
           materiais ou pessoais, ferimentos, doenças, incapacidades ou morte.
-          Nesses casos, o Lendas, seus colaboradores, proprietários, parceiros
-          e terceiros envolvidos ficam isentos de qualquer responsabilidade.
+          Nesses casos, o Lendas, seus colaboradores, proprietários, parceiros e
+          terceiros envolvidos ficam isentos de qualquer responsabilidade.
         </p>
         <ul>
           <li>
@@ -188,11 +184,10 @@ const SECTIONS: AccordionSection[] = [
             comprovada.
           </li>
           <li>
-            <strong>Cumprimento de regras:</strong> comprometo-me a seguir
-            todas as orientações da equipe antes e durante a atividade,
-            respeitando os limites físicos do ambiente, não utilizando força
-            bruta e não danificando estruturas, cenários, objetos ou
-            equipamentos.
+            <strong>Cumprimento de regras:</strong> comprometo-me a seguir todas
+            as orientações da equipe antes e durante a atividade, respeitando os
+            limites físicos do ambiente, não utilizando força bruta e não
+            danificando estruturas, cenários, objetos ou equipamentos.
           </li>
           <li>
             <strong>Interrupção da atividade:</strong> posso solicitar a
@@ -230,9 +225,8 @@ const SECTIONS: AccordionSection[] = [
           notebooks, tablets etc.).
         </li>
         <li>
-          Todas as sessões podem ser filmadas e as imagens são de propriedade
-          do Lendas Escape Room. Os participantes aceitam de antemão a
-          filmagem.
+          Todas as sessões podem ser filmadas e as imagens são de propriedade do
+          Lendas Escape Room. Os participantes aceitam de antemão a filmagem.
         </li>
         <li>
           Autorizo, de forma gratuita, a captação e uso da minha imagem e da
@@ -252,8 +246,8 @@ const SECTIONS: AccordionSection[] = [
     title: "Sigilo",
     content: (
       <p>
-        Os participantes se comprometem a não revelar os segredos dos jogos,
-        não comprometendo nem influenciando a participação de outras pessoas em
+        Os participantes se comprometem a não revelar os segredos dos jogos, não
+        comprometendo nem influenciando a participação de outras pessoas em
         futuras atividades.
       </p>
     ),
@@ -266,8 +260,8 @@ const SECTIONS: AccordionSection[] = [
         <p>
           Comprometo-me a ressarcir solidariamente e integralmente quaisquer
           danos materiais causados por mim ou por membros do meu grupo,
-          decorrentes de uso indevido, força excessiva, negligência,
-          vandalismo ou descumprimento das regras estabelecidas.
+          decorrentes de uso indevido, força excessiva, negligência, vandalismo
+          ou descumprimento das regras estabelecidas.
         </p>
         <p>
           Enquanto estiver nas instalações, devo respeitar os regulamentos da
@@ -292,11 +286,41 @@ export function TermoCompromisso() {
   const [aceitou, setAceitou] = useState(false);
   const [saved, setSaved] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [ageError, setAgeError] = useState<string | null>(null);
 
   useEffect(() => {
     const now = new Date();
     setDataAtual(now.toLocaleString("pt-BR"));
   }, []);
+
+  useEffect(() => {
+    if (!dataNascimento) {
+      setAgeError(null);
+      return;
+    }
+
+    const birthDate = new Date(dataNascimento);
+    if (isNaN(birthDate.getTime())) {
+      setAgeError(null);
+      return;
+    }
+
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+
+    if (age < 18) {
+      setAgeError(
+        "O responsável deve ter 18 anos ou mais para aceitar os termos.",
+      );
+    } else {
+      setAgeError(null);
+    }
+  }, [dataNascimento]);
 
   const handleCpfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value.replace(/\D/g, "");
@@ -315,7 +339,7 @@ export function TermoCompromisso() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!aceitou) return;
+    if (!aceitou || ageError) return;
     setIsLoading(true);
 
     let finalIp = "Não detectado";
@@ -494,6 +518,7 @@ export function TermoCompromisso() {
                 required
                 max={new Date().toISOString().split("T")[0]}
               />
+              {ageError && <p className="termo-form__error">{ageError}</p>}
             </div>
 
             <div className="form-group form-group--full">
@@ -510,7 +535,7 @@ export function TermoCompromisso() {
             <button
               type="submit"
               className="btn-aceitar"
-              disabled={isLoading || !aceitou}
+              disabled={isLoading || !aceitou || !!ageError}
             >
               {isLoading ? "Enviando..." : "Eu aceito"}
             </button>
