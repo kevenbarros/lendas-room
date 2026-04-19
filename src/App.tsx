@@ -2,6 +2,8 @@ import { Header } from "./components/Header";
 import { Hero } from "./components/Hero";
 import { About as AboutSSR } from "./components/About";
 import { Contact as ContactSSR } from "./components/Contact";
+import { FAQ as FAQSSR } from "./components/FAQ";
+import { ContactInfo as ContactInfoSSR } from "./components/ContactInfo";
 import "./App.css";
 import { Helmet } from "./lib/helmet";
 import { lazy, Suspense, useEffect, useState } from "react";
@@ -18,6 +20,18 @@ const Contact = import.meta.env.SSR
   ? ContactSSR
   : lazy(() =>
       import("./components/Contact").then((m) => ({ default: m.Contact })),
+    );
+
+const FAQ = import.meta.env.SSR
+  ? FAQSSR
+  : lazy(() => import("./components/FAQ").then((m) => ({ default: m.FAQ })));
+
+const ContactInfo = import.meta.env.SSR
+  ? ContactInfoSSR
+  : lazy(() =>
+      import("./components/ContactInfo").then((m) => ({
+        default: m.ContactInfo,
+      })),
     );
 
 function App() {
@@ -51,7 +65,7 @@ function App() {
         />
         <meta
           property="og:description"
-          content="Desvende mistérios e escape antes que o tempo acabe! O primeiro Escape Room de Belém está chegando. Cadastre-se para a estreia."
+          content="Desvende mistérios e escape antes que o tempo acabe! O primeiro Escape Room de Belém do Pará chegou."
         />
         <meta property="og:url" content="https://lendas-room.vercel.app/" />
         <meta
@@ -73,7 +87,13 @@ function App() {
           
           </Suspense> */}
         <Suspense fallback={null}>{<Rooms />}</Suspense>
-        <Suspense fallback={null}>{<Contact />}</Suspense>
+        {/* <Suspense fallback={null}>{<Contact />}</Suspense> */}
+        <Suspense fallback={null}>
+          <FAQ />
+        </Suspense>
+        <Suspense fallback={null}>
+          <ContactInfo />
+        </Suspense>
       </main>
     </>
   );

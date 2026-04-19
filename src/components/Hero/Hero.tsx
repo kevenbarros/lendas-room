@@ -26,7 +26,9 @@ export const Hero = () => {
       <div className="hero__content">
         <h1 className="hero__title">
           O PRIMEIRO{" "}
-          <span className="hero__title--highlight">ESCAPE ROOM DE BELÉM</span>{" "}
+          <span className="hero__title--highlight">
+            ESCAPE ROOM DE BELÉM DO PARÁ
+          </span>{" "}
           CHEGOu!
         </h1>
 
@@ -35,7 +37,14 @@ export const Hero = () => {
           descubra pistas e escape antes que o tempo acabe!
         </p>
 
-        <a href="#contact" className="hero__cta">
+        <a
+          href={`https://wa.me/5591999713060?text=${encodeURIComponent(
+            "Olá! Gostaria de fazer uma reserva no Lendas Escape Room.",
+          )}`}
+          className="hero__cta"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           Faça sua reserva
         </a>
 
