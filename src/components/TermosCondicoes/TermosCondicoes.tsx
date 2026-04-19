@@ -79,7 +79,7 @@ const SECTIONS: Section[] = [
       "Nesses casos, o Lendas, bem como seus colaboradores, proprietários, parceiros comerciais e terceiros envolvidos, ficam isentos de qualquer responsabilidade.",
     ],
     items: [
-      "Caso algum jogador deseje sair durante o jogo, pode falar com os monitores que estarão assistindo o grupo através de câmeras. Menores de idade poderão sair da sala acompanhados pelos pais ou adulto responsável. Independente do motivo da saída, o jogador não pode retornar ao jogo e não será efetuado reembolso ou ressarcimento do valor.",
+      "Caso algum jogador deseje sair durante o jogo, pode falar com os monitores que estarão assistindo o grupo através de câmeras. Menores de idade poderão sair da sala acompanhados pelos pais ou adulto responsável. independente do motivo da saída, o jogador não pode retornar ao jogo e não será efetuado reembolso ou ressarcimento do valor pago.",
       "A participação nos jogos exige dos participantes concentração e controle de seu estado físico e emocional. Assim, participantes que estiverem sob a influência de álcool ou drogas de qualquer natureza não poderão jogar. Se esta condição for constatada, a reserva será cancelada, não havendo restituição do valor pago.",
       "Também não será permitido o ingresso nas salas de jogos com bebidas e ou qualquer tipo de alimento.",
       "É totalmente proibido levar objetos perigosos para o local, incluindo, a título de exemplo, objetos cortantes, artigos explosivos, armas, ou outros itens que poderão colocar em perigo a segurança das pessoas.",

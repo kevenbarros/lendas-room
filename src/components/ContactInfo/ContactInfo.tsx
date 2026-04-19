@@ -103,18 +103,24 @@ export const ContactInfo = () => {
             </div>
             <h3 className="contact-info__card-title">Como chegar?</h3>
             <p className="contact-info__card-text">
-              Av. Serzedelo Corrêa, 126
-              <br />
-              Batista Campos, Belém - PA
-              <br />
-              CEP 66033-265
+              Av. Serzedelo Corrêa, 126 — Batista Campos, Belém - PA, CEP 66033-265
             </p>
             <div className="contact-info__hours" aria-label="Horário de funcionamento">
               <ClockIcon />
-              <span>
-                Quarta a domingo
-                <strong> 17h30 às 20h30</strong>
-              </span>
+              <ul className="contact-info__hours-list">
+                <li>
+                  Quarta a sexta
+                  <strong> 17h às 20h30</strong>
+                </li>
+                <li>
+                  Sábado e domingo
+                  <strong> 14h às 20h</strong>
+                </li>
+                <li>
+                  Feriados
+                  <strong> verificar disponibilidade</strong>
+                </li>
+              </ul>
             </div>
             <small className="contact-info__note">
               *Somente por agendamento

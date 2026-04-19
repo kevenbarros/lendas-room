@@ -24,6 +24,7 @@ export interface ContactFormData {
 export interface TermoFormData {
   nome: string;
   cpf: string;
+  dataNascimento: string;
   dataHora: string;
   ip?: string;
   local?: string;
@@ -104,6 +105,7 @@ export const sendTermoToGoogleSheets = async (
       action: "termoCompromisso",
       nome: data.nome,
       cpf: data.cpf,
+      dataNascimento: data.dataNascimento,
       timestamp: data.dataHora,
       ip: data.ip || "",
       local: data.local || "",

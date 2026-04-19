@@ -33,8 +33,8 @@ export const Footer = () => {
           <a href="#contact-info" className="footer__link">
             Contato
           </a>
-          <a href="/termos-e-condicoes" className="footer__link">
-            Termos e condições
+          <a href="/termo-de-compromisso" className="footer__link">
+            Termo de compromisso
           </a>
         </nav>
       </div>

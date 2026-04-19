@@ -26,7 +26,7 @@
 .termo-card h1 {
   color: #f95738;
   margin-top: 0;
-  margin-bottom: 2rem;
+  margin-bottom: 1.25rem;
   padding: 0 1rem;
   font-size: 2rem;
   text-align: center;
@@ -35,37 +35,156 @@
   text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
 }
 
-.termo-text {
-  font-size: 1.05rem;
-  line-height: 1.6;
-  margin-bottom: 2rem;
-  padding: 0 1rem;
-  color: #fff;
-  text-align: left;
-  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.9), 0 0 10px rgba(0, 0, 0, 0.5);
-}
-
-.termo-text p {
-  margin-top: 0;
-  margin-bottom: 1rem;
-}
-
-.termo-text ul, .termo-text ol {
-  margin-top: 0;
-  margin-bottom: 1.5rem;
-  padding-left: 1.5rem;
-}
-
-.termo-text li {
-  margin-bottom: 0.8rem;
-}
-
-.termo-conclusao {
-  margin-top: 1.5rem;
-  margin-bottom: 0 !important;
+.termo-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 1rem 1rem;
+  padding: 0.5rem 0.875rem;
+  background: rgba(11, 12, 16, 0.7);
+  border: 1px solid rgba(249, 87, 56, 0.4);
+  border-radius: 6px;
   color: #f95738;
-  text-align: center;
+  font-size: 0.9rem;
   font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.termo-back:hover {
+  background: rgba(249, 87, 56, 0.12);
+  border-color: #f95738;
+}
+
+.termo-intro {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0 1rem 1.5rem;
+  padding: 1rem 1.25rem;
+  color: #fff;
+  background: rgba(11, 12, 16, 0.65);
+  border-left: 3px solid #f95738;
+  border-radius: 6px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+/* Accordions */
+.termo-accordions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  margin: 0 1rem 2rem;
+}
+
+.termo-accordion {
+  background: rgba(11, 12, 16, 0.8);
+  border: 1px solid rgba(249, 87, 56, 0.2);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+}
+
+.termo-accordion[open] {
+  border-color: rgba(249, 87, 56, 0.55);
+}
+
+.termo-accordion__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+  list-style: none;
+  user-select: none;
+  transition: background-color 0.2s ease;
+}
+
+.termo-accordion__header::-webkit-details-marker {
+  display: none;
+}
+
+.termo-accordion__header:hover {
+  background-color: rgba(249, 87, 56, 0.08);
+}
+
+.termo-accordion__header:focus-visible {
+  outline: 2px solid #f95738;
+  outline-offset: -2px;
+}
+
+.termo-accordion__chevron {
+  flex-shrink: 0;
+  color: #f95738;
+  transition: transform 0.25s ease;
+}
+
+.termo-accordion[open] .termo-accordion__chevron {
+  transform: rotate(180deg);
+}
+
+.termo-accordion__content {
+  padding: 0.25rem 1.25rem 1.25rem;
+  color: #e6e6e6;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  border-top: 1px solid rgba(249, 87, 56, 0.15);
+  padding-top: 1rem;
+}
+
+.termo-accordion__content p {
+  margin: 0 0 0.875rem;
+}
+
+.termo-accordion__content p:last-child {
+  margin-bottom: 0;
+}
+
+.termo-accordion__content ul,
+.termo-accordion__content ol {
+  margin: 0.5rem 0;
+  padding-left: 1.25rem;
+}
+
+.termo-accordion__content li {
+  margin-bottom: 0.5rem;
+}
+
+.termo-accordion__content strong {
+  color: #f95738;
+}
+
+/* Checkbox */
+.termo-checkbox {
+  grid-column: span 2;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  background: rgba(11, 12, 16, 0.8);
+  border: 1px solid rgba(249, 87, 56, 0.4);
+  border-radius: 6px;
+  color: #fff;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.termo-checkbox:hover {
+  border-color: #f95738;
+}
+
+.termo-checkbox input[type="checkbox"] {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  accent-color: #f95738;
+  cursor: pointer;
 }
 
 .termo-form {
@@ -76,15 +195,7 @@
   padding: 0 1rem;
 }
 
-.termo-form .form-group:nth-child(1) {
-  grid-column: span 1;
-}
-
-.termo-form .form-group:nth-child(2) {
-  grid-column: span 1;
-}
-
-.termo-form .form-group:nth-child(3) {
+.termo-form .form-group--full {
   grid-column: span 2;
 }
 
@@ -145,15 +256,20 @@
   width: 100%;
 }
 
-.btn-aceitar:hover {
+.btn-aceitar:hover:not(:disabled) {
   background: #d34020;
   color: #fff;
   transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(211, 64, 32, 0.4);
 }
 
-.btn-aceitar:active {
+.btn-aceitar:active:not(:disabled) {
   transform: translateY(0);
+}
+
+.btn-aceitar:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .success-message {
@@ -172,6 +288,7 @@
 }
 
 .btn-voltar {
+  display: inline-block;
   margin-top: 2rem;
   padding: 1rem 2rem;
   background: transparent;
@@ -184,6 +301,7 @@
   transition: all 0.3s ease;
   text-transform: uppercase;
   letter-spacing: 1px;
+  text-decoration: none;
 }
 
 .btn-voltar:hover {
@@ -194,15 +312,29 @@
   .termo-card {
     padding: 1rem 0;
   }
-  
+
+  .termo-card h1 {
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+  }
+
   .termo-form {
     grid-template-columns: 1fr;
   }
-  
-  .termo-form .form-group:nth-child(1),
-  .termo-form .form-group:nth-child(2),
-  .termo-form .form-group:nth-child(3),
+
+  .termo-checkbox,
+  .termo-form .form-group,
   .btn-aceitar {
     grid-column: span 1;
+  }
+
+  .termo-accordion__header {
+    font-size: 0.95rem;
+    padding: 0.875rem 1rem;
+  }
+
+  .termo-accordion__content {
+    padding: 0.75rem 1rem 1rem;
+    font-size: 0.9rem;
   }
 }

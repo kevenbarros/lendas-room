@@ -9,7 +9,6 @@ import "./App.css";
 import { Helmet } from "./lib/helmet";
 import { lazy, Suspense, useEffect, useState } from "react";
 import { TermoCompromisso } from "./components/TermoCompromisso";
-import { TermosCondicoes } from "./components/TermosCondicoes";
 import { Rooms } from "./components/Rooms";
 
 const About = import.meta.env.SSR
@@ -37,39 +36,39 @@ const ContactInfo = import.meta.env.SSR
     );
 
 function App() {
-  const [route, setRoute] = useState<"home" | "termo" | "termos">("home");
+  const [route, setRoute] = useState<"home" | "termo">("home");
 
   useEffect(() => {
     const path = window.location.pathname;
-    if (path === "/termo-de-compromisso") setRoute("termo");
-    else if (path === "/termos-e-condicoes") setRoute("termos");
+    if (
+      path === "/termo-de-compromisso" ||
+      path === "/termos-e-condicoes"
+    ) {
+      setRoute("termo");
+    }
   }, []);
 
   if (route === "termo") {
     return <TermoCompromisso />;
   }
 
-  if (route === "termos") {
-    return <TermosCondicoes />;
-  }
-
   return (
     <>
       <Helmet>
-        <title>Lendas Room | O Primeiro Escape Room de Belém</title>
+        <title>Lendas Escape Room | O Primeiro Escape Room de Belém</title>
         <meta
           name="description"
           content="O primeiro Escape Room de Belém! Salas temáticas, desafios imersivos e muita diversão com seus amigos. Garanta sua vaga com 20% OFF na estreia!"
         />
         <meta
           name="keywords"
-          content="escape room belém, jogos de fuga belém, lendas room, entretenimento belém, o que fazer em belém, sala de escape"
+          content="escape room belém, jogos de fuga belém, lendas escape room, entretenimento belém, o que fazer em belém, sala de escape"
         />
         <link rel="canonical" href="https://lendas-room.vercel.app/" />
         <meta property="og:type" content="website" />
         <meta
           property="og:title"
-          content="Lendas Room | O Primeiro Escape Room de Belém"
+          content="Lendas Escape Room | O Primeiro Escape Room de Belém"
         />
         <meta
           property="og:description"
