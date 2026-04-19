@@ -124,11 +124,11 @@ const RoomCard = ({
   additionalInfo,
   stats,
   categories,
-  roomId,
-  onRoomClick,
-  isLoading,
-  isVoted,
-  disabledAll = false,
+  // roomId,
+  // onRoomClick,
+  // isLoading,
+  // isVoted,
+  // disabledAll = false,
 }: RoomCardProps) => {
   return (
     <article className="rooms__card">

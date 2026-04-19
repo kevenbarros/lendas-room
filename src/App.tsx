@@ -1,7 +1,7 @@
 import { Header } from "./components/Header";
 import { Hero } from "./components/Hero";
 import { About as AboutSSR } from "./components/About";
-import { Contact as ContactSSR } from "./components/Contact";
+// import { Contact as ContactSSR } from "./components/Contact";
 import { FAQ as FAQSSR } from "./components/FAQ";
 import { ContactInfo as ContactInfoSSR } from "./components/ContactInfo";
 import "./App.css";
@@ -16,11 +16,11 @@ const About = import.meta.env.SSR
       import("./components/About").then((m) => ({ default: m.About })),
     );
 
-const Contact = import.meta.env.SSR
-  ? ContactSSR
-  : lazy(() =>
-      import("./components/Contact").then((m) => ({ default: m.Contact })),
-    );
+// const Contact = import.meta.env.SSR
+//   ? ContactSSR
+//   : lazy(() =>
+//       import("./components/Contact").then((m) => ({ default: m.Contact })),
+//     );
 
 const FAQ = import.meta.env.SSR
   ? FAQSSR
