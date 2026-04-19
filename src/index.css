@@ -60,7 +60,25 @@ img {
 
 /* Smooth scrolling and offset for fixed header */
 :root {
-  --header-scroll-offset: 80px;
+  --header-scroll-offset: 64px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --header-scroll-offset: 80px;
+  }
+}
+
+@media (min-width: 1280px) and (max-height: 820px) {
+  :root {
+    --header-scroll-offset: 84px;
+  }
+}
+
+@media (min-width: 1280px) and (min-height: 821px) {
+  :root {
+    --header-scroll-offset: 100px;
+  }
 }
 
 html {

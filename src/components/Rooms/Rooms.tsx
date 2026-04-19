@@ -278,7 +278,7 @@ export const Rooms = () => {
 
         <h2 id="rooms-title" className="rooms__title">
           <span className="rooms__title--highlight">SELECIONE</span> QUAL SALA
-          VOCÊ GOSTARIA DE DESVENDAR PRIMEIRO?
+          VOCÊ GOSTARIA DE DESVENDAR PRIMEIRO
         </h2>
 
         <div className="rooms__grid">

@@ -16,12 +16,13 @@
 }
 
 .header__container {
-  max-width: 1440px;
+  max-width: 1360px;
   margin: 0 auto;
-  padding: 1.5rem 2rem;
+  padding: 0.75rem 1.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1rem;
 }
 
 /* Logo */
@@ -32,21 +33,22 @@
   text-decoration: none;
   color: hsl(0, 0%, 100%);
   transition: opacity 0.3s ease;
+  flex-shrink: 0;
 }
 
 .header__logo:hover,
 .header__logo:focus-visible {
-  opacity: 0.8;
+  opacity: 0.85;
   outline: 2px solid hsl(0, 0%, 100%);
   outline-offset: 4px;
   border-radius: 4px;
 }
 
 .header__logo-icon {
-  width: 50px;
-  height: 50px;
+  height: 48px;
+  width: auto;
   flex-shrink: 0;
-  filter: brightness(0) invert(1);
+  display: block;
 }
 
 .header__logo-text {
@@ -64,7 +66,7 @@
 
 .header__nav-list {
   display: flex;
-  gap: 2.5rem;
+  gap: 2rem;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -77,28 +79,32 @@
 .header__nav-link {
   font-family: var(--font-body);
   font-weight: 500;
-  font-size: 16px;
+  font-size: 0.9375rem;
   color: hsl(0, 0%, 100%);
   text-decoration: none;
   position: relative;
   transition: color 0.3s ease;
-  
+  white-space: nowrap;
 }
 
 .header__nav-link::after {
   content: '';
   position: absolute;
-  bottom: 0;
+  bottom: -4px;
   left: 0;
   width: 0;
   height: 2px;
-  background-color: hsl(0, 0%, 100%);
+  background-color: #f95738;
   transition: width 0.3s ease;
 }
 
 .header__nav-link:hover::after,
 .header__nav-link:focus-visible::after {
   width: 100%;
+}
+
+.header__nav-link:hover {
+  color: #f95738;
 }
 
 .header__nav-link:focus-visible {
@@ -226,16 +232,27 @@
 
 .header__mobile-link:hover,
 .header__mobile-link:focus-visible {
-  color: hsl(0, 0%, 63%);
+  color: #f95738;
   outline: 2px solid hsl(0, 0%, 27%);
   outline-offset: 4px;
   border-radius: 4px;
 }
 
-/* Desktop Breakpoint */
+/* Mobile (prioridade) */
+@media (max-width: 767px) {
+  .header__container {
+    padding: 0.5rem 1rem;
+  }
+
+  .header__logo-icon {
+    height: 44px;
+  }
+}
+
+/* Tablet / Notebook compacto */
 @media (min-width: 768px) {
   .header__container {
-    padding: 1.5rem 3rem;
+    padding: 0.625rem 1.5rem;
   }
 
   .header__nav {
@@ -250,30 +267,39 @@
   .header__overlay {
     display: none !important;
   }
+
+  .header__logo-icon {
+    height: 56px;
+  }
 }
 
-@media (max-width: 767px) {
+/* Notebook padrão (1280+ com altura reduzida) */
+@media (min-width: 1280px) and (max-height: 820px) {
   .header__container {
-    padding: 1rem 1.25rem;
+    padding: 0.625rem 2rem;
   }
 
   .header__logo-icon {
-    width: 36px;
-    height: 36px;
+    height: 60px;
   }
 }
 
-@media (min-width: 1024px) {
+/* Desktop grande */
+@media (min-width: 1280px) and (min-height: 821px) {
   .header__container {
-    padding: 1.5rem 4rem;
+    padding: 0.875rem 2.5rem;
   }
 
   .header__nav-list {
-    gap: 3rem;
+    gap: 2.5rem;
+  }
+
+  .header__logo-icon {
+    height: 72px;
   }
 
   .header__nav-link {
-    font-size: 16px;
+    font-size: 1rem;
   }
 }
 

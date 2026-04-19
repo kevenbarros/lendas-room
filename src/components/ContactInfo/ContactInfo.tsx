@@ -116,6 +116,9 @@ export const ContactInfo = () => {
                 <strong> 17h30 às 20h30</strong>
               </span>
             </div>
+            <small className="contact-info__note">
+              *Somente por agendamento
+            </small>
             <a
               href={mapsUrl}
               className="contact-info__action contact-info__action--outline"

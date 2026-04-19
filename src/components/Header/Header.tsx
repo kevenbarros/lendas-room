@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import "./Header.css";
-import logoIcon from "../../assets/logo.svg";
+import logoIcon from "../../assets/logotitle.png";
 
 export const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -49,12 +49,22 @@ export const Header = () => {
           <ul className="header__nav-list">
             <li className="header__nav-item">
               <a href="#about" className="header__nav-link">
-                O que é Escape room?
+                O que é Escape Room?
               </a>
             </li>
             <li className="header__nav-item">
               <a href="#rooms" className="header__nav-link">
                 Salas
+              </a>
+            </li>
+            <li className="header__nav-item">
+              <a href="#faq" className="header__nav-link">
+                FAQ
+              </a>
+            </li>
+            <li className="header__nav-item">
+              <a href="#contact-info" className="header__nav-link">
+                Contato
               </a>
             </li>
           </ul>
@@ -112,7 +122,7 @@ export const Header = () => {
                   className="header__mobile-link"
                   onClick={closeMobileMenu}
                 >
-                  O que é Escape room?
+                  O que é Escape Room?
                 </a>
               </li>
               <li className="header__mobile-item">
@@ -122,6 +132,24 @@ export const Header = () => {
                   onClick={closeMobileMenu}
                 >
                   Salas
+                </a>
+              </li>
+              <li className="header__mobile-item">
+                <a
+                  href="#faq"
+                  className="header__mobile-link"
+                  onClick={closeMobileMenu}
+                >
+                  FAQ
+                </a>
+              </li>
+              <li className="header__mobile-item">
+                <a
+                  href="#contact-info"
+                  className="header__mobile-link"
+                  onClick={closeMobileMenu}
+                >
+                  Contato
                 </a>
               </li>
             </ul>

@@ -1,6 +1,7 @@
 import "./Hero.css";
 import backgroundImage from "../../assets/section-one.png";
 import arrowIcon from "../../assets/arrow.svg";
+import logoImage from "../../assets/logo.svg";
 
 export const Hero = () => {
   const scrollToContent = () => {
@@ -24,6 +25,14 @@ export const Hero = () => {
       />
 
       <div className="hero__content">
+        <img
+          src={logoImage}
+          alt="Lendas Escape Room"
+          className="hero__logo"
+          loading="eager"
+          decoding="async"
+        />
+
         <h1 className="hero__title">
           O PRIMEIRO{" "}
           <span className="hero__title--highlight">

@@ -144,6 +144,15 @@
   font-weight: 600;
 }
 
+.contact-info__note {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-style: italic;
+  color: hsl(0, 0%, 70%);
+  margin-top: -0.25rem;
+  letter-spacing: 0.01em;
+}
+
 .contact-info__action {
   display: inline-flex;
   align-items: center;

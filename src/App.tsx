@@ -4,10 +4,12 @@ import { About as AboutSSR } from "./components/About";
 // import { Contact as ContactSSR } from "./components/Contact";
 import { FAQ as FAQSSR } from "./components/FAQ";
 import { ContactInfo as ContactInfoSSR } from "./components/ContactInfo";
+import { Footer } from "./components/Footer";
 import "./App.css";
 import { Helmet } from "./lib/helmet";
 import { lazy, Suspense, useEffect, useState } from "react";
 import { TermoCompromisso } from "./components/TermoCompromisso";
+import { TermosCondicoes } from "./components/TermosCondicoes";
 import { Rooms } from "./components/Rooms";
 
 const About = import.meta.env.SSR
@@ -35,14 +37,20 @@ const ContactInfo = import.meta.env.SSR
     );
 
 function App() {
-  const [isTermoPage, setIsTermoPage] = useState(false);
+  const [route, setRoute] = useState<"home" | "termo" | "termos">("home");
 
   useEffect(() => {
-    setIsTermoPage(window.location.pathname === "/termo-de-compromisso");
+    const path = window.location.pathname;
+    if (path === "/termo-de-compromisso") setRoute("termo");
+    else if (path === "/termos-e-condicoes") setRoute("termos");
   }, []);
 
-  if (isTermoPage) {
+  if (route === "termo") {
     return <TermoCompromisso />;
+  }
+
+  if (route === "termos") {
+    return <TermosCondicoes />;
   }
 
   return (
@@ -95,6 +103,7 @@ function App() {
           <ContactInfo />
         </Suspense>
       </main>
+      <Footer />
     </>
   );
 }

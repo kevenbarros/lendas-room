@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \"const s=require\\('sharp'\\); console.log\\('sharp ok'\\)\")",
+      "Bash(node -e ' *)"
+    ]
+  }
+}

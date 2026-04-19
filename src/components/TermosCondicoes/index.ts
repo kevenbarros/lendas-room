@@ -1,0 +1,1 @@
+export { TermosCondicoes } from "./TermosCondicoes";
