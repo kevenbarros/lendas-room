@@ -119,7 +119,7 @@ const RoomCard = ({
   image,
   imageAlt,
   title,
-  tagline,
+  // tagline,
   description,
   additionalInfo,
   stats,
@@ -153,7 +153,7 @@ const RoomCard = ({
       </div>
 
       <div className="rooms__card-content">
-        <p className="rooms__card-tagline">{tagline}</p>
+        {/* <p className="rooms__card-tagline">{tagline}</p> */}
         <h3 className="rooms__card-title">{title}</h3>
 
         <ul className="rooms__card-stats" aria-label="Informações da sala">
