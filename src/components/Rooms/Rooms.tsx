@@ -1,6 +1,6 @@
 import { useState, useEffect, type ReactNode } from "react";
 import "./Rooms.css";
-import iluminadoImg from "../../assets/room-iluminado.png";
+import iluminadoImg from "../../assets/oiluminado.png";
 import { trackRoomClick, type RoomName } from "../../services/roomTracking";
 
 interface RoomStat {
