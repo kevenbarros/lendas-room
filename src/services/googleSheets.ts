@@ -158,6 +158,103 @@ export const sendMatchFormToGoogleSheets = async (
   }
 };
 
+export interface MatchPlayer {
+  timestamp: string;
+  nome: string;
+  idade: string;
+  whatsapp: string;
+  topPersona1: string;
+  topPersona2: string;
+  resultadoTitulo: string;
+  esportes: string;
+  jogos: string;
+  jogosOutros: string;
+  filmes: string;
+  hobbies: string;
+  musica: string;
+  dias: string;
+  turnos: string;
+  respostasJson: string;
+}
+
+export interface FetchMatchDataResponse {
+  success: boolean;
+  data?: MatchPlayer[];
+  error?: string;
+}
+
+/**
+ * Busca os jogadores cadastrados via matchmaking no Google Sheets.
+ * Requer Apps Script com action=getMatchData e validação por secret.
+ */
+export const fetchMatchData = async (
+  secret: string,
+): Promise<FetchMatchDataResponse> => {
+  if (!SCRIPT_URL) {
+    return { success: false, error: "Google Script URL não configurada" };
+  }
+  try {
+    const url = `${SCRIPT_URL}?action=getMatchData&secret=${encodeURIComponent(secret)}`;
+    const res = await fetch(url, { method: "GET" });
+    if (!res.ok) {
+      return { success: false, error: `HTTP ${res.status}` };
+    }
+    const json = await res.json();
+    if (!json.success) {
+      return { success: false, error: json.error || "Falha ao buscar dados" };
+    }
+    return { success: true, data: json.data as MatchPlayer[] };
+  } catch (err) {
+    console.error("fetchMatchData error:", err);
+    return { success: false, error: "Erro de conexão" };
+  }
+};
+
+const LOCAL_AI_URL =
+  import.meta.env.VITE_LOCAL_AI_URL || "http://localhost:3001";
+
+export interface GenerateMatchLocalParams {
+  players: MatchPlayer[];
+  numGroups: number;
+  playersPerGroup: number;
+}
+
+export interface GenerateMatchLocalResponse {
+  success: boolean;
+  response?: string;
+  error?: string;
+}
+
+/**
+ * Chama o backend Node local para gerar grupos via Ollama.
+ */
+export const generateMatchLocal = async (
+  params: GenerateMatchLocalParams,
+): Promise<GenerateMatchLocalResponse> => {
+  try {
+    const res = await fetch(`${LOCAL_AI_URL}/api/match`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(params),
+    });
+    if (!res.ok) {
+      const text = await res.text().catch(() => "");
+      return { success: false, error: text || `HTTP ${res.status}` };
+    }
+    const json = await res.json();
+    if (!json.success) {
+      return { success: false, error: json.error || "Falha na IA local" };
+    }
+    return { success: true, response: json.response };
+  } catch (err) {
+    console.error("generateMatchLocal error:", err);
+    return {
+      success: false,
+      error: `Não foi possível conectar ao backend local (${LOCAL_AI_URL}). Está rodando?`,
+    };
+  }
+};
+
 /**
  * Envia dados do Termo de Compromisso para o Google Sheets (nova aba/tipo)
  */

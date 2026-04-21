@@ -10,6 +10,7 @@ import { Helmet } from "./lib/helmet";
 import { lazy, Suspense, useEffect, useState } from "react";
 import { TermoCompromisso } from "./components/TermoCompromisso";
 import { MatchForm } from "./components/MatchForm";
+import { Admin } from "./components/Admin";
 import { Rooms } from "./components/Rooms";
 
 const About = import.meta.env.SSR
@@ -37,7 +38,9 @@ const ContactInfo = import.meta.env.SSR
     );
 
 function App() {
-  const [route, setRoute] = useState<"home" | "termo" | "conectar">("home");
+  const [route, setRoute] = useState<
+    "home" | "termo" | "conectar" | "admin"
+  >("home");
 
   useEffect(() => {
     const path = window.location.pathname;
@@ -48,6 +51,8 @@ function App() {
       setRoute("termo");
     } else if (path === "/conectar") {
       setRoute("conectar");
+    } else if (path === "/admin") {
+      setRoute("admin");
     }
   }, []);
 
@@ -57,6 +62,10 @@ function App() {
 
   if (route === "conectar") {
     return <MatchForm />;
+  }
+
+  if (route === "admin") {
+    return <Admin />;
   }
 
   return (
