@@ -33,6 +33,9 @@ export const Footer = () => {
           <a href="#contact-info" className="footer__link">
             Contato
           </a>
+          <a href="/conectar" className="footer__link">
+            Encontrar grupo
+          </a>
           <a href="/termo-de-compromisso" className="footer__link">
             Termo de compromisso
           </a>

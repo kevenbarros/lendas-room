@@ -89,6 +89,75 @@ export const sendToGoogleSheets = async (
   }
 };
 
+export interface MatchFormData {
+  nome: string;
+  idade: string;
+  whatsapp: string;
+  respostas: Record<string, string>;
+  esportes: string;
+  jogos: string[];
+  jogosOutros: string;
+  filmes: string;
+  hobbies: string;
+  musica: string;
+  dias: string;
+  turnos: string[];
+  topPersona1: string;
+  topPersona2: string;
+  resultadoTitulo: string;
+  dataHora: string;
+}
+
+/**
+ * Envia dados do formulário de matchmaking para o Google Sheets (aba "Conectar")
+ */
+export const sendMatchFormToGoogleSheets = async (
+  data: MatchFormData,
+): Promise<GoogleSheetsResponse> => {
+  if (!SCRIPT_URL) {
+    console.warn("Google Script URL não configurada. Simulando envio...");
+    return { success: true, message: "Simulado com sucesso" };
+  }
+
+  try {
+    const params = new URLSearchParams({
+      action: "matchForm",
+      nome: data.nome,
+      idade: data.idade,
+      whatsapp: data.whatsapp,
+      respostas: JSON.stringify(data.respostas),
+      esportes: data.esportes,
+      jogos: data.jogos.join(", "),
+      jogosOutros: data.jogosOutros,
+      filmes: data.filmes,
+      hobbies: data.hobbies,
+      musica: data.musica,
+      dias: data.dias,
+      turnos: data.turnos.join(", "),
+      topPersona1: data.topPersona1,
+      topPersona2: data.topPersona2,
+      resultadoTitulo: data.resultadoTitulo,
+      timestamp: data.dataHora,
+    });
+
+    await fetch(`${SCRIPT_URL}?${params.toString()}`, {
+      method: "GET",
+      mode: "no-cors",
+    });
+
+    return {
+      success: true,
+      message: "Inscrição enviada com sucesso!",
+    };
+  } catch (error) {
+    console.error("Erro ao enviar inscrição de matchmaking:", error);
+    return {
+      success: false,
+      message: "Erro ao enviar inscrição.",
+    };
+  }
+};
+
 /**
  * Envia dados do Termo de Compromisso para o Google Sheets (nova aba/tipo)
  */
