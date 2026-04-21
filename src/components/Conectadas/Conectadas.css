@@ -40,7 +40,21 @@
   inset: 0;
   border-radius: 50%;
   border: 1px dashed rgba(249, 87, 56, 0.4);
+}
+
+.conectadas__orbit {
+  position: absolute;
+  inset: 0;
   animation: conectadas-spin 28s linear infinite;
+}
+
+.conectadas__persona-inner {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  animation: conectadas-spin-reverse 28s linear infinite;
 }
 
 .conectadas__ring::after {
@@ -110,6 +124,19 @@
 @keyframes conectadas-spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes conectadas-spin-reverse {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .conectadas__orbit,
+  .conectadas__persona-inner {
+    animation: none;
   }
 }
 

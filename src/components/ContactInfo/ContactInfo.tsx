@@ -82,8 +82,8 @@ export const ContactInfo = () => {
               Quer falar com a gente?
             </h3>
             <p className="contact-info__card-text">
-              Nosso atendimento é feito direto no WhatsApp. Tire dúvidas,
-              agende sua sala e garanta sua aventura.
+              Nosso atendimento é feito direto no WhatsApp. Tire dúvidas, agende
+              sua sala e garanta sua aventura.
             </p>
             <a
               href={`https://wa.me/${whatsappNumber}`}
@@ -109,12 +109,15 @@ export const ContactInfo = () => {
               <br />
               Interfone 1201
             </p>
-            <div className="contact-info__hours" aria-label="Horário de funcionamento">
+            <div
+              className="contact-info__hours"
+              aria-label="Horário de funcionamento"
+            >
               <ClockIcon />
               <ul className="contact-info__hours-list">
                 <li>
                   Quarta a sexta
-                  <strong> 17h às 20h30</strong>
+                  <strong> 17h30 às 20h30</strong>
                 </li>
                 <li>
                   Sábado e domingo

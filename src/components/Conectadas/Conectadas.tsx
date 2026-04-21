@@ -19,18 +19,20 @@ export const Conectadas = () => {
       <div className="conectadas__container">
         <div className="conectadas__visual" aria-hidden="true">
           <div className="conectadas__ring">
-            {PERSONAS.map((p, i) => (
-              <span
-                key={p.label}
-                className="conectadas__persona"
-                style={{
-                  transform: `rotate(${(360 / PERSONAS.length) * i}deg) translateY(-86px) rotate(-${(360 / PERSONAS.length) * i}deg)`,
-                }}
-                title={p.label}
-              >
-                {p.emoji}
-              </span>
-            ))}
+            <div className="conectadas__orbit">
+              {PERSONAS.map((p, i) => (
+                <span
+                  key={p.label}
+                  className="conectadas__persona"
+                  style={{
+                    transform: `rotate(${(360 / PERSONAS.length) * i}deg) translateY(-86px)`,
+                  }}
+                  title={p.label}
+                >
+                  <span className="conectadas__persona-inner">{p.emoji}</span>
+                </span>
+              ))}
+            </div>
             <div className="conectadas__ring-core">
               <span>✨</span>
             </div>
@@ -43,7 +45,7 @@ export const Conectadas = () => {
             Lendas <span className="conectadas__title--accent">Conectadas</span>
           </h2>
           <p className="conectadas__text">
-            Vir sozinho não é problema — a gente acha sua tribo. Responda um
+            Vir sozinho não é problema — a gente acha sua equipe. Responda um
             quiz rápido, a gente identifica seu perfil de jogador e te conecta
             com pessoas de estilo e interesses parecidos para jogar junto.
           </p>
