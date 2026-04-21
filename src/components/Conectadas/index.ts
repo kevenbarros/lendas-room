@@ -1,0 +1,1 @@
+export { Conectadas } from "./Conectadas";

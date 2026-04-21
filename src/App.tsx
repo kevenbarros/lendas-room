@@ -12,6 +12,7 @@ import { TermoCompromisso } from "./components/TermoCompromisso";
 import { MatchForm } from "./components/MatchForm";
 import { Admin } from "./components/Admin";
 import { Rooms } from "./components/Rooms";
+import { Conectadas } from "./components/Conectadas";
 
 const About = import.meta.env.SSR
   ? AboutSSR
@@ -111,6 +112,7 @@ function App() {
           </Suspense> */}
         <Suspense fallback={null}>{<Rooms />}</Suspense>
         {/* <Suspense fallback={null}>{<Contact />}</Suspense> */}
+        <Conectadas />
         <Suspense fallback={null}>
           <FAQ />
         </Suspense>
