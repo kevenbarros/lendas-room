@@ -53,7 +53,7 @@ export const ContactInfo = () => {
   const whatsappNumber = "5591999713060";
   const whatsappDisplay = "(91) 9 9971-3060";
   const address =
-    "Av. Serzedelo Corrêa, 126 - Batista Campos, Belém - PA, 66033-265";
+    "Av. Serzedelo Corrêa, 126. Ed. Maria — Batista Campos, Belém - PA, CEP 66033-265";
   const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
     address,
   )}`;
@@ -103,7 +103,11 @@ export const ContactInfo = () => {
             </div>
             <h3 className="contact-info__card-title">Como chegar?</h3>
             <p className="contact-info__card-text">
-              Av. Serzedelo Corrêa, 126 — Batista Campos, Belém - PA, CEP 66033-265
+              Av. Serzedelo Corrêa, 126 — Ed. Maria
+              <br />
+              Batista Campos, Belém - PA, CEP 66033-265
+              <br />
+              Interfone 1201
             </p>
             <div className="contact-info__hours" aria-label="Horário de funcionamento">
               <ClockIcon />

@@ -315,7 +315,7 @@ export function TermoCompromisso() {
 
     if (age < 18) {
       setAgeError(
-        "O responsável deve ter 18 anos ou mais para aceitar os termos.",
+        "Este termo deve ser aceito por um responsável maior de 18 anos. Menores de idade não podem assinar — peça a um adulto responsável pelo grupo que preencha e aceite em nome de todos os participantes.",
       );
     } else {
       setAgeError(null);

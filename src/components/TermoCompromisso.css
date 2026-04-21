@@ -272,6 +272,21 @@
   cursor: not-allowed;
 }
 
+.termo-form__error {
+  grid-column: span 2;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: rgba(220, 38, 38, 0.12);
+  border: 1px solid rgba(220, 38, 38, 0.5);
+  border-radius: 6px;
+  color: #fca5a5;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
 .success-message {
   text-align: center;
   padding: 3rem 0;
