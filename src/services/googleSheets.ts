@@ -102,6 +102,7 @@ export interface MatchFormData {
   musica: string;
   dias: string;
   turnos: string[];
+  amigos: string[];
   topPersona1: string;
   topPersona2: string;
   resultadoTitulo: string;
@@ -134,6 +135,7 @@ export const sendMatchFormToGoogleSheets = async (
       musica: data.musica,
       dias: data.dias,
       turnos: data.turnos.join(", "),
+      amigos: data.amigos.join(", "),
       topPersona1: data.topPersona1,
       topPersona2: data.topPersona2,
       resultadoTitulo: data.resultadoTitulo,
@@ -175,6 +177,7 @@ export interface MatchPlayer {
   dias: string;
   turnos: string;
   respostasJson: string;
+  amigos?: string;
 }
 
 export interface FetchMatchDataResponse {

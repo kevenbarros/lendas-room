@@ -35,6 +35,8 @@ export function MatchForm() {
   const [nome, setNome] = useState("");
   const [idade, setIdade] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
+  const [temAmigos, setTemAmigos] = useState(false);
+  const [amigos, setAmigos] = useState<string[]>([""]);
 
   // Step 2 - answers
   const [answers, setAnswers] = useState<Record<string, string>>({});
@@ -60,8 +62,8 @@ export function MatchForm() {
     };
   }, [answers, step]);
 
-  const handleWhatsappChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value.replace(/\D/g, "");
+  const maskPhone = (raw: string) => {
+    let value = raw.replace(/\D/g, "");
     if (value.length > 11) value = value.slice(0, 11);
     if (value.length > 10) {
       value = value.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
@@ -70,7 +72,29 @@ export function MatchForm() {
     } else if (value.length > 2) {
       value = value.replace(/(\d{2})(\d+)/, "($1) $2");
     }
-    setWhatsapp(value);
+    return value;
+  };
+
+  const handleWhatsappChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setWhatsapp(maskPhone(e.target.value));
+  };
+
+  const onlyDigits = (s: string) => s.replace(/\D/g, "");
+
+  const updateAmigo = (index: number, value: string) => {
+    setAmigos((prev) =>
+      prev.map((v, i) => (i === index ? maskPhone(value) : v)),
+    );
+  };
+
+  const addAmigo = () => {
+    setAmigos((prev) => (prev.length >= 6 ? prev : [...prev, ""]));
+  };
+
+  const removeAmigo = (index: number) => {
+    setAmigos((prev) =>
+      prev.length === 1 ? [""] : prev.filter((_, i) => i !== index),
+    );
   };
 
   const toggleArray = (
@@ -82,11 +106,22 @@ export function MatchForm() {
     else setter([...list, value]);
   };
 
-  const validateStep1 = () =>
-    nome.trim().length >= 2 &&
-    Number(idade) >= 14 &&
-    Number(idade) <= 99 &&
-    whatsapp.replace(/\D/g, "").length >= 10;
+  const validateStep1 = () => {
+    const baseOk =
+      nome.trim().length >= 2 &&
+      Number(idade) >= 14 &&
+      Number(idade) <= 99 &&
+      onlyDigits(whatsapp).length >= 10;
+    if (!baseOk) return false;
+    if (!temAmigos) return true;
+    const selfDigits = onlyDigits(whatsapp);
+    const normalized = amigos.map((a) => onlyDigits(a)).filter(Boolean);
+    if (normalized.length === 0) return false;
+    if (normalized.some((d) => d.length < 10)) return false;
+    if (normalized.some((d) => d === selfDigits)) return false;
+    if (new Set(normalized).size !== normalized.length) return false;
+    return true;
+  };
 
   const validateStep2 = () =>
     QUESTIONS.every((q) => answers[q.id] !== undefined);
@@ -96,7 +131,13 @@ export function MatchForm() {
   const goNext = () => {
     setError(null);
     if (step === 1 && !validateStep1()) {
-      setError("Preencha nome, idade (14+) e WhatsApp válido.");
+      if (temAmigos) {
+        setError(
+          "Preencha nome, idade (14+), seu WhatsApp e pelo menos um WhatsApp de amigo válido (diferente do seu e sem duplicados).",
+        );
+      } else {
+        setError("Preencha nome, idade (14+) e WhatsApp válido.");
+      }
       return;
     }
     if (step === 2 && !validateStep2()) {
@@ -107,13 +148,13 @@ export function MatchForm() {
       setError("Escolha pelo menos um dia e um turno disponíveis.");
       return;
     }
-    setStep((s) => Math.min(4, (s + 1) as Step));
+    setStep((s) => Math.min(4, s + 1) as Step);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const goBack = () => {
     setError(null);
-    setStep((s) => Math.max(1, (s - 1) as Step));
+    setStep((s) => Math.max(1, s - 1) as Step);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -124,6 +165,9 @@ export function MatchForm() {
     setError(null);
 
     try {
+      const amigosLimpos = temAmigos
+        ? amigos.map((a) => a.trim()).filter((a) => onlyDigits(a).length >= 10)
+        : [];
       await sendMatchFormToGoogleSheets({
         nome,
         idade,
@@ -137,6 +181,7 @@ export function MatchForm() {
         musica,
         dias,
         turnos,
+        amigos: amigosLimpos,
         topPersona1: top1,
         topPersona2: top2,
         resultadoTitulo: titulo,
@@ -168,8 +213,8 @@ export function MatchForm() {
             <p className="match__success-text">
               Boas-vindas à comunidade, {nome.split(" ")[0]}. Em breve
               entraremos em contato pelo WhatsApp com um grupo de pessoas com
-              interesses parecidos com os seus para viverem juntos a
-              experiência Lendas.
+              interesses parecidos com os seus para viverem juntos a experiência
+              Lendas.
             </p>
             <div className="match__success-persona">
               <span className="match__success-emojis">
@@ -293,14 +338,74 @@ export function MatchForm() {
                   />
                 </div>
               </div>
+
+              <div className="match__friends">
+                <label className="match__friends-toggle">
+                  <input
+                    type="checkbox"
+                    checked={temAmigos}
+                    onChange={(e) => setTemAmigos(e.target.checked)}
+                  />
+                  <span>
+                    Já tenho amigo(s) e queremos jogar com mais pessoas
+                  </span>
+                </label>
+
+                {temAmigos && (
+                  <div className="match__friends-box">
+                    <p className="match__friends-note">
+                      ⚠️ Seus amigos{" "}
+                      <strong>precisam preencher este mesmo formulário</strong>{" "}
+                      para entrarem no match. Use o número de WhatsApp que eles
+                      vão cadastrar aqui — é assim que a gente garante que vocês
+                      ficarão no mesmo grupo. Você pode incluir até 6 amigos.
+                    </p>
+
+                    {amigos.map((amigo, i) => (
+                      <div key={i} className="match__friends-row">
+                        <div className="match__field">
+                          <label htmlFor={`amigo-${i}`}>
+                            WhatsApp do amigo {i + 1}
+                          </label>
+                          <input
+                            id={`amigo-${i}`}
+                            type="tel"
+                            value={amigo}
+                            onChange={(e) => updateAmigo(i, e.target.value)}
+                            placeholder="(91) 9 9999-9999"
+                          />
+                        </div>
+                        {amigos.length > 1 && (
+                          <button
+                            type="button"
+                            className="match__friends-remove"
+                            onClick={() => removeAmigo(i)}
+                            aria-label={`Remover amigo ${i + 1}`}
+                          >
+                            ×
+                          </button>
+                        )}
+                      </div>
+                    ))}
+
+                    {amigos.length < 6 && (
+                      <button
+                        type="button"
+                        className="match__friends-add"
+                        onClick={addAmigo}
+                      >
+                        + Adicionar outro amigo
+                      </button>
+                    )}
+                  </div>
+                )}
+              </div>
             </fieldset>
           )}
 
           {step === 2 && (
             <fieldset className="match__step">
-              <legend className="match__step-title">
-                Seu estilo no jogo
-              </legend>
+              <legend className="match__step-title">Seu estilo no jogo</legend>
               <p className="match__step-note">
                 Não existe resposta certa ou errada — o sistema identifica seu
                 perfil automaticamente.
@@ -452,9 +557,7 @@ export function MatchForm() {
                       <input
                         type="checkbox"
                         checked={turnos.includes(t.value)}
-                        onChange={() =>
-                          toggleArray(t.value, turnos, setTurnos)
-                        }
+                        onChange={() => toggleArray(t.value, turnos, setTurnos)}
                       />
                       <span>{t.label}</span>
                     </label>

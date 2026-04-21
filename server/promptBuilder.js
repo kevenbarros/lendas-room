@@ -18,6 +18,7 @@ export function buildMatchPrompt(players, { numGroups, playersPerGroup }) {
         `- Música: ${p.musica || "-"}`,
         `- Dias disponíveis: ${p.dias || "-"}`,
         `- Turnos: ${p.turnos || "-"}`,
+        `- Amigos declarados (WhatsApp): ${p.amigos || "-"}`,
       ].join("\n");
     })
     .join("\n\n");
@@ -27,10 +28,16 @@ export function buildMatchPrompt(players, { numGroups, playersPerGroup }) {
 # Objetivo
 Forme **${numGroups} grupo(s)** de exatamente **${playersPerGroup} jogadores cada** (${totalNeeded} pessoas no total) a partir da lista abaixo, conectando pessoas que não se conhecem e têm chance real de se divertirem juntas.
 
+# Regras INVIOLÁVEIS (se quebrar qualquer uma, a resposta está errada)
+- **Cada jogador aparece em EXATAMENTE UM grupo** ou na lista "Não alocados". Nunca repita um jogador em dois grupos. Nunca invente jogadores.
+- **Copie os WhatsApp EXATAMENTE como estão na lista** (mesmos dígitos, mesma formatação). Nunca altere, abrevie, reformate ou invente números.
+- **Nome e WhatsApp têm que corresponder** ao mesmo jogador da lista — não misture.
+
 # Regras de formação dos grupos
 1. Cada grupo deve ter **${playersPerGroup} jogadores**.
-2. **Disponibilidade é o filtro mais importante**: agrupe apenas pessoas com sobreposição clara de dias e turnos.
-3. **Equilíbrio de personas**:
+2. **REGRA OBRIGATÓRIA — Amigos declarados**: se um jogador listar WhatsApp(s) em "Amigos declarados" e essas pessoas também estão cadastradas, elas **DEVEM** ficar no mesmo grupo. Ignore amigos não cadastrados.
+3. **Disponibilidade**: agrupe pessoas com sobreposição de dias e turnos (exceto amigos declarados, que sempre ficam juntos).
+4. **Equilíbrio de personas**:
    - Pelo menos 1 "Líder" ou "Estratégico".
    - Pelo menos 1 "Comunicador" ou "Alívio Cômico".
    - Pelo menos 1 "Investigador" ou "Observador".
