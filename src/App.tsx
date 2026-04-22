@@ -13,6 +13,9 @@ import { MatchForm } from "./components/MatchForm";
 import { Admin } from "./components/Admin";
 import { Rooms } from "./components/Rooms";
 import { Conectadas } from "./components/Conectadas";
+import { Enigma } from "./components/Enigma";
+import { ImgEnigma } from "./components/ImgEnigma";
+import { MissionCompleted } from "./components/MissionCompleted";
 
 const About = import.meta.env.SSR
   ? AboutSSR
@@ -40,7 +43,7 @@ const ContactInfo = import.meta.env.SSR
 
 function App() {
   const [route, setRoute] = useState<
-    "home" | "termo" | "conectar" | "admin"
+    "home" | "termo" | "conectar" | "admin" | "enigma" | "img-enigma"
   >("home");
 
   useEffect(() => {
@@ -54,6 +57,10 @@ function App() {
       setRoute("conectar");
     } else if (path === "/admin") {
       setRoute("admin");
+    } else if (path === "/enigma") {
+      setRoute("enigma");
+    } else if (path === "/img-enigma") {
+      setRoute("img-enigma");
     }
   }, []);
 
@@ -67,6 +74,14 @@ function App() {
 
   if (route === "admin") {
     return <Admin />;
+  }
+
+  if (route === "enigma") {
+    return <Enigma />;
+  }
+
+  if (route === "img-enigma") {
+    return <ImgEnigma />;
   }
 
   return (
@@ -101,6 +116,7 @@ function App() {
         Pular para o conteúdo
       </a>
       <Header />
+      <MissionCompleted />
       <main id="main-content">
         <Hero />
         <Suspense fallback={null}>
