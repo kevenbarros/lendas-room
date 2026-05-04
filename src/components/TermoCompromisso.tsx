@@ -106,13 +106,17 @@ const SECTIONS: AccordionSection[] = [
     content: (
       <ul>
         <li>
-          A experiência é presencial, com data e horário definidos. Após a
-          confirmação e pagamento, não será possível cancelar com menos de 24
-          horas de antecedência. Nesses casos, não haverá reembolso.
+          A experiência é presencial, com data e horário confirmados após o
+          pagamento da reserva e assinatura do termo de compromisso.
         </li>
         <li>
           Reagendamentos podem ser solicitados com pelo menos 24 horas de
           antecedência, uma única vez, dentro do prazo de 30 dias.
+        </li>
+        <li>Se precisar cancelar a sessão, informe pelo Whatsapp.</li>
+        <li>
+          O valor pago para a reserva da vaga será utilizado como taxa de
+          cancelamento.
         </li>
       </ul>
     ),
