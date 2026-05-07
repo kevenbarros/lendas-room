@@ -1,0 +1,84 @@
+.mission-completed {
+  position: fixed;
+  top: var(--header-scroll-offset);
+  left: 0;
+  right: 0;
+  width: 100%;
+  overflow: hidden;
+  background: linear-gradient(
+    90deg,
+    rgba(11, 12, 16, 0.98) 0%,
+    rgba(20, 20, 26, 0.98) 50%,
+    rgba(11, 12, 16, 0.98) 100%
+  );
+  border-top: 1px solid rgba(249, 87, 56, 0.35);
+  border-bottom: 1px solid rgba(249, 87, 56, 0.35);
+  padding: 0.55rem 0;
+  z-index: 999;
+}
+
+.mission-completed__track {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  gap: 2.5rem;
+  padding-right: 2.5rem;
+  white-space: nowrap;
+  animation: mission-marquee 35s linear infinite;
+  will-change: transform;
+}
+
+.mission-completed:hover .mission-completed__track {
+  animation-play-state: paused;
+}
+
+@keyframes mission-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.mission-completed__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: "Inter", system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-size: 0.88rem;
+  color: #e8e8e8;
+  letter-spacing: 0.3px;
+}
+
+.mission-completed__star {
+  color: #f95738;
+  font-size: 0.95rem;
+  line-height: 1;
+  text-shadow: 0 0 8px rgba(249, 87, 56, 0.55);
+}
+
+.mission-completed__name {
+  color: #fff;
+  font-weight: 700;
+}
+
+.mission-completed__text {
+  color: #bdbdbd;
+  font-weight: 400;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mission-completed__track {
+    animation-duration: 120s;
+  }
+}
+
+@media (max-width: 540px) {
+  .mission-completed__item {
+    font-size: 0.8rem;
+  }
+  .mission-completed__track {
+    gap: 1.75rem;
+    animation-duration: 28s;
+  }
+}

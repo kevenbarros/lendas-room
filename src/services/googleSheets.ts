@@ -258,6 +258,83 @@ export const generateMatchLocal = async (
   }
 };
 
+export interface EnigmaCompletionData {
+  nome: string;
+  whatsapp: string;
+}
+
+/**
+ * Registra quem decifrou o enigma (aba "Enigma")
+ */
+export const sendEnigmaCompletion = async (
+  data: EnigmaCompletionData,
+): Promise<GoogleSheetsResponse> => {
+  if (!SCRIPT_URL) {
+    console.warn("Google Script URL não configurada. Simulando envio...");
+    return { success: true, message: "Simulado com sucesso" };
+  }
+
+  try {
+    const timestamp = new Date().toLocaleString("pt-BR", {
+      timeZone: "America/Sao_Paulo",
+    });
+    const params = new URLSearchParams({
+      action: "enigmaCompletion",
+      nome: data.nome,
+      whatsapp: data.whatsapp,
+      timestamp,
+    });
+
+    await fetch(`${SCRIPT_URL}?${params.toString()}`, {
+      method: "GET",
+      mode: "no-cors",
+    });
+
+    return { success: true, message: "Registrado com sucesso!" };
+  } catch (error) {
+    console.error("Erro ao registrar enigma:", error);
+    return { success: false, message: "Erro ao registrar." };
+  }
+};
+
+export interface EnigmaCompletion {
+  timestamp: string;
+  nome: string;
+}
+
+export interface FetchEnigmaCompletionsResponse {
+  success: boolean;
+  data?: EnigmaCompletion[];
+  error?: string;
+}
+
+/**
+ * Lista os nomes dos decifradores do enigma (sem expor WhatsApp)
+ */
+export const fetchEnigmaCompletions =
+  async (): Promise<FetchEnigmaCompletionsResponse> => {
+    if (!SCRIPT_URL) {
+      return { success: false, error: "Google Script URL não configurada" };
+    }
+    try {
+      const res = await fetch(
+        `${SCRIPT_URL}?action=getEnigmaCompletions`,
+        { method: "GET" },
+      );
+      if (!res.ok) {
+        return { success: false, error: `HTTP ${res.status}` };
+      }
+      const json = await res.json();
+      if (!json.success) {
+        return { success: false, error: json.error || "Falha ao buscar dados" };
+      }
+      return { success: true, data: json.data as EnigmaCompletion[] };
+    } catch (err) {
+      console.error("fetchEnigmaCompletions error:", err);
+      return { success: false, error: "Erro de conexão" };
+    }
+  };
+
 /**
  * Envia dados do Termo de Compromisso para o Google Sheets (nova aba/tipo)
  */

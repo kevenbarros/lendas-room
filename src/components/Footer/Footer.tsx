@@ -1,8 +1,28 @@
+import { useEffect, useState } from "react";
 import "./Footer.css";
 import logoIcon from "../../assets/logo.svg";
+import { fetchEnigmaCompletions } from "../../services/googleSheets";
 
 export const Footer = () => {
   const year = new Date().getFullYear();
+  const [enigmaSolved, setEnigmaSolved] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetchEnigmaCompletions().then((res) => {
+      if (
+        !cancelled &&
+        res.success &&
+        res.data &&
+        res.data.length > 0
+      ) {
+        setEnigmaSolved(true);
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return (
     <footer className="footer" role="contentinfo">
@@ -41,6 +61,22 @@ export const Footer = () => {
           </a>
         </nav>
       </div>
+
+      {!enigmaSolved && (
+        <a
+          href="/enigma"
+          className="footer__enigma"
+          aria-label="Acessar enigma"
+        >
+          <span className="footer__enigma-prompt" aria-hidden="true">
+            {">"}_
+          </span>
+          <span className="footer__enigma-text">
+            o enigma começa agora
+          </span>
+          <span className="footer__enigma-cursor" aria-hidden="true" />
+        </a>
+      )}
 
       <div className="footer__bottom">
         <small>© {year} Lendas Escape Room. Todos os direitos reservados.</small>
