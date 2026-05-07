@@ -381,6 +381,39 @@
   cursor: pointer;
 }
 
+.admin__connect-btn {
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: filter 0.15s, background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.admin__connect-btn--pending {
+  background: #f95738;
+  color: #fff;
+  border: 1px solid #f95738;
+}
+
+.admin__connect-btn--pending:hover {
+  filter: brightness(1.1);
+}
+
+.admin__connect-btn--done {
+  background: transparent;
+  color: #6dd49e;
+  border: 1px solid #2f7d52;
+}
+
+.admin__connect-btn--done:hover {
+  background: rgba(249, 87, 56, 0.08);
+  border-color: #f95738;
+  color: #f95738;
+}
+
 .admin__empty {
   color: #aaa;
   margin: 0;

@@ -422,7 +422,7 @@ export const Admin = () => {
             <table className="admin__table">
               <thead>
                 <tr>
-                  <th>Conectado</th>
+                  <th>Status</th>
                   <th>Nome</th>
                   <th>Idade</th>
                   <th>WhatsApp</th>
@@ -441,12 +441,27 @@ export const Admin = () => {
                       className={isConnected ? "admin__row--connected" : ""}
                     >
                       <td>
-                        <input
-                          type="checkbox"
-                          checked={isConnected}
-                          onChange={() => toggleConnected(p.whatsapp)}
-                          aria-label={`Marcar ${p.nome} como conectado`}
-                        />
+                        <button
+                          type="button"
+                          className={`admin__connect-btn ${
+                            isConnected
+                              ? "admin__connect-btn--done"
+                              : "admin__connect-btn--pending"
+                          }`}
+                          onClick={() => toggleConnected(p.whatsapp)}
+                          aria-label={
+                            isConnected
+                              ? `Desfazer conexão de ${p.nome}`
+                              : `Marcar ${p.nome} como conectado`
+                          }
+                          title={
+                            isConnected
+                              ? "Clique para desfazer"
+                              : "Clique para marcar como conectado"
+                          }
+                        >
+                          {isConnected ? "✓ Conectado" : "Marcar conectado"}
+                        </button>
                       </td>
                       <td>{p.nome}</td>
                       <td>{p.idade}</td>
