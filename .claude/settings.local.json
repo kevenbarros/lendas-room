@@ -3,7 +3,8 @@
     "allow": [
       "Bash(node -e \"const s=require\\('sharp'\\); console.log\\('sharp ok'\\)\")",
       "Bash(node -e ' *)",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "Bash(npx tsc *)"
     ]
   }
 }
