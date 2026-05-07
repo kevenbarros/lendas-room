@@ -9,7 +9,7 @@ import {
 import "./Enigma.css";
 
 const TOKEN =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkaWNhIjoidGVtIGFsZ28gZXNjb25kaWRvIG5hIGltYWdlbSwgdGVudGUgZGVzY29icmlyISEhIiwiaW1nIjoiaHR0cDovL2xvY2FsaG9zdDo1MTczL2ltZy1lbmlnbWEifQ.rnkaqom_QzmW87GwjWS4G4og2Ea-ElTuuk9MrpSPFQc";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkaWNhIjoidGVtIGFsZ28gZXNjb25kaWRvIG5hIGltYWdlbSwgdGVudGUgZGVzY29icmlyISEhIiwiaW1nIjoiaHR0cDovL2xlbmRhc2VzY2FwZS5jb20vaW1nLWVuaWdtYSJ9.PXvgcsKKYf8JpyZAEPppW-1_iOhNfLZUA7tx02cjdUQ";
 
 const ENIGMA_SENHA = (import.meta.env.VITE_ENIGMA_SENHA || "").trim();
 
