@@ -1,4 +1,4 @@
-import { useState, useEffect, type ReactNode } from "react";
+import { useState, useEffect, useRef, type ReactNode } from "react";
 import "./Rooms.css";
 import iluminadoImg from "../../assets/oiluminado.png";
 import { trackRoomClick, type RoomName } from "../../services/roomTracking";
@@ -12,6 +12,7 @@ interface RoomStat {
 interface RoomCardProps {
   image: string;
   imageAlt: string;
+  video?: string;
   title: string;
   tagline: string;
   description: string;
@@ -115,9 +116,54 @@ const TagIcon = () => (
   </svg>
 );
 
+const SoundOnIcon = () => (
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+  >
+    <path
+      d="M11 5L6 9H3v6h3l5 4V5z"
+      fill="currentColor"
+    />
+    <path
+      d="M15.5 8.5a4 4 0 010 7M18 6a7 7 0 010 12"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+    />
+  </svg>
+);
+
+const SoundOffIcon = () => (
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+  >
+    <path
+      d="M11 5L6 9H3v6h3l5 4V5z"
+      fill="currentColor"
+    />
+    <path
+      d="M22 9l-6 6M16 9l6 6"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+    />
+  </svg>
+);
+
 const RoomCard = ({
   image,
   imageAlt,
+  video,
   title,
   // tagline,
   description,
@@ -130,16 +176,106 @@ const RoomCard = ({
   // isVoted,
   // disabledAll = false,
 }: RoomCardProps) => {
+  const [showVideo, setShowVideo] = useState(false);
+  const [muted, setMuted] = useState(true);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+
+  // Start the video automatically 3s after the card enters the viewport.
+  useEffect(() => {
+    if (!video || showVideo) return;
+    const el = wrapperRef.current;
+    if (!el) return;
+
+    let timer: ReturnType<typeof setTimeout> | null = null;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            if (!timer) {
+              timer = setTimeout(() => setShowVideo(true), 3000);
+            }
+          } else if (timer) {
+            clearTimeout(timer);
+            timer = null;
+          }
+        });
+      },
+      { threshold: 0.35 },
+    );
+    observer.observe(el);
+    return () => {
+      if (timer) clearTimeout(timer);
+      observer.disconnect();
+    };
+  }, [video, showVideo]);
+
+  // Pause when card scrolls out of view; resume when back in view.
+  useEffect(() => {
+    if (!showVideo) return;
+    const el = wrapperRef.current;
+    const vid = videoRef.current;
+    if (!el || !vid) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            vid.play().catch(() => {});
+          } else {
+            vid.pause();
+          }
+        });
+      },
+      { threshold: 0.35 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [showVideo]);
+
+  const handleToggleMute = () => {
+    setMuted((prev) => {
+      const next = !prev;
+      if (videoRef.current) {
+        videoRef.current.muted = next;
+        if (!next) videoRef.current.play().catch(() => {});
+      }
+      return next;
+    });
+  };
+
   return (
     <article className="rooms__card">
-      <div className="rooms__card-image-wrapper">
+      <div
+        ref={wrapperRef}
+        className={`rooms__card-image-wrapper${
+          showVideo ? " rooms__card-image-wrapper--video" : ""
+        }`}
+      >
         <img
           src={image}
           alt={imageAlt}
-          className="rooms__card-image"
+          className={`rooms__card-image${
+            showVideo ? " rooms__card-image--hidden" : ""
+          }`}
           loading="lazy"
           decoding="async"
         />
+
+        {video && showVideo && (
+          <video
+            ref={videoRef}
+            className="rooms__card-video"
+            src={video}
+            autoPlay
+            loop
+            muted={muted}
+            playsInline
+            preload="metadata"
+            aria-label={`Vídeo da sala ${title}`}
+          />
+        )}
+
         <div className="rooms__card-image-overlay">
           <div className="rooms__card-categories">
             {categories.map((cat) => (
@@ -150,6 +286,20 @@ const RoomCard = ({
             ))}
           </div>
         </div>
+
+        {video && showVideo && (
+          <div className="rooms__card-media-controls rooms__card-media-controls--active">
+            <button
+              type="button"
+              className="rooms__card-media-btn rooms__card-media-btn--mute"
+              onClick={handleToggleMute}
+              aria-label={muted ? "Ativar som" : "Desativar som"}
+              aria-pressed={!muted}
+            >
+              {muted ? <SoundOffIcon /> : <SoundOnIcon />}
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="rooms__card-content">
@@ -235,6 +385,7 @@ export const Rooms = () => {
     {
       roomId: "iluminado",
       image: iluminadoImg,
+      video: "/escape-iluminado.webm",
       imageAlt:
         "Sala O Iluminado - ambiente vintage com sofá e decoração clássica",
       title: "O ILUMINADO",
