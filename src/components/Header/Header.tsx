@@ -63,6 +63,11 @@ export const Header = () => {
               </a>
             </li>
             <li className="header__nav-item">
+              <a href="#games" className="header__nav-link">
+                Games
+              </a>
+            </li>
+            <li className="header__nav-item">
               <a href="#faq" className="header__nav-link">
                 FAQ
               </a>
@@ -146,6 +151,15 @@ export const Header = () => {
                   onClick={closeMobileMenu}
                 >
                   Conectadas
+                </a>
+              </li>
+              <li className="header__mobile-item">
+                <a
+                  href="#games"
+                  className="header__mobile-link"
+                  onClick={closeMobileMenu}
+                >
+                  Games
                 </a>
               </li>
               <li className="header__mobile-item">

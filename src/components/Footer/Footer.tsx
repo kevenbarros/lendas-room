@@ -49,6 +49,9 @@ export const Footer = () => {
           <a href="#rooms" className="footer__link">
             Salas
           </a>
+          <a href="#games" className="footer__link">
+            Games
+          </a>
           <a href="#faq" className="footer__link">
             FAQ
           </a>

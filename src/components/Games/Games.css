@@ -1,0 +1,429 @@
+/* Games Section — porta de entrada para o hub de minigames (lendas-games).
+   Propositalmente destoa das demais seções: enquanto o resto da página é o
+   azul-marinho da casa, aqui o fundo é o quase-preto do próprio lendas-games,
+   cortado em diagonal. É outro produto, e a seção avisa isso antes de o texto
+   dizer. O coral e as fontes continuam sendo os da marca. */
+.games {
+  --games-mono: "SFMono-Regular", ui-monospace, "Cascadia Mono", Menlo, monospace;
+
+  position: relative;
+  /* Acima das vizinhas, para poder avançar sobre elas. */
+  z-index: 1;
+  /* A seção invade 72px da vizinha de cima e da de baixo e recorta a própria
+     caixa na diagonal. O triângulo removido revela o que já está pintado
+     embaixo — a emenda acompanha o gradiente de cada vizinha em vez de tentar
+     reproduzir a cor delas, que era o que criava o degrau visível. */
+  margin-block: calc(var(--section-wedge) * -1);
+  padding: calc(6rem + var(--section-wedge)) 1.5rem;
+  clip-path: polygon(
+    0 var(--section-wedge),
+    100% 0,
+    100% calc(100% - var(--section-wedge)),
+    0 100%
+  );
+  /* O link #games do menu precisa descontar a parte que avança para cima. */
+  scroll-margin-top: calc(var(--header-scroll-offset) + var(--section-wedge));
+  background-color: #0a0a0c;
+  background-image:
+    radial-gradient(
+      620px circle at 76% 32%,
+      rgba(249, 87, 56, 0.12),
+      transparent 70%
+    ),
+    linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
+  background-size: auto, 44px 44px, 44px 44px;
+  color: hsl(0, 0%, 100%);
+}
+
+.games__container {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: 4rem;
+  /* A lista à direita é sempre a coluna mais alta; centralizar o discurso
+     evita o vazio embaixo à esquerda. */
+  align-items: center;
+}
+
+/* ---------- Coluna da esquerda: o discurso ---------- */
+.games__pitch {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.games__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--games-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #f95738;
+  margin-bottom: 1.1rem;
+  padding-left: 0.75rem;
+  border-left: 2px solid #f95738;
+}
+
+.games__eyebrow::after {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #f95738;
+  box-shadow: 0 0 8px rgba(249, 87, 56, 0.9);
+  animation: games-blink 1.8s ease-in-out infinite;
+}
+
+.games__title {
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: 2.35rem;
+  line-height: 1.15;
+  margin: 0 0 1.1rem;
+  color: hsl(0, 0%, 100%);
+}
+
+.games__title--accent {
+  color: #f95738;
+}
+
+.games__text {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.7;
+  color: hsl(0, 0%, 78%);
+  margin: 0 0 1.4rem;
+}
+
+.games__perks {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0;
+  font-family: var(--games-mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: hsl(0, 0%, 62%);
+}
+
+.games__perks li {
+  display: inline-flex;
+  align-items: center;
+}
+
+.games__perks li:not(:last-child)::after {
+  content: "";
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(249, 87, 56, 0.65);
+  margin: 0 0.7rem;
+}
+
+.games__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: linear-gradient(135deg, #f95738 0%, #d94521 100%);
+  color: #fff;
+  padding: 0.9rem 1.6rem;
+  border-radius: 4px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.95rem;
+  box-shadow: 0 6px 18px -6px rgba(249, 87, 56, 0.6);
+  transition: filter 0.2s, transform 0.2s, gap 0.2s, box-shadow 0.2s;
+}
+
+.games__cta:hover {
+  filter: brightness(1.08);
+  transform: translateY(-2px);
+  gap: 0.8rem;
+  box-shadow: 0 10px 24px -6px rgba(249, 87, 56, 0.75);
+}
+
+.games__cta:active {
+  transform: translateY(0);
+}
+
+.games__cta:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+/* ---------- Coluna da direita: a "tela" do outro site ---------- */
+.games__screen {
+  background-color: #131317;
+  border: 1px solid #2a2a30;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 28px 64px rgba(0, 0, 0, 0.55);
+}
+
+.games__screen-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.7rem 0.95rem;
+  background-color: #1b1b21;
+  border-bottom: 1px solid #2a2a30;
+}
+
+.games__screen-dots {
+  display: inline-flex;
+  gap: 0.35rem;
+  flex-shrink: 0;
+}
+
+.games__screen-dots i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background-color: #3a3a44;
+}
+
+.games__screen-dots i:first-child {
+  background-color: rgba(249, 87, 56, 0.75);
+}
+
+.games__screen-url {
+  flex: 1;
+  text-align: center;
+  font-family: var(--games-mono);
+  font-size: 0.72rem;
+  color: hsl(0, 0%, 58%);
+  background-color: #0a0a0c;
+  border: 1px solid #2a2a30;
+  border-radius: 999px;
+  padding: 0.28rem 0.8rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.games__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.games__item + .games__item .games__row {
+  border-top: 1px solid #23232b;
+}
+
+.games__row {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0 1rem;
+  padding: 1.15rem 1.25rem;
+  color: inherit;
+  transition: background-color 0.25s ease;
+}
+
+/* Barra coral que cresce na lateral no hover */
+.games__row::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background-color: #f95738;
+  transform: scaleY(0);
+  transition: transform 0.25s ease;
+}
+
+a.games__row:hover {
+  background-color: rgba(249, 87, 56, 0.07);
+}
+
+a.games__row:hover::before {
+  transform: scaleY(1);
+}
+
+a.games__row:focus-visible {
+  outline: 2px solid #f95738;
+  outline-offset: -2px;
+}
+
+.games__row-index {
+  font-family: var(--games-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: hsl(0, 0%, 38%);
+  transition: color 0.25s ease;
+}
+
+a.games__row:hover .games__row-index {
+  color: #f95738;
+}
+
+.games__row-emoji {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  line-height: 1;
+  border-radius: 12px;
+  background-color: rgba(249, 87, 56, 0.12);
+  border: 1px solid rgba(249, 87, 56, 0.22);
+  transition: transform 0.25s ease, background-color 0.25s ease;
+}
+
+a.games__row:hover .games__row-emoji {
+  transform: scale(1.08) rotate(-6deg);
+  background-color: rgba(249, 87, 56, 0.26);
+}
+
+.games__row-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.games__row-title {
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: 0.98rem;
+  line-height: 1.3;
+  color: hsl(0, 0%, 100%);
+}
+
+.games__row-description {
+  font-family: var(--font-body);
+  font-size: 0.84rem;
+  line-height: 1.55;
+  color: hsl(0, 0%, 68%);
+}
+
+.games__row-meta {
+  font-family: var(--games-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: hsl(0, 0%, 45%);
+  margin-top: 0.15rem;
+}
+
+.games__row-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  color: #f95738;
+  border: 1px solid rgba(249, 87, 56, 0.28);
+  flex-shrink: 0;
+  transition: transform 0.25s ease, background-color 0.25s ease;
+}
+
+a.games__row:hover .games__row-arrow {
+  background-color: rgba(249, 87, 56, 0.18);
+  transform: translateX(3px);
+}
+
+/* Linha do jogo que ainda não saiu */
+.games__row--soon {
+  opacity: 0.7;
+}
+
+.games__row-badge {
+  font-family: var(--games-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: hsl(0, 0%, 70%);
+  border: 1px solid #3a3a44;
+  border-radius: 999px;
+  padding: 0.3rem 0.6rem;
+  white-space: nowrap;
+}
+
+@keyframes games-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.25;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .games__eyebrow::after {
+    animation: none;
+  }
+
+  a.games__row:hover .games__row-emoji,
+  a.games__row:hover .games__row-arrow,
+  .games__cta:hover {
+    transform: none;
+  }
+}
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 1024px) {
+  .games__container {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    max-width: 640px;
+  }
+}
+
+@media (max-width: 768px) {
+  .games {
+    padding: calc(3.5rem + var(--section-wedge)) 1rem;
+  }
+
+  .games__title {
+    font-size: 1.8rem;
+  }
+
+  .games__text {
+    font-size: 0.95rem;
+  }
+
+  .games__row {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 0 0.8rem;
+    padding: 1rem;
+  }
+
+  /* No celular o número sai: a linha precisa da largura para o texto. */
+  .games__row-index {
+    display: none;
+  }
+
+  .games__row-emoji {
+    width: 38px;
+    height: 38px;
+    font-size: 1.15rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .games__row-description {
+    font-size: 0.8rem;
+  }
+
+  .games__screen-url {
+    font-size: 0.65rem;
+  }
+}

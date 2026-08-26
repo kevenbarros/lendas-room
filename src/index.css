@@ -61,6 +61,17 @@ img {
 /* Smooth scrolling and offset for fixed header */
 :root {
   --header-scroll-offset: 64px;
+
+  /* Recorte diagonal com que a seção Games avança sobre as seções vizinhas.
+     Quem encosta nela (Conectadas acima, FAQ abaixo) soma este valor ao
+     padding do lado encostado, para o conteúdo manter a folga de sempre. */
+  --section-wedge: 72px;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --section-wedge: 40px;
+  }
 }
 
 @media (min-width: 768px) {

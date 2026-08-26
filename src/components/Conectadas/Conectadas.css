@@ -2,6 +2,8 @@
 .conectadas {
   background-color: hsl(229, 31%, 13%);
   padding: 5rem 1.5rem;
+  /* A seção Games avança na diagonal sobre esta borda — ver --section-wedge. */
+  padding-bottom: calc(5rem + var(--section-wedge));
   color: hsl(0, 0%, 100%);
   position: relative;
   overflow: hidden;
@@ -470,6 +472,7 @@
 @media (max-width: 768px) {
   .conectadas {
     padding: 3.5rem 1rem;
+    padding-bottom: calc(3.5rem + var(--section-wedge));
   }
 
   .conectadas__container {

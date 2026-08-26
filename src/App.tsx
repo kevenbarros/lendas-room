@@ -13,6 +13,7 @@ import { MatchForm } from "./components/MatchForm";
 import { Admin } from "./components/Admin";
 import { Rooms } from "./components/Rooms";
 import { Conectadas } from "./components/Conectadas";
+import { Games as GamesSSR } from "./components/Games";
 // Enigma desativado — campanha encerrada
 // import { Enigma } from "./components/Enigma";
 // import { ImgEnigma } from "./components/ImgEnigma";
@@ -33,6 +34,12 @@ const About = import.meta.env.SSR
 const FAQ = import.meta.env.SSR
   ? FAQSSR
   : lazy(() => import("./components/FAQ").then((m) => ({ default: m.FAQ })));
+
+const Games = import.meta.env.SSR
+  ? GamesSSR
+  : lazy(() =>
+      import("./components/Games").then((m) => ({ default: m.Games })),
+    );
 
 const ContactInfo = import.meta.env.SSR
   ? ContactInfoSSR
@@ -134,6 +141,9 @@ function App() {
         <Suspense fallback={null}>{<Rooms />}</Suspense>
         {/* <Suspense fallback={null}>{<Contact />}</Suspense> */}
         <Conectadas />
+        <Suspense fallback={null}>
+          <Games />
+        </Suspense>
         <Suspense fallback={null}>
           <FAQ />
         </Suspense>
