@@ -4,7 +4,9 @@
       "Bash(node -e \"const s=require\\('sharp'\\); console.log\\('sharp ok'\\)\")",
       "Bash(node -e ' *)",
       "Bash(npm run *)",
-      "Bash(npx tsc *)"
+      "Bash(npx tsc *)",
+      "Bash(ls \"C:/Users/keven/OneDrive/Área de Trabalho/keven/financas-lendas\" 2>nul && echo \"FOUND\" || echo \"NOT in keven folder\")",
+      "Read(//c/Users/keven/OneDrive/Área de Trabalho/keven/financas-lendas/**)"
     ]
   }
 }

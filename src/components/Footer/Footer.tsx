@@ -1,5 +1,7 @@
 import "./Footer.css";
 import logoIcon from "../../assets/logo.svg";
+import { HALLOWEEN } from "../../lib/halloween";
+import { Cobweb, Fog } from "../Halloween";
 // Enigma desativado — campanha encerrada
 // import { useEffect, useState } from "react";
 // import { fetchEnigmaCompletions } from "../../services/googleSheets";
@@ -27,7 +29,16 @@ export const Footer = () => {
   // }, []);
 
   return (
-    <footer className="footer" role="contentinfo">
+    <footer
+      className={`footer ${HALLOWEEN ? "footer--halloween" : ""}`}
+      role="contentinfo"
+    >
+      {HALLOWEEN && (
+        <>
+          <Cobweb corner="tr" size={110} />
+          <Fog />
+        </>
+      )}
       <div className="footer__container">
         <div className="footer__brand">
           <a href="/" aria-label="Lendas Escape Room">

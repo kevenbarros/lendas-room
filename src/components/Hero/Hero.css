@@ -346,3 +346,24 @@
     height: 56px;
   }
 }
+
+/* Decoração de Halloween (src/lib/halloween.ts) */
+.hero__halloween {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+.hero__halloween .hw-web,
+.hero__halloween .hw-spider {
+  top: var(--header-scroll-offset);
+}
+@media (max-width: 768px) {
+  .hero__halloween .hw-web {
+    width: 90px;
+    height: 90px;
+  }
+  .hero__halloween .hw-spider {
+    display: none;
+  }
+}

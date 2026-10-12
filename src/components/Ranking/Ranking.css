@@ -1,0 +1,724 @@
+.ranking {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background:
+    radial-gradient(1000px 500px at 85% -10%, rgba(249, 87, 56, 0.1), transparent 60%),
+    radial-gradient(800px 500px at -10% 5%, rgba(249, 87, 56, 0.12), transparent 55%),
+    linear-gradient(180deg, #171a2c 0%, #0f1020 55%, #0a0c14 100%);
+  color: #fff;
+  font-family: var(--font-body);
+  padding: 0 1.25rem 4rem;
+}
+
+/* Medal tints (gold / silver / bronze) */
+.ranking {
+  --gold: #ffd36b;
+  --gold-deep: #f6a12b;
+  --silver: #dfe6f2;
+  --silver-deep: #9fb0c9;
+  --bronze: #eab08a;
+  --bronze-deep: #c9723f;
+}
+
+.ranking__glow {
+  position: absolute;
+  width: 22rem;
+  height: 22rem;
+  border-radius: 9999px;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+}
+.ranking__glow--coral {
+  top: -6rem;
+  left: -5rem;
+  background: rgba(249, 87, 56, 0.18);
+}
+.ranking__glow--gold {
+  top: 8rem;
+  right: -6rem;
+  background: rgba(255, 195, 90, 0.14);
+}
+
+.ranking__header,
+.ranking__hero,
+.ranking__podium,
+.ranking__list,
+.ranking__list-head,
+.ranking__msg,
+.ranking__footer {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ranking__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 0 0.5rem;
+}
+.ranking__back {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  transition: color 0.2s;
+}
+.ranking__back:hover {
+  color: #f95738;
+}
+.ranking__logo {
+  height: 28px;
+  width: auto;
+  filter: brightness(0) invert(1);
+}
+
+.ranking__hero {
+  text-align: center;
+  padding: 2rem 0 1.5rem;
+}
+.ranking__eyebrow {
+  font-size: 0.7rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #f95738;
+  margin-bottom: 0.75rem;
+}
+.ranking__title {
+  font-family: var(--font-title);
+  text-transform: uppercase;
+  font-size: 2rem;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+.ranking__title span {
+  color: #f95738;
+}
+.ranking__subtitle {
+  margin: 0.75rem auto 0;
+  max-width: 26rem;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.6;
+}
+
+/* ===== Pódio (top 3) ===== */
+.ranking__podium {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 0.9rem;
+  margin-bottom: 0.6rem;
+}
+.ranking__pod {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  animation: ranking-rise 0.6s ease both;
+}
+.ranking__pod-card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.6rem 0.5rem 0.7rem;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+.ranking__pod-medal {
+  font-size: 2rem;
+  line-height: 1;
+  animation: ranking-bob 2.6s ease-in-out infinite;
+}
+.ranking__pod--1 .ranking__pod-medal {
+  font-size: 2.5rem;
+}
+.ranking__pod--2 .ranking__pod-medal {
+  animation-delay: 0.3s;
+}
+.ranking__pod--3 .ranking__pod-medal {
+  animation-delay: 0.6s;
+}
+.ranking__pod-team {
+  margin-top: 0.5rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ranking__pod-members {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+  margin-top: 0.25rem;
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+.ranking__pod-time {
+  margin: 0.4rem 0 0;
+  font-family: var(--font-title);
+  font-size: 1.15rem;
+  font-variant-numeric: tabular-nums;
+  color: #f95738;
+}
+.ranking__pedestal {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  margin-top: 0.55rem;
+  border-radius: 8px 8px 0 0;
+  background: rgba(249, 87, 56, 0.12);
+  border: 1px solid rgba(249, 87, 56, 0.25);
+  border-bottom: none;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 0.6rem;
+}
+.ranking__pod--1 .ranking__pedestal {
+  height: 120px;
+  background: linear-gradient(180deg, rgba(255, 195, 90, 0.5), rgba(249, 87, 56, 0.12));
+  border-color: rgba(255, 205, 110, 0.7);
+  animation: ranking-glow 3.2s ease-in-out 0.6s infinite;
+}
+.ranking__pod--2 .ranking__pedestal {
+  height: 84px;
+  background: linear-gradient(180deg, rgba(223, 230, 242, 0.32), rgba(159, 176, 201, 0.08));
+  border-color: rgba(223, 230, 242, 0.4);
+}
+.ranking__pod--3 .ranking__pedestal {
+  height: 60px;
+  background: linear-gradient(180deg, rgba(234, 176, 138, 0.34), rgba(201, 114, 63, 0.08));
+  border-color: rgba(234, 176, 138, 0.45);
+}
+.ranking__pod-rank {
+  font-family: var(--font-title);
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+.ranking__pod--1 .ranking__pod-rank {
+  font-size: 1.5rem;
+}
+.ranking__shine {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.22) 50%,
+    transparent 65%
+  );
+  transform: translateX(-130%);
+  animation: ranking-shine 4.5s ease-in-out 1s infinite;
+  pointer-events: none;
+}
+
+@keyframes ranking-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes ranking-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 rgba(249, 87, 56, 0);
+  }
+  50% {
+    box-shadow: 0 8px 30px rgba(255, 190, 90, 0.28);
+  }
+}
+@keyframes ranking-shine {
+  0%, 60%, 100% {
+    transform: translateX(-130%);
+  }
+  80% {
+    transform: translateX(130%);
+  }
+}
+@keyframes ranking-bob {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ranking__pod,
+  .ranking__pod-medal,
+  .ranking__pod--1 .ranking__pedestal,
+  .ranking__shine {
+    animation: none;
+  }
+}
+
+/* ===== Lista (4º em diante) ===== */
+.ranking__list-head {
+  display: none;
+}
+.ranking__list {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.ranking__row {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
+  padding: 0.85rem 1rem;
+  transition: transform 0.2s, border-color 0.2s, background 0.2s;
+}
+.ranking__row:hover {
+  transform: translateX(4px);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(249, 87, 56, 0.4);
+}
+.ranking__pos {
+  flex-shrink: 0;
+  width: 2rem;
+  text-align: center;
+  font-family: var(--font-title);
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+.ranking__team {
+  min-width: 0;
+  flex: 1;
+}
+.ranking__teamname {
+  display: block;
+  font-weight: 600;
+  font-size: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ranking__members {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.6rem;
+  margin-top: 0.2rem;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+.ranking__member a {
+  color: rgba(249, 87, 56, 0.85);
+  transition: color 0.2s;
+}
+.ranking__member a:hover {
+  color: #f95738;
+}
+.ranking__time {
+  flex-shrink: 0;
+  font-family: var(--font-title);
+  font-size: 1.25rem;
+  font-variant-numeric: tabular-nums;
+  color: #f95738;
+}
+
+.ranking__msg {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+  padding: 3rem 0;
+  font-size: 0.95rem;
+}
+
+.ranking__footer {
+  text-align: center;
+  margin-top: 3rem;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* ===== Tablet ===== */
+@media (min-width: 768px) {
+  .ranking__title {
+    font-size: 2.75rem;
+  }
+}
+
+/* ===== Desktop ===== */
+@media (min-width: 1024px) {
+  .ranking {
+    padding: 0 2.5rem 6rem;
+  }
+
+  .ranking__glow {
+    width: 32rem;
+    height: 32rem;
+  }
+
+  .ranking__header,
+  .ranking__hero,
+  .ranking__footer {
+    max-width: 1120px;
+  }
+  .ranking__podium {
+    max-width: 860px;
+  }
+  .ranking__list,
+  .ranking__list-head {
+    max-width: 900px;
+  }
+
+  .ranking__logo {
+    height: 34px;
+  }
+  .ranking__header {
+    padding: 2.25rem 0 0.5rem;
+  }
+
+  .ranking__hero {
+    padding: 2.75rem 0 2.5rem;
+  }
+  .ranking__title {
+    font-size: 3.6rem;
+    line-height: 1.15;
+    letter-spacing: 0.01em;
+  }
+  .ranking__subtitle {
+    font-size: 1.05rem;
+    max-width: 34rem;
+  }
+
+  /* Grander podium */
+  .ranking__podium {
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+    padding: 0 1rem;
+  }
+  .ranking__pod-card {
+    padding: 1.3rem 1rem 1.4rem;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(6px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .ranking__pod:hover .ranking__pod-card {
+    transform: translateY(-6px);
+    box-shadow: 0 26px 56px rgba(0, 0, 0, 0.45);
+  }
+  .ranking__pod--1 {
+    margin-bottom: 0.6rem;
+  }
+  .ranking__pod--1 .ranking__pod-card {
+    border-color: rgba(255, 205, 110, 0.5);
+    box-shadow: 0 22px 50px rgba(255, 170, 60, 0.18);
+  }
+  .ranking__pod--2 .ranking__pod-card {
+    border-color: rgba(223, 230, 242, 0.3);
+  }
+  .ranking__pod--3 .ranking__pod-card {
+    border-color: rgba(234, 176, 138, 0.32);
+  }
+
+  .ranking__pod-medal {
+    font-size: 2.8rem;
+  }
+  .ranking__pod--1 .ranking__pod-medal {
+    font-size: 3.6rem;
+  }
+  .ranking__pod-team {
+    margin-top: 0.65rem;
+    font-size: 1.2rem;
+  }
+  .ranking__pod--1 .ranking__pod-team {
+    font-size: 1.4rem;
+  }
+  .ranking__pod-members {
+    font-size: 0.82rem;
+    margin-top: 0.4rem;
+  }
+  .ranking__pod-time {
+    margin-top: 0.6rem;
+    font-size: 1.7rem;
+  }
+  .ranking__pod--1 .ranking__pod-time {
+    font-size: 2rem;
+    color: var(--gold);
+  }
+
+  .ranking__pedestal {
+    margin-top: 0.75rem;
+    border-radius: 12px 12px 0 0;
+    padding-top: 0.9rem;
+  }
+  .ranking__pod--1 .ranking__pedestal {
+    height: 168px;
+  }
+  .ranking__pod--2 .ranking__pedestal {
+    height: 116px;
+  }
+  .ranking__pod--3 .ranking__pedestal {
+    height: 82px;
+  }
+  .ranking__pod-rank {
+    font-size: 1.7rem;
+  }
+  .ranking__pod--1 .ranking__pod-rank {
+    font-size: 2.2rem;
+    color: var(--gold);
+  }
+
+  /* Leaderboard table */
+  .ranking__list-head {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    padding: 0 1.75rem 0.85rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
+  }
+  .ranking__list-head-pos {
+    flex-shrink: 0;
+    width: 2.75rem;
+    text-align: center;
+  }
+  .ranking__list-head-team {
+    flex: 1;
+  }
+  .ranking__list-head-time {
+    flex-shrink: 0;
+    text-align: right;
+  }
+  .ranking__list {
+    gap: 0.7rem;
+  }
+  .ranking__row {
+    gap: 1.1rem;
+    padding: 1.1rem 1.75rem;
+    border-radius: 1.15rem;
+  }
+  .ranking__row:hover {
+    transform: none;
+    background: rgba(255, 255, 255, 0.09);
+    border-color: rgba(249, 87, 56, 0.45);
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.28);
+  }
+  .ranking__pos {
+    width: 2.75rem;
+    height: 2.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+  }
+  .ranking__teamname {
+    font-size: 1.1rem;
+  }
+  .ranking__members {
+    font-size: 0.85rem;
+    margin-top: 0.3rem;
+  }
+  .ranking__time {
+    font-size: 1.5rem;
+  }
+
+  .ranking__footer {
+    margin-top: 4rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .ranking__podium {
+    gap: 0.4rem;
+  }
+  .ranking__pod-card {
+    padding: 0.5rem 0.35rem 0.6rem;
+  }
+  .ranking__pod-medal {
+    font-size: 1.6rem;
+  }
+  .ranking__pod--1 .ranking__pod-medal {
+    font-size: 2rem;
+  }
+  .ranking__pod-team {
+    font-size: 0.82rem;
+  }
+  .ranking__pod-members {
+    font-size: 0.66rem;
+  }
+  .ranking__pod--1 .ranking__pedestal {
+    height: 96px;
+  }
+  .ranking__pod--2 .ranking__pedestal {
+    height: 68px;
+  }
+  .ranking__pod--3 .ranking__pedestal {
+    height: 48px;
+  }
+}
+
+/* ===================================================================
+   Tema de Halloween (ativado por HALLOWEEN em src/lib/halloween.ts)
+   =================================================================== */
+.ranking--halloween {
+  --hw-pumpkin: #ff7a18;
+  --hw-purple: #a855f7;
+  padding-bottom: 9rem;
+  background:
+    radial-gradient(1000px 500px at 50% 105%, rgba(124, 58, 237, 0.25), transparent 65%),
+    radial-gradient(800px 500px at -10% 5%, rgba(255, 122, 24, 0.1), transparent 55%),
+    linear-gradient(180deg, #150d26 0%, #100a1e 55%, #08060f 100%);
+}
+.ranking--halloween .ranking__glow--coral {
+  background: rgba(168, 85, 247, 0.2);
+}
+.ranking--halloween .ranking__glow--gold {
+  background: rgba(255, 122, 24, 0.14);
+}
+.ranking--halloween .hw-moon {
+  top: 5.5rem;
+  left: 4%;
+  width: 6.5rem;
+  height: 6.5rem;
+}
+.ranking--halloween .ranking__back:hover,
+.ranking--halloween .ranking__eyebrow,
+.ranking--halloween .ranking__pod-time,
+.ranking--halloween .ranking__time {
+  color: var(--hw-pumpkin);
+}
+.ranking--halloween .ranking__title span {
+  color: var(--hw-pumpkin);
+  text-shadow: 0 0 22px rgba(255, 122, 24, 0.55);
+  animation: ranking-flicker 5s linear infinite;
+}
+
+/* Cartões do pódio com brilho fantasma, pedestais viram lápides */
+.ranking--halloween .ranking__pod-card {
+  background: rgba(124, 58, 237, 0.08);
+  border-color: rgba(168, 85, 247, 0.2);
+}
+.ranking--halloween .ranking__pod-medal {
+  animation-name: ranking-float;
+  animation-duration: 3.2s;
+}
+.ranking--halloween .ranking__pedestal {
+  border-radius: 50% 50% 0 0 / 40px 40px 0 0;
+  padding-top: 1rem;
+  background: linear-gradient(180deg, rgba(150, 140, 175, 0.38), rgba(70, 60, 95, 0.22));
+  border: 1px solid rgba(190, 180, 220, 0.32);
+  border-bottom: none;
+}
+.ranking--halloween .ranking__pod--1 .ranking__pedestal {
+  background: linear-gradient(180deg, rgba(255, 122, 24, 0.55), rgba(124, 58, 237, 0.18));
+  border-color: rgba(255, 150, 60, 0.75);
+  animation-name: ranking-hw-glow;
+}
+.ranking--halloween .ranking__pod--3 .ranking__pedestal {
+  background: linear-gradient(180deg, rgba(168, 85, 247, 0.4), rgba(70, 40, 110, 0.2));
+  border-color: rgba(168, 85, 247, 0.45);
+}
+.ranking--halloween .ranking__pod--1 .ranking__pod-time,
+.ranking--halloween .ranking__pod--1 .ranking__pod-rank {
+  color: var(--hw-pumpkin);
+}
+.ranking--halloween .ranking__pod--1 .ranking__pod-card {
+  border-color: rgba(255, 150, 60, 0.5);
+}
+
+.ranking--halloween .ranking__row {
+  background: rgba(124, 58, 237, 0.08);
+  border-color: rgba(168, 85, 247, 0.18);
+}
+.ranking--halloween .ranking__row:hover {
+  background: rgba(124, 58, 237, 0.14);
+  border-color: rgba(255, 122, 24, 0.45);
+}
+.ranking--halloween .ranking__member a {
+  color: rgba(255, 150, 60, 0.9);
+}
+.ranking--halloween .ranking__member a:hover {
+  color: var(--hw-pumpkin);
+}
+
+@keyframes ranking-float {
+  0%, 100% {
+    transform: translateY(0) rotate(-4deg);
+  }
+  50% {
+    transform: translateY(-7px) rotate(4deg);
+  }
+}
+@keyframes ranking-hw-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 rgba(255, 122, 24, 0);
+  }
+  50% {
+    box-shadow: 0 10px 40px rgba(255, 122, 24, 0.45);
+  }
+}
+@keyframes ranking-flicker {
+  0%, 18%, 22%, 62%, 64%, 100% {
+    opacity: 1;
+  }
+  20%, 63% {
+    opacity: 0.55;
+  }
+}
+
+@media (min-width: 1024px) {
+  .ranking--halloween .ranking__pod--1 .ranking__pod-card {
+    box-shadow: 0 22px 50px rgba(255, 122, 24, 0.2);
+  }
+  .ranking--halloween .ranking__pedestal {
+    border-radius: 50% 50% 0 0 / 56px 56px 0 0;
+  }
+  .ranking--halloween .ranking__row:hover {
+    background: rgba(124, 58, 237, 0.16);
+  }
+}
+
+@media (max-width: 768px) {
+  .ranking--halloween .hw-moon {
+    top: 4.5rem;
+    left: auto;
+    right: 1rem;
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+  .ranking--halloween .hw-web {
+    width: 90px;
+    height: 90px;
+  }
+  .ranking--halloween .hw-web--tr,
+  .ranking--halloween .hw-spider {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ranking--halloween .ranking__title span {
+    animation: none;
+  }
+}

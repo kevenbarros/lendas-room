@@ -2,6 +2,8 @@ import "./Hero.css";
 import backgroundImage from "../../assets/section-one.png";
 import arrowIcon from "../../assets/arrow.svg";
 import logoImage from "../../assets/logo.svg";
+import { HALLOWEEN } from "../../lib/halloween";
+import { Bats, Cobweb, Spider } from "../Halloween";
 
 export const Hero = () => {
   const scrollToContent = () => {
@@ -23,6 +25,20 @@ export const Hero = () => {
         decoding="async"
         fetchPriority="high"
       />
+      {HALLOWEEN && (
+        <div className="hero__halloween">
+          <Cobweb corner="tl" size={170} />
+          <Cobweb corner="tr" size={130} />
+          <Spider left="88%" />
+          <Bats
+            bats={[
+              { top: "22%", size: 30, duration: 17, delay: 1 },
+              { top: "34%", size: 20, duration: 23, delay: 7 },
+              { top: "16%", size: 16, duration: 27, delay: 13 },
+            ]}
+          />
+        </div>
+      )}
 
       <div className="hero__content">
         <img

@@ -11,6 +11,7 @@ import { lazy, Suspense, useEffect, useState } from "react";
 import { TermoCompromisso } from "./components/TermoCompromisso";
 import { MatchForm } from "./components/MatchForm";
 import { Admin } from "./components/Admin";
+import { Ranking, RankingHome } from "./components/Ranking";
 import { Rooms } from "./components/Rooms";
 import { Conectadas } from "./components/Conectadas";
 import { Games as GamesSSR } from "./components/Games";
@@ -51,7 +52,7 @@ const ContactInfo = import.meta.env.SSR
 
 function App() {
   const [route, setRoute] = useState<
-    "home" | "termo" | "conectar" | "admin" /* | "enigma" | "img-enigma" */
+    "home" | "termo" | "conectar" | "admin" | "ranking" /* | "enigma" | "img-enigma" */
   >("home");
 
   useEffect(() => {
@@ -65,6 +66,8 @@ function App() {
       setRoute("conectar");
     } else if (path === "/admin") {
       setRoute("admin");
+    } else if (path === "/ranking") {
+      setRoute("ranking");
     }
     // Enigma desativado — campanha encerrada
     // else if (path === "/enigma") {
@@ -84,6 +87,10 @@ function App() {
 
   if (route === "admin") {
     return <Admin />;
+  }
+
+  if (route === "ranking") {
+    return <Ranking />;
   }
 
   // Enigma desativado — campanha encerrada
@@ -140,6 +147,7 @@ function App() {
           </Suspense> */}
         <Suspense fallback={null}>{<Rooms />}</Suspense>
         {/* <Suspense fallback={null}>{<Contact />}</Suspense> */}
+        <RankingHome />
         <Conectadas />
         <Suspense fallback={null}>
           <Games />
