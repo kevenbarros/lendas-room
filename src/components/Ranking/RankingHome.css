@@ -70,37 +70,6 @@
   animation: rankhome-rise 0.6s ease 0.16s both;
 }
 
-/* Abas de salas */
-.rankhome__rooms {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-bottom: 1.75rem;
-  animation: rankhome-rise 0.6s ease 0.2s both;
-}
-.rankhome__room {
-  font-family: var(--font-body);
-  font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.75);
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 9999px;
-  padding: 0.4rem 1rem;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.rankhome__room:hover {
-  border-color: rgba(249, 87, 56, 0.6);
-  transform: translateY(-1px);
-}
-.rankhome__room.is-active {
-  background: #f95738;
-  border-color: #f95738;
-  color: #fff;
-  box-shadow: 0 4px 16px rgba(249, 87, 56, 0.35);
-}
-
 /* ===== Pódio (top 3) ===== */
 .rankhome__podium {
   display: flex;
@@ -378,12 +347,144 @@
   .rankhome__eyebrow,
   .rankhome__title,
   .rankhome__subtitle,
-  .rankhome__rooms,
   .rankhome__pod,
   .rankhome__pod-medal,
   .rankhome__pod--1 .rankhome__pedestal,
   .rankhome__shine,
   .rankhome__row {
+    animation: none;
+  }
+}
+
+/* ===================================================================
+   Tema de Halloween (ativado por HALLOWEEN em src/lib/halloween.ts)
+   =================================================================== */
+.rankhome--halloween {
+  --hw-pumpkin: #ff7a18;
+  --hw-pumpkin-soft: rgba(255, 122, 24, 0.14);
+  --hw-purple: #a855f7;
+  /* Mesma cor de fundo da seção Lendas Conectadas, logo abaixo */
+  --hw-ground: hsl(229, 31%, 13%);
+  /* A divisa com a próxima seção pode cair em fração de pixel e deixar
+     vazar uma linha do fundo branco da página: a seção avança 1px sobre a
+     próxima e termina numa faixa na cor do chão. */
+  margin-bottom: -1px;
+  background:
+    linear-gradient(to top, var(--hw-ground) 0 4px, transparent 4px),
+    radial-gradient(900px 420px at 50% 100%, rgba(124, 58, 237, 0.28), transparent 65%),
+    linear-gradient(180deg, #120c22 0%, #1a1030 55%, #1b1235 100%);
+  padding-bottom: 11rem;
+}
+.rankhome--halloween .rankhome__glow {
+  background: rgba(168, 85, 247, 0.2);
+}
+.rankhome--halloween .hw-moon {
+  top: 2.5rem;
+  left: 8%;
+  width: 5.5rem;
+  height: 5.5rem;
+}
+.rankhome--halloween .rankhome__eyebrow {
+  color: var(--hw-pumpkin);
+  background: var(--hw-pumpkin-soft);
+  border: 1px solid rgba(255, 122, 24, 0.3);
+}
+.rankhome--halloween .rankhome__title span {
+  color: var(--hw-pumpkin);
+  text-shadow: 0 0 18px rgba(255, 122, 24, 0.55);
+  animation: rankhome-flicker 5s linear infinite;
+}
+
+/* Pódio vira lápides */
+.rankhome--halloween .rankhome__pod-medal {
+  animation-name: rankhome-float;
+  animation-duration: 3.2s;
+}
+.rankhome--halloween .rankhome__pod-time {
+  color: var(--hw-pumpkin);
+}
+.rankhome--halloween .rankhome__pedestal {
+  border-radius: 50% 50% 0 0 / 34px 34px 0 0;
+  padding-top: 0.9rem;
+  background: linear-gradient(180deg, rgba(150, 140, 175, 0.35), rgba(70, 60, 95, 0.25));
+  border: 1px solid rgba(190, 180, 220, 0.3);
+  border-bottom: none;
+}
+.rankhome--halloween .rankhome__pod--1 .rankhome__pedestal {
+  background: linear-gradient(180deg, rgba(255, 122, 24, 0.55), rgba(124, 58, 237, 0.18));
+  border-color: rgba(255, 150, 60, 0.75);
+  animation-name: rankhome-hw-glow;
+}
+.rankhome--halloween .rankhome__pod--3 .rankhome__pedestal {
+  background: linear-gradient(180deg, rgba(168, 85, 247, 0.38), rgba(70, 40, 110, 0.2));
+  border-color: rgba(168, 85, 247, 0.45);
+}
+
+.rankhome--halloween .rankhome__row {
+  background: rgba(124, 58, 237, 0.08);
+  border-color: rgba(168, 85, 247, 0.18);
+}
+.rankhome--halloween .rankhome__row:hover {
+  background: rgba(124, 58, 237, 0.14);
+  border-color: rgba(255, 122, 24, 0.45);
+}
+.rankhome--halloween .rankhome__time {
+  color: var(--hw-pumpkin);
+}
+
+.rankhome--halloween .rankhome__cta {
+  background: var(--hw-pumpkin);
+  box-shadow: 0 6px 22px rgba(255, 122, 24, 0.35);
+}
+
+@keyframes rankhome-float {
+  0%, 100% {
+    transform: translateY(0) rotate(-4deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(4deg);
+  }
+}
+@keyframes rankhome-hw-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 rgba(255, 122, 24, 0);
+  }
+  50% {
+    box-shadow: 0 8px 34px rgba(255, 122, 24, 0.45);
+  }
+}
+/* Tremulação de vela no destaque do título */
+@keyframes rankhome-flicker {
+  0%, 18%, 22%, 62%, 64%, 100% {
+    opacity: 1;
+  }
+  20%, 63% {
+    opacity: 0.55;
+  }
+}
+
+@media (max-width: 768px) {
+  .rankhome--halloween {
+    padding-bottom: 8.5rem;
+  }
+  .rankhome--halloween .hw-moon {
+    top: 1.25rem;
+    left: auto;
+    right: 1.25rem;
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+  .rankhome--halloween .hw-web {
+    width: 80px;
+    height: 80px;
+  }
+  .rankhome--halloween .hw-web--tr {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rankhome--halloween .rankhome__title span {
     animation: none;
   }
 }

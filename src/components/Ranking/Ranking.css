@@ -43,7 +43,6 @@
 
 .ranking__header,
 .ranking__hero,
-.ranking__controls,
 .ranking__podium,
 .ranking__list,
 .ranking__list-head,
@@ -104,62 +103,6 @@
   font-size: 0.95rem;
   color: rgba(255, 255, 255, 0.6);
   line-height: 1.6;
-}
-
-.ranking__controls {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  margin-bottom: 1.25rem;
-}
-.ranking__season {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: rgba(255, 255, 255, 0.55);
-}
-.ranking__season select {
-  font-family: var(--font-body);
-  font-size: 0.9rem;
-  color: #fff;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 9999px;
-  padding: 0.4rem 0.9rem;
-  outline: none;
-  cursor: pointer;
-}
-.ranking__season select option {
-  color: #171a2c;
-}
-.ranking__rooms {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-.ranking__room {
-  font-family: var(--font-body);
-  font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.75);
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 9999px;
-  padding: 0.4rem 1rem;
-  transition: all 0.2s;
-}
-.ranking__room:hover {
-  border-color: rgba(249, 87, 56, 0.6);
-}
-.ranking__room.is-active {
-  background: #f95738;
-  border-color: #f95738;
-  color: #fff;
-  box-shadow: 0 4px 16px rgba(249, 87, 56, 0.35);
 }
 
 /* ===== Pódio (top 3) ===== */
@@ -427,7 +370,6 @@
 
   .ranking__header,
   .ranking__hero,
-  .ranking__controls,
   .ranking__footer {
     max-width: 1120px;
   }
@@ -457,24 +399,6 @@
   .ranking__subtitle {
     font-size: 1.05rem;
     max-width: 34rem;
-  }
-
-  /* Controls become a floating glass bar */
-  .ranking__controls {
-    padding: 0.85rem 1.25rem;
-    border-radius: 16px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(8px);
-    margin-bottom: 2.5rem;
-  }
-  .ranking__season select {
-    font-size: 1rem;
-    padding: 0.5rem 1.1rem;
-  }
-  .ranking__room {
-    font-size: 0.95rem;
-    padding: 0.5rem 1.25rem;
   }
 
   /* Grander podium */
@@ -651,5 +575,150 @@
   }
   .ranking__pod--3 .ranking__pedestal {
     height: 48px;
+  }
+}
+
+/* ===================================================================
+   Tema de Halloween (ativado por HALLOWEEN em src/lib/halloween.ts)
+   =================================================================== */
+.ranking--halloween {
+  --hw-pumpkin: #ff7a18;
+  --hw-purple: #a855f7;
+  padding-bottom: 9rem;
+  background:
+    radial-gradient(1000px 500px at 50% 105%, rgba(124, 58, 237, 0.25), transparent 65%),
+    radial-gradient(800px 500px at -10% 5%, rgba(255, 122, 24, 0.1), transparent 55%),
+    linear-gradient(180deg, #150d26 0%, #100a1e 55%, #08060f 100%);
+}
+.ranking--halloween .ranking__glow--coral {
+  background: rgba(168, 85, 247, 0.2);
+}
+.ranking--halloween .ranking__glow--gold {
+  background: rgba(255, 122, 24, 0.14);
+}
+.ranking--halloween .hw-moon {
+  top: 5.5rem;
+  left: 4%;
+  width: 6.5rem;
+  height: 6.5rem;
+}
+.ranking--halloween .ranking__back:hover,
+.ranking--halloween .ranking__eyebrow,
+.ranking--halloween .ranking__pod-time,
+.ranking--halloween .ranking__time {
+  color: var(--hw-pumpkin);
+}
+.ranking--halloween .ranking__title span {
+  color: var(--hw-pumpkin);
+  text-shadow: 0 0 22px rgba(255, 122, 24, 0.55);
+  animation: ranking-flicker 5s linear infinite;
+}
+
+/* Cartões do pódio com brilho fantasma, pedestais viram lápides */
+.ranking--halloween .ranking__pod-card {
+  background: rgba(124, 58, 237, 0.08);
+  border-color: rgba(168, 85, 247, 0.2);
+}
+.ranking--halloween .ranking__pod-medal {
+  animation-name: ranking-float;
+  animation-duration: 3.2s;
+}
+.ranking--halloween .ranking__pedestal {
+  border-radius: 50% 50% 0 0 / 40px 40px 0 0;
+  padding-top: 1rem;
+  background: linear-gradient(180deg, rgba(150, 140, 175, 0.38), rgba(70, 60, 95, 0.22));
+  border: 1px solid rgba(190, 180, 220, 0.32);
+  border-bottom: none;
+}
+.ranking--halloween .ranking__pod--1 .ranking__pedestal {
+  background: linear-gradient(180deg, rgba(255, 122, 24, 0.55), rgba(124, 58, 237, 0.18));
+  border-color: rgba(255, 150, 60, 0.75);
+  animation-name: ranking-hw-glow;
+}
+.ranking--halloween .ranking__pod--3 .ranking__pedestal {
+  background: linear-gradient(180deg, rgba(168, 85, 247, 0.4), rgba(70, 40, 110, 0.2));
+  border-color: rgba(168, 85, 247, 0.45);
+}
+.ranking--halloween .ranking__pod--1 .ranking__pod-time,
+.ranking--halloween .ranking__pod--1 .ranking__pod-rank {
+  color: var(--hw-pumpkin);
+}
+.ranking--halloween .ranking__pod--1 .ranking__pod-card {
+  border-color: rgba(255, 150, 60, 0.5);
+}
+
+.ranking--halloween .ranking__row {
+  background: rgba(124, 58, 237, 0.08);
+  border-color: rgba(168, 85, 247, 0.18);
+}
+.ranking--halloween .ranking__row:hover {
+  background: rgba(124, 58, 237, 0.14);
+  border-color: rgba(255, 122, 24, 0.45);
+}
+.ranking--halloween .ranking__member a {
+  color: rgba(255, 150, 60, 0.9);
+}
+.ranking--halloween .ranking__member a:hover {
+  color: var(--hw-pumpkin);
+}
+
+@keyframes ranking-float {
+  0%, 100% {
+    transform: translateY(0) rotate(-4deg);
+  }
+  50% {
+    transform: translateY(-7px) rotate(4deg);
+  }
+}
+@keyframes ranking-hw-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 rgba(255, 122, 24, 0);
+  }
+  50% {
+    box-shadow: 0 10px 40px rgba(255, 122, 24, 0.45);
+  }
+}
+@keyframes ranking-flicker {
+  0%, 18%, 22%, 62%, 64%, 100% {
+    opacity: 1;
+  }
+  20%, 63% {
+    opacity: 0.55;
+  }
+}
+
+@media (min-width: 1024px) {
+  .ranking--halloween .ranking__pod--1 .ranking__pod-card {
+    box-shadow: 0 22px 50px rgba(255, 122, 24, 0.2);
+  }
+  .ranking--halloween .ranking__pedestal {
+    border-radius: 50% 50% 0 0 / 56px 56px 0 0;
+  }
+  .ranking--halloween .ranking__row:hover {
+    background: rgba(124, 58, 237, 0.16);
+  }
+}
+
+@media (max-width: 768px) {
+  .ranking--halloween .hw-moon {
+    top: 4.5rem;
+    left: auto;
+    right: 1rem;
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+  .ranking--halloween .hw-web {
+    width: 90px;
+    height: 90px;
+  }
+  .ranking--halloween .hw-web--tr,
+  .ranking--halloween .hw-spider {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ranking--halloween .ranking__title span {
+    animation: none;
   }
 }

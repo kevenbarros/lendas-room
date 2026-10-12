@@ -179,3 +179,14 @@
     text-align: center;
   }
 }
+
+/* Decoração de Halloween (src/lib/halloween.ts) */
+.footer--halloween {
+  position: relative;
+  overflow: hidden;
+  border-top-color: rgba(255, 122, 24, 0.35);
+}
+.footer--halloween > :not(.hw-web):not(.hw-fog) {
+  position: relative;
+  z-index: 1;
+}

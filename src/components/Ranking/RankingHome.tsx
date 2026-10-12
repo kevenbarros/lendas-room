@@ -1,22 +1,20 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './RankingHome.css';
 import {
   fetchRanking,
-  fetchRooms,
-  fetchSeasons,
+  fetchRankingRoom,
   formatGameTime,
+  GENERAL_SEASON,
   type RankingEntry,
-  type Room,
-  type Season,
 } from '../../lib/ranking';
+import { HALLOWEEN } from '../../lib/halloween';
+import { SeasonCountdown } from './SeasonCountdown';
+import { Bats, Clouds, Cobweb, Fog, Graveyard, Moon } from '../Halloween';
 
-const MEDALS = ['🥇', '🥈', '🥉'];
+const MEDALS = HALLOWEEN ? ['🎃', '👻', '💀'] : ['🥇', '🥈', '🥉'];
 const TOP_N = 5;
 
 export const RankingHome = () => {
-  const [seasons, setSeasons] = useState<Season[]>([]);
-  const [rooms, setRooms] = useState<Room[]>([]);
-  const [seasonId, setSeasonId] = useState('');
   const [roomId, setRoomId] = useState('');
   const [entries, setEntries] = useState<RankingEntry[]>([]);
   const [loading, setLoading] = useState(true);
@@ -26,14 +24,10 @@ export const RankingHome = () => {
     let cancelled = false;
     (async () => {
       try {
-        const [s, r] = await Promise.all([fetchSeasons(), fetchRooms()]);
+        // O ranking mostra só a sala "o iluminado".
+        const room = await fetchRankingRoom();
         if (cancelled) return;
-        setSeasons(s);
-        setRooms(r);
-        const today = new Date().toISOString().slice(0, 10);
-        const current = s.find((x) => today >= x.startDate && today <= x.endDate);
-        setSeasonId((current ?? s[0])?.id ?? '');
-        setRoomId(r[0]?.id ?? '');
+        setRoomId(room?.id ?? '');
       } catch (e) {
         if (!cancelled) setError(true);
         console.error(e);
@@ -46,18 +40,14 @@ export const RankingHome = () => {
     };
   }, []);
 
-  const season = useMemo(
-    () => seasons.find((s) => s.id === seasonId) ?? null,
-    [seasons, seasonId],
-  );
-
   useEffect(() => {
-    if (!season || !roomId) {
+    if (!roomId) {
       setEntries([]);
       return;
     }
     let cancelled = false;
-    fetchRanking(roomId, season.startDate, season.endDate)
+    // Na home a contagem é sempre a Geral: todos os tempos já registrados.
+    fetchRanking(roomId, GENERAL_SEASON.startDate, GENERAL_SEASON.endDate)
       .then((rows) => {
         if (!cancelled) setEntries(rows.slice(0, TOP_N));
       })
@@ -68,50 +58,61 @@ export const RankingHome = () => {
     return () => {
       cancelled = true;
     };
-  }, [season, roomId]);
+  }, [roomId]);
 
   // Sem dados ainda → não renderiza a seção (evita um bloco vazio na home).
-  if (loading || error || seasons.length === 0 || rooms.length === 0) {
+  if (loading || error || !roomId) {
     return null;
   }
 
   return (
     <section
       id="ranking"
-      className="rankhome"
+      className={`rankhome ${HALLOWEEN ? 'rankhome--halloween' : ''}`}
       aria-labelledby="rankhome-title"
     >
       <div className="rankhome__glow" aria-hidden />
+      {HALLOWEEN && (
+        <>
+          <Clouds />
+          <Moon />
+          <Clouds layer="front" />
+          <Cobweb corner="tl" />
+          <Cobweb corner="tr" size={110} />
+          <Bats />
+          <Fog />
+          <Graveyard />
+        </>
+      )}
       <div className="rankhome__container">
         <header className="rankhome__head">
-          <span className="rankhome__eyebrow">🏆 Ranking</span>
+          <span className="rankhome__eyebrow">
+            {HALLOWEEN ? '🎃 Ranking de Halloween' : '🏆 Ranking'}
+          </span>
           <h2 id="rankhome-title" className="rankhome__title">
-            As equipes mais <span>rápidas</span>
+            {HALLOWEEN ? (
+              <>
+                As equipes mais <span>assombrosas</span>
+              </>
+            ) : (
+              <>
+                As equipes mais <span>rápidas</span>
+              </>
+            )}
           </h2>
           <p className="rankhome__subtitle">
-            Quanto menor o tempo de jogo, melhor a colocação.
-            Será que vocês chegam ao topo?
+            {HALLOWEEN
+              ? 'Quanto menor o tempo de jogo, melhor a colocação. Escapem antes que as almas peguem vocês!'
+              : 'Quanto menor o tempo de jogo, melhor a colocação. Será que vocês chegam ao topo?'}
           </p>
+          <SeasonCountdown />
         </header>
-
-        {rooms.length > 1 && (
-          <div className="rankhome__rooms">
-            {rooms.map((r) => (
-              <button
-                key={r.id}
-                type="button"
-                onClick={() => setRoomId(r.id)}
-                className={`rankhome__room ${r.id === roomId ? 'is-active' : ''}`}
-              >
-                {r.name}
-              </button>
-            ))}
-          </div>
-        )}
 
         {entries.length === 0 ? (
           <p className="rankhome__empty">
-            Nenhum tempo registrado ainda. Seja a primeira equipe! 🚀
+            {HALLOWEEN
+              ? 'Nenhuma alma escapou ainda. Seja a primeira equipe! 👻'
+              : 'Nenhum tempo registrado ainda. Seja a primeira equipe! 🚀'}
           </p>
         ) : (
           <>

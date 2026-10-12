@@ -1,22 +1,20 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Ranking.css';
 import logo from '../../assets/logo.svg';
 import {
   fetchRanking,
-  fetchRooms,
-  fetchSeasons,
+  fetchRankingRoom,
   formatGameTime,
+  GENERAL_SEASON,
   type RankingEntry,
-  type Room,
-  type Season,
 } from '../../lib/ranking';
+import { HALLOWEEN } from '../../lib/halloween';
+import { SeasonCountdown } from './SeasonCountdown';
+import { Bats, Clouds, Cobweb, Fog, Moon, Spider } from '../Halloween';
 
-const MEDALS = ['🥇', '🥈', '🥉'];
+const MEDALS = HALLOWEEN ? ['🎃', '👻', '💀'] : ['🥇', '🥈', '🥉'];
 
 export function Ranking() {
-  const [seasons, setSeasons] = useState<Season[]>([]);
-  const [rooms, setRooms] = useState<Room[]>([]);
-  const [seasonId, setSeasonId] = useState('');
   const [roomId, setRoomId] = useState('');
   const [entries, setEntries] = useState<RankingEntry[]>([]);
   const [loadingMeta, setLoadingMeta] = useState(true);
@@ -27,14 +25,10 @@ export function Ranking() {
     let cancelled = false;
     (async () => {
       try {
-        const [s, r] = await Promise.all([fetchSeasons(), fetchRooms()]);
+        // O ranking mostra só a sala "o iluminado".
+        const room = await fetchRankingRoom();
         if (cancelled) return;
-        setSeasons(s);
-        setRooms(r);
-        const today = new Date().toISOString().slice(0, 10);
-        const current = s.find((x) => today >= x.startDate && today <= x.endDate);
-        setSeasonId((current ?? s[0])?.id ?? '');
-        setRoomId(r[0]?.id ?? '');
+        setRoomId(room?.id ?? '');
       } catch (e) {
         if (!cancelled) setError('Não foi possível carregar o ranking agora.');
         console.error(e);
@@ -47,19 +41,15 @@ export function Ranking() {
     };
   }, []);
 
-  const season = useMemo(
-    () => seasons.find((s) => s.id === seasonId) ?? null,
-    [seasons, seasonId],
-  );
-
   useEffect(() => {
-    if (!season || !roomId) {
+    if (!roomId) {
       setEntries([]);
       return;
     }
     let cancelled = false;
     setLoadingRank(true);
-    fetchRanking(roomId, season.startDate, season.endDate)
+    // O ranking é sempre o Geral: todos os tempos já registrados.
+    fetchRanking(roomId, GENERAL_SEASON.startDate, GENERAL_SEASON.endDate)
       .then((rows) => {
         if (!cancelled) setEntries(rows);
       })
@@ -73,12 +63,24 @@ export function Ranking() {
     return () => {
       cancelled = true;
     };
-  }, [season, roomId]);
+  }, [roomId]);
 
   return (
-    <div className="ranking">
+    <div className={`ranking ${HALLOWEEN ? 'ranking--halloween' : ''}`}>
       <div className="ranking__glow ranking__glow--coral" aria-hidden />
       <div className="ranking__glow ranking__glow--gold" aria-hidden />
+      {HALLOWEEN && (
+        <>
+          <Clouds />
+          <Moon />
+          <Clouds layer="front" />
+          <Cobweb corner="tl" size={180} />
+          <Cobweb corner="tr" size={150} />
+          <Spider left="82%" />
+          <Bats />
+          <Fog />
+        </>
+      )}
 
       <header className="ranking__header">
         <a href="/" className="ranking__back">
@@ -88,56 +90,35 @@ export function Ranking() {
       </header>
 
       <div className="ranking__hero">
-        <p className="ranking__eyebrow">Lendas Escape Room</p>
+        <p className="ranking__eyebrow">
+          {HALLOWEEN ? '🎃 Edição de Halloween 🎃' : 'Lendas Escape Room'}
+        </p>
         <h1 className="ranking__title">
-          Ranking da <span>Temporada</span>
+          Ranking <span>Geral</span>
         </h1>
         <p className="ranking__subtitle">
-          Os tempos mais rápidos de cada sala. Será que sua equipe chega ao topo?
+          {HALLOWEEN
+            ? 'Os tempos mais rápidos da sala O Iluminado. Escapem antes que as almas peguem vocês!'
+            : 'Os tempos mais rápidos da sala O Iluminado. Será que sua equipe chega ao topo?'}
         </p>
+        <SeasonCountdown size="lg" />
       </div>
 
       {loadingMeta ? (
         <p className="ranking__msg">Carregando ranking…</p>
       ) : error ? (
         <p className="ranking__msg">{error}</p>
-      ) : seasons.length === 0 || rooms.length === 0 ? (
+      ) : !roomId ? (
         <p className="ranking__msg">O ranking estará disponível em breve. 🏆</p>
       ) : (
         <>
-          <div className="ranking__controls">
-            <label className="ranking__season">
-              <span>Temporada</span>
-              <select value={seasonId} onChange={(e) => setSeasonId(e.target.value)}>
-                {seasons.map((s) => (
-                  <option key={s.id} value={s.id}>
-                    {s.name}
-                  </option>
-                ))}
-              </select>
-            </label>
-
-            {rooms.length > 1 && (
-              <div className="ranking__rooms">
-                {rooms.map((r) => (
-                  <button
-                    key={r.id}
-                    type="button"
-                    onClick={() => setRoomId(r.id)}
-                    className={`ranking__room ${r.id === roomId ? 'is-active' : ''}`}
-                  >
-                    {r.name}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-
           {loadingRank ? (
             <p className="ranking__msg">Carregando tempos…</p>
           ) : entries.length === 0 ? (
             <p className="ranking__msg">
-              Nenhum tempo registrado nesta temporada ainda. Seja a primeira equipe! 🚀
+              {HALLOWEEN
+                ? 'Nenhuma alma escapou ainda. Seja a primeira equipe! 👻'
+                : 'Nenhum tempo registrado ainda. Seja a primeira equipe! 🚀'}
             </p>
           ) : (
             <>

@@ -1,0 +1,417 @@
+/* Decorações de Halloween reutilizáveis — o pai precisa de position: relative */
+
+/* ===== Morcegos ===== */
+.hw-bats {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.hw-bat {
+  position: absolute;
+  left: 0;
+  display: block;
+  color: rgba(10, 8, 20, 0.85);
+  filter: drop-shadow(0 0 6px rgba(168, 85, 247, 0.35));
+  animation: hw-fly 18s linear infinite;
+  opacity: 0;
+}
+.hw-bat svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  animation: hw-flap 0.32s ease-in-out infinite alternate;
+  transform-origin: center 40%;
+}
+.hw-bat--rtl {
+  animation-name: hw-fly-rtl;
+}
+
+@keyframes hw-fly {
+  0% {
+    transform: translate(-10vw, 0);
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  25% {
+    transform: translate(25vw, -18px);
+  }
+  50% {
+    transform: translate(55vw, 14px);
+  }
+  75% {
+    transform: translate(85vw, -10px);
+  }
+  92% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(110vw, 6px);
+    opacity: 0;
+  }
+}
+@keyframes hw-fly-rtl {
+  0% {
+    transform: translate(110vw, 0);
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  30% {
+    transform: translate(70vw, 16px);
+  }
+  60% {
+    transform: translate(40vw, -14px);
+  }
+  92% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-10vw, 4px);
+    opacity: 0;
+  }
+}
+@keyframes hw-flap {
+  from {
+    transform: scaleY(1);
+  }
+  to {
+    transform: scaleY(0.35);
+  }
+}
+
+/* ===== Teias ===== */
+.hw-web {
+  position: absolute;
+  top: 0;
+  color: rgba(255, 255, 255, 0.22);
+  pointer-events: none;
+  z-index: 0;
+}
+.hw-web--tl {
+  left: 0;
+}
+.hw-web--tr {
+  right: 0;
+  transform: scaleX(-1);
+}
+
+/* ===== Aranha ===== */
+.hw-spider {
+  position: absolute;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #0d0a18;
+  pointer-events: none;
+  z-index: 0;
+  animation: hw-dangle 6s ease-in-out infinite;
+  transform-origin: top center;
+}
+.hw-spider__thread {
+  width: 1px;
+  height: 90px;
+  background: rgba(255, 255, 255, 0.35);
+}
+.hw-spider__body {
+  width: 30px;
+  height: auto;
+  margin-top: -2px;
+  filter: drop-shadow(0 0 4px rgba(255, 122, 24, 0.4));
+}
+@keyframes hw-dangle {
+  0%, 100% {
+    transform: translateY(-30px) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(10px) rotate(2deg);
+  }
+}
+
+/* ===== Névoa ===== */
+.hw-fog {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 9rem;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.hw-fog__layer {
+  position: absolute;
+  bottom: -2rem;
+  left: -50%;
+  width: 200%;
+  height: 100%;
+  background:
+    radial-gradient(40% 60% at 20% 70%, rgba(200, 190, 255, 0.12), transparent 70%),
+    radial-gradient(35% 55% at 55% 80%, rgba(200, 190, 255, 0.1), transparent 70%),
+    radial-gradient(40% 60% at 85% 70%, rgba(200, 190, 255, 0.12), transparent 70%);
+  filter: blur(8px);
+  animation: hw-drift 28s linear infinite;
+}
+.hw-fog__layer--2 {
+  bottom: -3rem;
+  opacity: 0.8;
+  animation-duration: 40s;
+  animation-direction: reverse;
+}
+@keyframes hw-drift {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(25%);
+  }
+}
+
+/* ===== Lua ===== */
+.hw-moon {
+  position: absolute;
+  width: 7rem;
+  height: 7rem;
+  pointer-events: none;
+  z-index: 0;
+  animation: hw-moon-float 9s ease-in-out infinite;
+}
+/* Halo que pulsa devagar */
+.hw-moon__halo {
+  position: absolute;
+  inset: -55%;
+  border-radius: 9999px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 214, 140, 0.32) 0%,
+    rgba(255, 150, 60, 0.14) 38%,
+    rgba(168, 85, 247, 0.08) 55%,
+    transparent 70%
+  );
+  animation: hw-moon-pulse 6s ease-in-out infinite;
+}
+/* Disco: crateras + sombreamento esférico */
+.hw-moon__disc {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 9999px;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(176, 112, 52, 0.55) 0 6.2%, rgba(176, 112, 52, 0.25) 8.5%, transparent 10.0%),
+    radial-gradient(circle at 31.8% 31.8%, transparent 8.0%, rgba(255, 246, 215, 0.55) 9.2%, transparent 11.2%),
+    radial-gradient(circle at 63% 22%, rgba(176, 112, 52, 0.55) 0 3.7%, rgba(176, 112, 52, 0.25) 5.1%, transparent 6.0%),
+    radial-gradient(circle at 64.1% 23.1%, transparent 4.8%, rgba(255, 246, 215, 0.55) 5.5%, transparent 6.7%),
+    radial-gradient(circle at 68% 56%, rgba(176, 112, 52, 0.55) 0 8.1%, rgba(176, 112, 52, 0.25) 11.0%, transparent 13.0%),
+    radial-gradient(circle at 70.3% 58.3%, transparent 10.4%, rgba(255, 246, 215, 0.55) 12.0%, transparent 14.6%),
+    radial-gradient(circle at 38% 68%, rgba(176, 112, 52, 0.55) 0 4.3%, rgba(176, 112, 52, 0.25) 6.0%, transparent 7.0%),
+    radial-gradient(circle at 39.3% 69.3%, transparent 5.6%, rgba(255, 246, 215, 0.55) 6.4%, transparent 7.8%),
+    radial-gradient(circle at 54% 84%, rgba(176, 112, 52, 0.55) 0 2.8%, rgba(176, 112, 52, 0.25) 3.8%, transparent 4.5%),
+    radial-gradient(circle at 54.8% 84.8%, transparent 3.6%, rgba(255, 246, 215, 0.55) 4.1%, transparent 5.0%),
+    radial-gradient(circle at 18% 54%, rgba(176, 112, 52, 0.55) 0 3.1%, rgba(176, 112, 52, 0.25) 4.2%, transparent 5.0%),
+    radial-gradient(circle at 18.9% 54.9%, transparent 4.0%, rgba(255, 246, 215, 0.55) 4.6%, transparent 5.6%),
+    radial-gradient(circle at 82% 38%, rgba(176, 112, 52, 0.55) 0 2.5%, rgba(176, 112, 52, 0.25) 3.4%, transparent 4.0%),
+    radial-gradient(circle at 82.7% 38.7%, transparent 3.2%, rgba(255, 246, 215, 0.55) 3.7%, transparent 4.5%),
+    radial-gradient(ellipse 55% 40% at 50% 45%, rgba(210, 150, 80, 0.2), transparent 70%),
+    radial-gradient(circle at 34% 30%, #fffaf0 0%, #ffe6ab 32%, #f6b763 70%, #cf7428 100%);
+  box-shadow:
+    inset -18px -14px 30px rgba(110, 40, 8, 0.6),
+    inset 8px 8px 18px rgba(255, 255, 240, 0.55),
+    0 0 18px rgba(255, 215, 130, 0.7),
+    0 0 60px rgba(255, 150, 50, 0.4),
+    0 0 140px rgba(255, 120, 30, 0.2);
+}
+/* Nuvem fininha que atravessa a lua */
+.hw-moon__cloud {
+  position: absolute;
+  top: 60%;
+  left: -40%;
+  width: 130%;
+  height: 16%;
+  border-radius: 9999px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(60, 35, 95, 0.55) 0%,
+    rgba(60, 35, 95, 0.28) 45%,
+    transparent 70%
+  );
+  filter: blur(4px);
+  animation: hw-moon-cloud 22s linear infinite;
+}
+.hw-moon__cloud--2 {
+  top: 26%;
+  height: 10%;
+  width: 95%;
+  opacity: 0.6;
+  animation-duration: 31s;
+  animation-delay: -12s;
+}
+/* Morceguinho que passa na frente de vez em quando */
+.hw-moon__bat {
+  position: absolute;
+  top: 38%;
+  left: 50%;
+  width: 26%;
+  color: #120a1f;
+  opacity: 0;
+  animation: hw-moon-bat 11s ease-in-out 3s infinite;
+}
+.hw-moon__bat svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  animation: hw-flap 0.28s ease-in-out infinite alternate;
+}
+
+@keyframes hw-moon-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+@keyframes hw-moon-pulse {
+  0%, 100% {
+    opacity: 0.75;
+    transform: scale(0.95);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+@keyframes hw-moon-cloud {
+  from {
+    transform: translateX(-60%);
+  }
+  to {
+    transform: translateX(160%);
+  }
+}
+@keyframes hw-moon-bat {
+  0% {
+    transform: translate(-260%, 60%) scale(0.6);
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  22% {
+    transform: translate(60%, -40%) scale(1);
+    opacity: 1;
+  }
+  30%, 100% {
+    transform: translate(260%, -160%) scale(0.7);
+    opacity: 0;
+  }
+}
+
+/* ===== Nuvens ===== */
+.hw-clouds {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.hw-cloud {
+  position: absolute;
+  left: 0;
+  display: block;
+  filter: blur(1.5px) drop-shadow(0 -2px 8px rgba(255, 210, 140, 0.18));
+  animation: hw-cloud-drift 100s linear infinite;
+}
+.hw-cloud svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.hw-clouds--front .hw-cloud {
+  filter: blur(2.5px);
+}
+@keyframes hw-cloud-drift {
+  from {
+    transform: translateX(-40vw);
+  }
+  to {
+    transform: translateX(110vw);
+  }
+}
+
+/* ===== Cemitério (transição para a próxima seção) ===== */
+.hw-graveyard {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 140px;
+  pointer-events: none;
+  z-index: 0;
+  color: var(--hw-ground, hsl(229, 31%, 13%));
+}
+.hw-graveyard__ground {
+  fill: currentColor;
+}
+/* Contorno iluminado pela lua no alto das colinas */
+.hw-graveyard__ridge {
+  fill: none;
+  stroke: rgba(200, 170, 255, 0.28);
+  stroke-width: 2;
+  filter: blur(1px);
+}
+.hw-graveyard__pumpkin ellipse {
+  fill: #ff7a18;
+}
+.hw-graveyard__face {
+  fill: #ffe08a;
+}
+.hw-graveyard__pumpkin {
+  filter: drop-shadow(0 0 6px rgba(255, 140, 30, 0.9)) drop-shadow(0 0 18px rgba(255, 120, 20, 0.5));
+  animation: hw-candle 3.5s ease-in-out infinite;
+}
+@keyframes hw-candle {
+  0%, 100% {
+    opacity: 1;
+  }
+  45% {
+    opacity: 0.85;
+  }
+  50% {
+    opacity: 0.65;
+  }
+  55% {
+    opacity: 0.9;
+  }
+}
+@media (max-width: 768px) {
+  .hw-graveyard {
+    height: 110px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hw-bat,
+  .hw-bat svg,
+  .hw-spider,
+  .hw-fog__layer,
+  .hw-moon,
+  .hw-moon__halo,
+  .hw-moon__cloud,
+  .hw-cloud,
+  .hw-graveyard__pumpkin {
+    animation: none;
+  }
+  .hw-moon__bat {
+    display: none;
+  }
+  .hw-bat {
+    display: none;
+  }
+}

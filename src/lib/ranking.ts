@@ -34,12 +34,40 @@ export interface RankingEntry {
   timeSeconds: number;
 }
 
+/**
+ * Ranking "Geral": todos os tempos já registrados, sem recorte de datas.
+ * É a única contagem exibida no site. As datas são strings YYYY-MM-DD,
+ * então este intervalo cobre qualquer data.
+ */
+export const GENERAL_SEASON: Season = {
+  id: 'geral',
+  name: 'Geral',
+  startDate: '0000-01-01',
+  endDate: '9999-12-31',
+};
+
 export async function fetchSeasons(): Promise<Season[]> {
   const snap = await getDocs(query(collection(db, 'seasons'), orderBy('startDate', 'desc')));
   return snap.docs.map((d) => {
     const data = d.data() as Omit<Season, 'id'>;
     return { id: d.id, name: data.name, startDate: data.startDate, endDate: data.endDate };
   });
+}
+
+/** Data de hoje (YYYY-MM-DD) no fuso de Belém, onde ficam as salas. */
+export function todayInBelem(now: Date = new Date()): string {
+  return new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Belem' }).format(now);
+}
+
+/** Temporada em andamento hoje, ou null se nenhuma estiver ativa. */
+export function findCurrentSeason(seasons: Season[], now: Date = new Date()): Season | null {
+  const today = todayInBelem(now);
+  return seasons.find((s) => today >= s.startDate && today <= s.endDate) ?? null;
+}
+
+/** Momento em que a temporada encerra: fim do dia `endDate`, horário de Belém (UTC-3). */
+export function seasonEndsAt(season: Season): Date {
+  return new Date(`${season.endDate}T23:59:59-03:00`);
 }
 
 export async function fetchRooms(): Promise<Room[]> {
@@ -51,6 +79,16 @@ export async function fetchRooms(): Promise<Room[]> {
     })
     .filter((r) => r.active)
     .sort((a, b) => a.name.localeCompare(b.name));
+}
+
+/** Nome da única sala exibida no ranking do site. */
+export const RANKING_ROOM_NAME = 'o iluminado';
+
+/** Sala do ranking (busca pelo nome, sem diferenciar maiúsculas), ou null se não estiver ativa. */
+export async function fetchRankingRoom(): Promise<Room | null> {
+  const rooms = await fetchRooms();
+  const target = RANKING_ROOM_NAME.toLocaleLowerCase('pt-BR');
+  return rooms.find((r) => r.name.trim().toLocaleLowerCase('pt-BR') === target) ?? null;
 }
 
 export async function fetchRanking(
