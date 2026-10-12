@@ -378,11 +378,20 @@
 .rankhome--halloween .rankhome__glow {
   background: rgba(168, 85, 247, 0.2);
 }
+/* Lua com a bruxa: ao lado do conteúdo no computador e centralizada
+   acima do título no celular */
 .rankhome--halloween .hw-moon {
-  top: 2.5rem;
-  left: 8%;
-  width: 5.5rem;
-  height: 5.5rem;
+  top: 2.25rem;
+  left: 6%;
+  width: 8.5rem;
+  height: 8.5rem;
+}
+@media (min-width: 769px) and (max-width: 1099px) {
+  .rankhome--halloween .hw-moon {
+    left: 3%;
+    width: 6.5rem;
+    height: 6.5rem;
+  }
 }
 .rankhome--halloween .rankhome__eyebrow {
   color: var(--hw-pumpkin);
@@ -465,14 +474,14 @@
 
 @media (max-width: 768px) {
   .rankhome--halloween {
+    padding-top: 6.25rem;
     padding-bottom: 8.5rem;
   }
   .rankhome--halloween .hw-moon {
-    top: 1.25rem;
-    left: auto;
-    right: 1.25rem;
-    width: 3.5rem;
-    height: 3.5rem;
+    top: 1rem;
+    left: calc(50% - 2.3rem);
+    width: 4.6rem;
+    height: 4.6rem;
   }
   .rankhome--halloween .hw-web {
     width: 80px;

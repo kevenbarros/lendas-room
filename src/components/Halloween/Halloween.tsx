@@ -1,5 +1,7 @@
 import { useId } from 'react';
 import './Halloween.css';
+import moonImage from '../../assets/lua.webp';
+import witchImage from '../../assets/bruxa.svg';
 
 // Decorações puramente visuais (aria-hidden, sem eventos de ponteiro).
 // Posições fixas para o markup ser igual no SSR e no cliente.
@@ -102,18 +104,13 @@ export const Fog = () => (
   </div>
 );
 
+// Lua cheia dourada (src/assets/lua.png, em versão otimizada) com a bruxa na
+// vassoura (src/assets/bruxa.svg) voando na frente, como na referência.
 export const Moon = () => (
   <span className="hw-moon" aria-hidden="true">
     <span className="hw-moon__halo" />
-    <span className="hw-moon__disc">
-      <span className="hw-moon__cloud" />
-      <span className="hw-moon__cloud hw-moon__cloud--2" />
-    </span>
-    <span className="hw-moon__bat">
-      <svg viewBox="0 0 100 44" fill="currentColor">
-        <path d={BAT_PATH} />
-      </svg>
-    </span>
+    <img className="hw-moon__disc" src={moonImage} alt="" decoding="async" />
+    <img className="hw-moon__witch" src={witchImage} alt="" decoding="async" />
   </span>
 );
 

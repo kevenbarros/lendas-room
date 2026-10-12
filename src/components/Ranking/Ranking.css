@@ -596,11 +596,13 @@
 .ranking--halloween .ranking__glow--gold {
   background: rgba(255, 122, 24, 0.14);
 }
+/* Lua com a bruxa: grande no computador, menor no tablet e centralizada
+   no topo do celular (entre o "Voltar ao site" e o logo) */
 .ranking--halloween .hw-moon {
-  top: 5.5rem;
+  top: 5rem;
   left: 4%;
-  width: 6.5rem;
-  height: 6.5rem;
+  width: 7.5rem;
+  height: 7.5rem;
 }
 .ranking--halloween .ranking__back:hover,
 .ranking--halloween .ranking__eyebrow,
@@ -697,15 +699,20 @@
   .ranking--halloween .ranking__row:hover {
     background: rgba(124, 58, 237, 0.16);
   }
+  .ranking--halloween .hw-moon {
+    top: 5.5rem;
+    left: 5%;
+    width: 10rem;
+    height: 10rem;
+  }
 }
 
 @media (max-width: 768px) {
   .ranking--halloween .hw-moon {
-    top: 4.5rem;
-    left: auto;
-    right: 1rem;
-    width: 3.5rem;
-    height: 3.5rem;
+    top: 0.6rem;
+    left: calc(50% - 2.4rem);
+    width: 4.8rem;
+    height: 4.8rem;
   }
   .ranking--halloween .hw-web {
     width: 90px;

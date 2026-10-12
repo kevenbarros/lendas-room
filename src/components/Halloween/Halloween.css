@@ -172,7 +172,8 @@
   }
 }
 
-/* ===== Lua ===== */
+/* ===== Lua (cheia, dourada, com a bruxa na vassoura) =====
+   A caixa .hw-moon é o disco da lua; as imagens passam dela de propósito. */
 .hw-moon {
   position: absolute;
   width: 7rem;
@@ -181,90 +182,41 @@
   z-index: 0;
   animation: hw-moon-float 9s ease-in-out infinite;
 }
-/* Halo que pulsa devagar */
+/* Halo quente que pulsa devagar */
 .hw-moon__halo {
   position: absolute;
-  inset: -55%;
+  inset: -60%;
   border-radius: 9999px;
   background: radial-gradient(
     circle,
-    rgba(255, 214, 140, 0.32) 0%,
-    rgba(255, 150, 60, 0.14) 38%,
-    rgba(168, 85, 247, 0.08) 55%,
+    rgba(255, 214, 140, 0.3) 0%,
+    rgba(255, 170, 70, 0.14) 36%,
+    rgba(168, 85, 247, 0.07) 55%,
     transparent 70%
   );
   animation: hw-moon-pulse 6s ease-in-out infinite;
 }
-/* Disco: crateras + sombreamento esférico */
+/* lua.webp tem um brilho suave em volta do disco: o disco ocupa 86,9% da
+   imagem, então ela é ampliada e recuada para o disco caber na caixa */
 .hw-moon__disc {
   position: absolute;
-  inset: 0;
-  overflow: hidden;
-  border-radius: 9999px;
-  background:
-    radial-gradient(circle at 30% 30%, rgba(176, 112, 52, 0.55) 0 6.2%, rgba(176, 112, 52, 0.25) 8.5%, transparent 10.0%),
-    radial-gradient(circle at 31.8% 31.8%, transparent 8.0%, rgba(255, 246, 215, 0.55) 9.2%, transparent 11.2%),
-    radial-gradient(circle at 63% 22%, rgba(176, 112, 52, 0.55) 0 3.7%, rgba(176, 112, 52, 0.25) 5.1%, transparent 6.0%),
-    radial-gradient(circle at 64.1% 23.1%, transparent 4.8%, rgba(255, 246, 215, 0.55) 5.5%, transparent 6.7%),
-    radial-gradient(circle at 68% 56%, rgba(176, 112, 52, 0.55) 0 8.1%, rgba(176, 112, 52, 0.25) 11.0%, transparent 13.0%),
-    radial-gradient(circle at 70.3% 58.3%, transparent 10.4%, rgba(255, 246, 215, 0.55) 12.0%, transparent 14.6%),
-    radial-gradient(circle at 38% 68%, rgba(176, 112, 52, 0.55) 0 4.3%, rgba(176, 112, 52, 0.25) 6.0%, transparent 7.0%),
-    radial-gradient(circle at 39.3% 69.3%, transparent 5.6%, rgba(255, 246, 215, 0.55) 6.4%, transparent 7.8%),
-    radial-gradient(circle at 54% 84%, rgba(176, 112, 52, 0.55) 0 2.8%, rgba(176, 112, 52, 0.25) 3.8%, transparent 4.5%),
-    radial-gradient(circle at 54.8% 84.8%, transparent 3.6%, rgba(255, 246, 215, 0.55) 4.1%, transparent 5.0%),
-    radial-gradient(circle at 18% 54%, rgba(176, 112, 52, 0.55) 0 3.1%, rgba(176, 112, 52, 0.25) 4.2%, transparent 5.0%),
-    radial-gradient(circle at 18.9% 54.9%, transparent 4.0%, rgba(255, 246, 215, 0.55) 4.6%, transparent 5.6%),
-    radial-gradient(circle at 82% 38%, rgba(176, 112, 52, 0.55) 0 2.5%, rgba(176, 112, 52, 0.25) 3.4%, transparent 4.0%),
-    radial-gradient(circle at 82.7% 38.7%, transparent 3.2%, rgba(255, 246, 215, 0.55) 3.7%, transparent 4.5%),
-    radial-gradient(ellipse 55% 40% at 50% 45%, rgba(210, 150, 80, 0.2), transparent 70%),
-    radial-gradient(circle at 34% 30%, #fffaf0 0%, #ffe6ab 32%, #f6b763 70%, #cf7428 100%);
-  box-shadow:
-    inset -18px -14px 30px rgba(110, 40, 8, 0.6),
-    inset 8px 8px 18px rgba(255, 255, 240, 0.55),
-    0 0 18px rgba(255, 215, 130, 0.7),
-    0 0 60px rgba(255, 150, 50, 0.4),
-    0 0 140px rgba(255, 120, 30, 0.2);
+  top: -7.55%;
+  left: -7.55%;
+  width: 115.1%;
+  height: 115.1%;
+  max-width: none;
 }
-/* Nuvem fininha que atravessa a lua */
-.hw-moon__cloud {
+/* Bruxa um pouco mais larga que a lua: o cabo e as cerdas da vassoura
+   passam das bordas, e as botas chegam à borda de baixo */
+.hw-moon__witch {
   position: absolute;
-  top: 60%;
-  left: -40%;
-  width: 130%;
-  height: 16%;
-  border-radius: 9999px;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(60, 35, 95, 0.55) 0%,
-    rgba(60, 35, 95, 0.28) 45%,
-    transparent 70%
-  );
-  filter: blur(4px);
-  animation: hw-moon-cloud 22s linear infinite;
-}
-.hw-moon__cloud--2 {
-  top: 26%;
-  height: 10%;
-  width: 95%;
-  opacity: 0.6;
-  animation-duration: 31s;
-  animation-delay: -12s;
-}
-/* Morceguinho que passa na frente de vez em quando */
-.hw-moon__bat {
-  position: absolute;
-  top: 38%;
-  left: 50%;
-  width: 26%;
-  color: #120a1f;
-  opacity: 0;
-  animation: hw-moon-bat 11s ease-in-out 3s infinite;
-}
-.hw-moon__bat svg {
-  display: block;
-  width: 100%;
+  top: 6%;
+  left: -2.5%;
+  width: 105%;
   height: auto;
-  animation: hw-flap 0.28s ease-in-out infinite alternate;
+  max-width: none;
+  transform-origin: 50% 60%;
+  animation: hw-witch-bob 4s ease-in-out infinite;
 }
 
 @keyframes hw-moon-float {
@@ -285,29 +237,12 @@
     transform: scale(1.06);
   }
 }
-@keyframes hw-moon-cloud {
-  from {
-    transform: translateX(-60%);
+@keyframes hw-witch-bob {
+  0%, 100% {
+    transform: translateY(0) rotate(-1deg);
   }
-  to {
-    transform: translateX(160%);
-  }
-}
-@keyframes hw-moon-bat {
-  0% {
-    transform: translate(-260%, 60%) scale(0.6);
-    opacity: 0;
-  }
-  8% {
-    opacity: 1;
-  }
-  22% {
-    transform: translate(60%, -40%) scale(1);
-    opacity: 1;
-  }
-  30%, 100% {
-    transform: translate(260%, -160%) scale(0.7);
-    opacity: 0;
+  50% {
+    transform: translateY(-4%) rotate(1.2deg);
   }
 }
 
@@ -403,13 +338,10 @@
   .hw-fog__layer,
   .hw-moon,
   .hw-moon__halo,
-  .hw-moon__cloud,
+  .hw-moon__witch,
   .hw-cloud,
   .hw-graveyard__pumpkin {
     animation: none;
-  }
-  .hw-moon__bat {
-    display: none;
   }
   .hw-bat {
     display: none;
