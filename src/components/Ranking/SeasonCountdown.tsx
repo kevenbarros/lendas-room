@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import './SeasonCountdown.css';
 import {
   fetchSeasons,
@@ -20,24 +20,34 @@ const END_FORMAT = new Intl.DateTimeFormat('pt-BR', {
 });
 
 /**
- * Contagem regressiva até o encerramento da temporada em andamento, lida das
- * temporadas cadastradas no painel. Sem temporada ativa, não renderiza nada.
+ * Contagem regressiva até o encerramento da temporada em andamento no ranking
+ * da sala, lida das temporadas cadastradas no painel. Sem temporada ativa,
+ * não renderiza nada.
  */
-export const SeasonCountdown = ({ size = 'md' }: { size?: 'md' | 'lg' }) => {
-  const [season, setSeason] = useState<Season | null>(null);
+export const SeasonCountdown = ({
+  size = 'md',
+  roomId = '',
+}: {
+  size?: 'md' | 'lg';
+  roomId?: string;
+}) => {
+  const [seasons, setSeasons] = useState<Season[]>([]);
   const [now, setNow] = useState(() => Date.now());
 
   useEffect(() => {
     let cancelled = false;
     fetchSeasons()
       .then((s) => {
-        if (!cancelled) setSeason(findCurrentSeason(s));
+        if (!cancelled) setSeasons(s);
       })
       .catch((e) => console.error(e));
     return () => {
       cancelled = true;
     };
   }, []);
+
+  // Troca junto com a aba da sala, sem buscar de novo.
+  const season = useMemo(() => findCurrentSeason(seasons, roomId), [seasons, roomId]);
 
   useEffect(() => {
     if (!season) return;

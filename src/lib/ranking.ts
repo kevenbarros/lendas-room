@@ -12,6 +12,8 @@ export interface Season {
   name: string;
   startDate: string;
   endDate: string;
+  /** Sala da temporada; vazio = vale para todas as salas. */
+  roomId: string;
 }
 
 export interface Room {
@@ -44,13 +46,20 @@ export const GENERAL_SEASON: Season = {
   name: 'Geral',
   startDate: '0000-01-01',
   endDate: '9999-12-31',
+  roomId: '',
 };
 
 export async function fetchSeasons(): Promise<Season[]> {
   const snap = await getDocs(query(collection(db, 'seasons'), orderBy('startDate', 'desc')));
   return snap.docs.map((d) => {
-    const data = d.data() as Omit<Season, 'id'>;
-    return { id: d.id, name: data.name, startDate: data.startDate, endDate: data.endDate };
+    const data = d.data() as Omit<Season, 'id' | 'roomId'> & { roomId?: string };
+    return {
+      id: d.id,
+      name: data.name,
+      startDate: data.startDate,
+      endDate: data.endDate,
+      roomId: data.roomId ?? '',
+    };
   });
 }
 
@@ -59,10 +68,22 @@ export function todayInBelem(now: Date = new Date()): string {
   return new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Belem' }).format(now);
 }
 
-/** Temporada em andamento hoje, ou null se nenhuma estiver ativa. */
-export function findCurrentSeason(seasons: Season[], now: Date = new Date()): Season | null {
+/**
+ * Temporada em andamento hoje no ranking da sala, ou null se nenhuma estiver
+ * ativa. Vale a temporada da própria sala; sem ela, a de todas as salas.
+ */
+export function findCurrentSeason(
+  seasons: Season[],
+  roomId = '',
+  now: Date = new Date(),
+): Season | null {
   const today = todayInBelem(now);
-  return seasons.find((s) => today >= s.startDate && today <= s.endDate) ?? null;
+  const running = seasons.filter((s) => today >= s.startDate && today <= s.endDate);
+  return (
+    (roomId ? running.find((s) => s.roomId === roomId) : undefined) ??
+    running.find((s) => !s.roomId) ??
+    null
+  );
 }
 
 /** Momento em que a temporada encerra: fim do dia `endDate`, horário de Belém (UTC-3). */
@@ -81,14 +102,29 @@ export async function fetchRooms(): Promise<Room[]> {
     .sort((a, b) => a.name.localeCompare(b.name));
 }
 
-/** Nome da única sala exibida no ranking do site. */
-export const RANKING_ROOM_NAME = 'o iluminado';
+/** Sala aberta por padrão quando o link não escolhe uma. */
+export const DEFAULT_RANKING_ROOM_NAME = 'o iluminado';
 
-/** Sala do ranking (busca pelo nome, sem diferenciar maiúsculas), ou null se não estiver ativa. */
-export async function fetchRankingRoom(): Promise<Room | null> {
-  const rooms = await fetchRooms();
-  const target = RANKING_ROOM_NAME.toLocaleLowerCase('pt-BR');
-  return rooms.find((r) => r.name.trim().toLocaleLowerCase('pt-BR') === target) ?? null;
+/**
+ * Sala inicial do ranking: a do link (`/ranking?sala=<id>`), senão
+ * "o iluminado", senão a primeira sala ativa. Cada sala tem o próprio ranking.
+ */
+export function pickRankingRoom(rooms: Room[], preferredId?: string | null): Room | null {
+  if (preferredId) {
+    const fromLink = rooms.find((r) => r.id === preferredId);
+    if (fromLink) return fromLink;
+  }
+  const target = DEFAULT_RANKING_ROOM_NAME.toLocaleLowerCase('pt-BR');
+  return (
+    rooms.find((r) => r.name.trim().toLocaleLowerCase('pt-BR') === target) ??
+    rooms[0] ??
+    null
+  );
+}
+
+/** Sala pedida no link da página (`?sala=<id>`), se houver. */
+export function roomIdFromUrl(): string | null {
+  return new URLSearchParams(window.location.search).get('sala');
 }
 
 export async function fetchRanking(

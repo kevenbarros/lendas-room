@@ -43,6 +43,7 @@
 
 .ranking__header,
 .ranking__hero,
+.ranking__rooms,
 .ranking__podium,
 .ranking__list,
 .ranking__list-head,
@@ -103,6 +104,36 @@
   font-size: 0.95rem;
   color: rgba(255, 255, 255, 0.6);
   line-height: 1.6;
+}
+
+/* ===== Abas de sala (um ranking por sala) ===== */
+.ranking__rooms {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.75rem;
+}
+.ranking__room {
+  font: inherit;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+  padding: 0.4rem 1rem;
+  cursor: pointer;
+  transition: color 0.2s, background 0.2s, border-color 0.2s;
+}
+.ranking__room:hover {
+  color: #fff;
+  border-color: rgba(249, 87, 56, 0.6);
+}
+.ranking__room--active,
+.ranking__room--active:hover {
+  color: #fff;
+  background: #f95738;
+  border-color: #f95738;
 }
 
 /* ===== Pódio (top 3) ===== */

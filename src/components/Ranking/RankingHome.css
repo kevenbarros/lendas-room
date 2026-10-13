@@ -225,6 +225,36 @@
   color: #f95738;
 }
 
+/* Abas de sala (um ranking por sala) */
+.rankhome__rooms {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: -0.75rem 0 1.75rem;
+}
+.rankhome__room {
+  font: inherit;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+  padding: 0.4rem 1rem;
+  cursor: pointer;
+  transition: color 0.2s, background 0.2s, border-color 0.2s;
+}
+.rankhome__room:hover {
+  color: #fff;
+  border-color: rgba(249, 87, 56, 0.6);
+}
+.rankhome__room--active,
+.rankhome__room--active:hover {
+  color: #fff;
+  background: #f95738;
+  border-color: #f95738;
+}
+
 .rankhome__empty {
   text-align: center;
   color: rgba(255, 255, 255, 0.6);

@@ -3,10 +3,13 @@ import './Ranking.css';
 import logo from '../../assets/logo.svg';
 import {
   fetchRanking,
-  fetchRankingRoom,
+  fetchRooms,
   formatGameTime,
   GENERAL_SEASON,
+  pickRankingRoom,
+  roomIdFromUrl,
   type RankingEntry,
+  type Room,
 } from '../../lib/ranking';
 import { HALLOWEEN } from '../../lib/halloween';
 import { SeasonCountdown } from './SeasonCountdown';
@@ -15,6 +18,7 @@ import { Bats, Clouds, Cobweb, Fog, Moon, Spider } from '../Halloween';
 const MEDALS = HALLOWEEN ? ['🎃', '👻', '💀'] : ['🥇', '🥈', '🥉'];
 
 export function Ranking() {
+  const [rooms, setRooms] = useState<Room[]>([]);
   const [roomId, setRoomId] = useState('');
   const [entries, setEntries] = useState<RankingEntry[]>([]);
   const [loadingMeta, setLoadingMeta] = useState(true);
@@ -25,10 +29,11 @@ export function Ranking() {
     let cancelled = false;
     (async () => {
       try {
-        // O ranking mostra só a sala "o iluminado".
-        const room = await fetchRankingRoom();
+        // Um ranking por sala; o link pode abrir direto numa (?sala=<id>).
+        const list = await fetchRooms();
         if (cancelled) return;
-        setRoomId(room?.id ?? '');
+        setRooms(list);
+        setRoomId(pickRankingRoom(list, roomIdFromUrl())?.id ?? '');
       } catch (e) {
         if (!cancelled) setError('Não foi possível carregar o ranking agora.');
         console.error(e);
@@ -65,6 +70,14 @@ export function Ranking() {
     };
   }, [roomId]);
 
+  const roomName = rooms.find((r) => r.id === roomId)?.name ?? '';
+
+  function selectRoom(id: string) {
+    setRoomId(id);
+    // Mantém a sala no endereço, para o link compartilhado abrir nela.
+    window.history.replaceState(null, '', `/ranking?sala=${encodeURIComponent(id)}`);
+  }
+
   return (
     <div className={`ranking ${HALLOWEEN ? 'ranking--halloween' : ''}`}>
       <div className="ranking__glow ranking__glow--coral" aria-hidden />
@@ -97,12 +110,30 @@ export function Ranking() {
           Ranking <span>Geral</span>
         </h1>
         <p className="ranking__subtitle">
+          {roomName ? `Os tempos mais rápidos da sala ${roomName}. ` : ''}
           {HALLOWEEN
-            ? 'Os tempos mais rápidos da sala O Iluminado. Escapem antes que as almas peguem vocês!'
-            : 'Os tempos mais rápidos da sala O Iluminado. Será que sua equipe chega ao topo?'}
+            ? 'Escapem antes que as almas peguem vocês!'
+            : 'Será que sua equipe chega ao topo?'}
         </p>
-        <SeasonCountdown size="lg" />
+        <SeasonCountdown size="lg" roomId={roomId} />
       </div>
+
+      {rooms.length > 1 && (
+        <div className="ranking__rooms" role="tablist" aria-label="Sala">
+          {rooms.map((r) => (
+            <button
+              key={r.id}
+              type="button"
+              role="tab"
+              aria-selected={r.id === roomId}
+              className={`ranking__room ${r.id === roomId ? 'ranking__room--active' : ''}`}
+              onClick={() => selectRoom(r.id)}
+            >
+              {r.name}
+            </button>
+          ))}
+        </div>
+      )}
 
       {loadingMeta ? (
         <p className="ranking__msg">Carregando ranking…</p>

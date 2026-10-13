@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react';
 import './RankingHome.css';
 import {
   fetchRanking,
-  fetchRankingRoom,
+  fetchRooms,
   formatGameTime,
   GENERAL_SEASON,
+  pickRankingRoom,
   type RankingEntry,
+  type Room,
 } from '../../lib/ranking';
 import { HALLOWEEN } from '../../lib/halloween';
 import { SeasonCountdown } from './SeasonCountdown';
@@ -15,6 +17,7 @@ const MEDALS = HALLOWEEN ? ['🎃', '👻', '💀'] : ['🥇', '🥈', '🥉'];
 const TOP_N = 5;
 
 export const RankingHome = () => {
+  const [rooms, setRooms] = useState<Room[]>([]);
   const [roomId, setRoomId] = useState('');
   const [entries, setEntries] = useState<RankingEntry[]>([]);
   const [loading, setLoading] = useState(true);
@@ -24,10 +27,11 @@ export const RankingHome = () => {
     let cancelled = false;
     (async () => {
       try {
-        // O ranking mostra só a sala "o iluminado".
-        const room = await fetchRankingRoom();
+        // Um ranking por sala — começa pela padrão e troca pelas abas.
+        const list = await fetchRooms();
         if (cancelled) return;
-        setRoomId(room?.id ?? '');
+        setRooms(list);
+        setRoomId(pickRankingRoom(list)?.id ?? '');
       } catch (e) {
         if (!cancelled) setError(true);
         console.error(e);
@@ -105,8 +109,25 @@ export const RankingHome = () => {
               ? 'Quanto menor o tempo de jogo, melhor a colocação. Escapem antes que as almas peguem vocês!'
               : 'Quanto menor o tempo de jogo, melhor a colocação. Será que vocês chegam ao topo?'}
           </p>
-          <SeasonCountdown />
+          <SeasonCountdown roomId={roomId} />
         </header>
+
+        {rooms.length > 1 && (
+          <div className="rankhome__rooms" role="tablist" aria-label="Sala">
+            {rooms.map((r) => (
+              <button
+                key={r.id}
+                type="button"
+                role="tab"
+                aria-selected={r.id === roomId}
+                className={`rankhome__room ${r.id === roomId ? 'rankhome__room--active' : ''}`}
+                onClick={() => setRoomId(r.id)}
+              >
+                {r.name}
+              </button>
+            ))}
+          </div>
+        )}
 
         {entries.length === 0 ? (
           <p className="rankhome__empty">
@@ -162,7 +183,7 @@ export const RankingHome = () => {
           </>
         )}
 
-        <a href="/ranking" className="rankhome__cta">
+        <a href={`/ranking?sala=${encodeURIComponent(roomId)}`} className="rankhome__cta">
           Ver ranking completo
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path
