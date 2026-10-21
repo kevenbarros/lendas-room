@@ -282,6 +282,24 @@ const SECTIONS: AccordionSection[] = [
   },
 ];
 
+// Lê "dd/mm/aaaa" como data local; devolve null se incompleta ou inexistente (ex.: 31/02).
+function parseDataNascimento(value: string): Date | null {
+  const match = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(value);
+  if (!match) return null;
+  const dia = Number(match[1]);
+  const mes = Number(match[2]);
+  const ano = Number(match[3]);
+  const date = new Date(ano, mes - 1, dia);
+  if (
+    date.getFullYear() !== ano ||
+    date.getMonth() !== mes - 1 ||
+    date.getDate() !== dia
+  ) {
+    return null;
+  }
+  return date;
+}
+
 export function TermoCompromisso() {
   const [nome, setNome] = useState("");
   const [cpf, setCpf] = useState("");
@@ -298,18 +316,18 @@ export function TermoCompromisso() {
   }, []);
 
   useEffect(() => {
-    if (!dataNascimento) {
+    if (dataNascimento.length < 10) {
       setAgeError(null);
       return;
     }
 
-    const birthDate = new Date(dataNascimento);
-    if (isNaN(birthDate.getTime())) {
-      setAgeError(null);
-      return;
-    }
-
+    const birthDate = parseDataNascimento(dataNascimento);
     const today = new Date();
+    if (!birthDate || birthDate > today) {
+      setAgeError("Data de nascimento inválida.");
+      return;
+    }
+
     let age = today.getFullYear() - birthDate.getFullYear();
     const m = today.getMonth() - birthDate.getMonth();
 
@@ -339,6 +357,21 @@ export function TermoCompromisso() {
     }
 
     setCpf(value);
+  };
+
+  const handleDataNascimentoChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    let value = e.target.value.replace(/\D/g, "");
+    if (value.length > 8) value = value.slice(0, 8);
+
+    if (value.length > 4) {
+      value = value.replace(/(\d{2})(\d{2})(\d{1,4})/, "$1/$2/$3");
+    } else if (value.length > 2) {
+      value = value.replace(/(\d{2})(\d{1,2})/, "$1/$2");
+    }
+
+    setDataNascimento(value);
   };
 
   const handleSubmit = async (e: FormEvent) => {
@@ -372,7 +405,8 @@ export function TermoCompromisso() {
       await sendTermoToGoogleSheets({
         nome,
         cpf,
-        dataNascimento,
+        // A planilha guarda a data no formato ISO (aaaa-mm-dd)
+        dataNascimento: dataNascimento.split("/").reverse().join("-"),
         dataHora: dataAtual,
         ip: finalIp,
         local: finalLocal,
@@ -515,12 +549,17 @@ export function TermoCompromisso() {
             <div className="form-group">
               <label htmlFor="dataNascimento">Data de Nascimento</label>
               <input
-                type="date"
+                type="text"
+                inputMode="numeric"
+                autoComplete="bday"
                 id="dataNascimento"
                 value={dataNascimento}
-                onChange={(e) => setDataNascimento(e.target.value)}
+                onChange={handleDataNascimentoChange}
                 required
-                max={new Date().toISOString().split("T")[0]}
+                maxLength={10}
+                pattern="\d{2}/\d{2}/\d{4}"
+                title="Digite a data no formato dd/mm/aaaa"
+                placeholder="dd/mm/aaaa"
               />
               {ageError && <p className="termo-form__error">{ageError}</p>}
             </div>
