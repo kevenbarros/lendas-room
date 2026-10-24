@@ -49,18 +49,28 @@ export const GENERAL_SEASON: Season = {
   roomId: '',
 };
 
+/**
+ * Temporadas visíveis no site. As desmarcadas no painel ("Aparecer no site")
+ * ficam de fora; as antigas, sem o campo, continuam aparecendo.
+ */
 export async function fetchSeasons(): Promise<Season[]> {
   const snap = await getDocs(query(collection(db, 'seasons'), orderBy('startDate', 'desc')));
-  return snap.docs.map((d) => {
-    const data = d.data() as Omit<Season, 'id' | 'roomId'> & { roomId?: string };
-    return {
+  return snap.docs
+    .map((d) => ({
       id: d.id,
+      data: d.data() as Omit<Season, 'id' | 'roomId'> & {
+        roomId?: string;
+        showOnSite?: boolean;
+      },
+    }))
+    .filter(({ data }) => data.showOnSite !== false)
+    .map(({ id, data }) => ({
+      id,
       name: data.name,
       startDate: data.startDate,
       endDate: data.endDate,
       roomId: data.roomId ?? '',
-    };
-  });
+    }));
 }
 
 /** Data de hoje (YYYY-MM-DD) no fuso de Belém, onde ficam as salas. */
