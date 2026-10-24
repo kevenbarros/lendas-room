@@ -101,12 +101,20 @@ export function seasonEndsAt(season: Season): Date {
   return new Date(`${season.endDate}T23:59:59-03:00`);
 }
 
+/**
+ * Salas com ranking no site: ativas e não desmarcadas no painel ("Salas no
+ * site", na aba Ranking). Salas antigas, sem o campo, aparecem.
+ */
 export async function fetchRooms(): Promise<Room[]> {
   const snap = await getDocs(collection(db, 'rooms'));
   return snap.docs
     .map((d) => {
-      const data = d.data() as { name: string; active?: boolean };
-      return { id: d.id, name: data.name, active: !!data.active };
+      const data = d.data() as { name: string; active?: boolean; rankingOnSite?: boolean };
+      return {
+        id: d.id,
+        name: data.name,
+        active: !!data.active && data.rankingOnSite !== false,
+      };
     })
     .filter((r) => r.active)
     .sort((a, b) => a.name.localeCompare(b.name));
